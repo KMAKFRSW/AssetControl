@@ -1,0 +1,70 @@
+<%- model_class = FxRate -%>
+<br/>データ取得元：東京金融取引所（くりっく３６５）
+<br/>データ年月日：<%= @latest_rate[0].recent_date %>
+<br/>
+<br/>
+<div>
+	<table class="table table-bordered table-hover table-condensed">FX 為替レート
+	  <thead>
+	    <tr>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:product_code2) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:open_price) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:high_price) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:low_price) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:close_price) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:prev_changes) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:swap) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_quantity) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:position_quantity) %></div></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @latest_rate.each do |rate| %>
+	      <tr>
+	        <td><div class="text-center"><%= rate.product_code2 %></td>
+	        <% case rate.product_code2[4,6] %>
+		        <% when 'JPY' then %>
+			        <td><div class="text-right"><%= number_to_currency(rate.open_price, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.high_price, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.low_price, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.close_price, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.prev_changes, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.swap, :unit => "￥", :precision => 3) %></td>
+		        <% when 'USD' then %>
+			        <td><div class="text-right"><%= number_to_currency(rate.open_price, :unit => "$", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.high_price, :unit => "$", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.low_price, :unit => "$", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.close_price, :unit => "$", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.prev_changes, :unit => "$", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.swap, :unit => "$", :precision => 3) %></td>
+	        <% end %>
+	        <td><div class="text-right"><%= number_with_delimiter(rate.trade_quantity) + "枚" %></td>
+	        <td><div class="text-right"><%= number_with_delimiter(rate.position_quantity) + "枚" %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+<div class="row"> <!-- row で列を作る -->
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+		<div>
+		  <%= high_chart("usejpy_price", @usdjpy_price_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurjpy_price", @eurjpy_price_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurusd_price", @eurusd_price_graph) %>
+		</div>
+	</div>
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+		<div>
+		  <%= high_chart("usejpy_position", @usdjpy_position_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurjpy_usejpy_position", @eurjpy_position_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurusd_position", @eurusd_position_graph) %>
+		</div>
+	</div>
+</div>

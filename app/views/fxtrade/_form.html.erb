@@ -1,0 +1,74 @@
+<%= form_for @fx, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :order_no, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :order_no, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :trade_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :trade_date, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :position_no, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :position_no, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :currency, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :currency, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :trade_type, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :trade_type, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :quantity, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :quantity, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :price, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :price, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :commission, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :commission, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :sw_gain, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :sw_gain, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :realized_gain, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :realized_gain, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :sum_gain, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :sum_gain, :class => 'number_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                fx_path, :class => 'btn' %>
+  </div>
+<% end %>

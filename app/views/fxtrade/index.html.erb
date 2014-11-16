@@ -1,0 +1,115 @@
+<%- model_class = Fxtrade -%>
+<div> 
+<!--   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1> -->
+   <h1>FX 売買分析</h1> 
+   <p class="text-left"><%= link_to t('.upload_csv', :default => t("helpers.links.upload_csv")),upload_csv_user_fxtrade_index_path, :class => 'btn btn-primary' %></p>
+</div>
+<br>
+
+<div>
+  <%= high_chart("monthly_interest", @fx_monthly_interest_graph) %>
+</div>
+
+<table class="table table-bordered table-hover table-condensed">FX取引履歴：サマリー
+  <thead>
+    <tr>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:updated_at) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_num) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sum_gain) %></div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fx_avg.each do |fx| %>
+      <tr>
+        <td><div class="text-center"><%= fx.UpdatedDate %></td>
+        <td><div class="text-right"><%= number_with_delimiter(fx.TradeNum) + "件" %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.TotalSwapGain, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.TotalRealizedGain, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.TotalGain, :unit => "￥", :precision => 0) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="row"> <!-- row で列を作る -->
+<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+<table class="table table-bordered table-hover table-condensed">FX取引履歴：直近30日間
+  <thead>
+    <tr>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_date) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fx_last_30_day.each do |fx| %>
+      <tr>
+        <td><div class="text-center"><%= link_to(fx.Date, :controller => "fxtrade", :action => "daily_detail", :trade_date => fx.Date ) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.SwapGain_Last30day, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.RealizedGain_Last30day, :unit => "￥", :precision => 0) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+<table class="table table-bordered table-hover table-condensed">FX取引履歴：直近5週間
+  <thead>
+    <tr>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:week) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fx_last_5_week.each do |fx| %>
+      <tr>
+        <td><div class="text-center"><%= fx.Date + "の週" %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.SwapGain_Week, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.RealizedGain_Week, :unit => "￥", :precision => 0) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<table class="table table-bordered table-hover table-condensed">FX取引履歴：日次損益ランキング(Best 10)
+  <thead>
+    <tr>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_date) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fx_best10.each do |fx| %>
+      <tr>
+        <td><div class="text-center"><%= fx.Date %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.SwapGain_Best10, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.RealizedGain_Best10, :unit => "￥", :precision => 0) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-hover table-condensed">FX取引履歴：日次損益ランキング(Worst 10)
+  <thead>
+    <tr>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_date) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fx_worst10.each do |fx| %>
+      <tr>
+        <td><div class="text-center"><%= fx.Date %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.SwapGain_Worst10, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.RealizedGain_Worst10, :unit => "￥", :precision => 0) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>

@@ -1,0 +1,2 @@
+module FxRateHelper
+end

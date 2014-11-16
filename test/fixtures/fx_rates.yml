@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  data_kbn: MyString
+  trade_date: MyString
+  product_code1: MyString
+  product_code2: MyString
+  product_name: MyString
+  prev_price: MyString
+  open_price: MyString
+  open_price_time: MyString
+  high_price: MyString
+  high_price_time: MyString
+  low_price: MyString
+  low_price_time: MyString
+  close_price: MyString
+  close_price_time: MyString
+  today_price: MyString
+  prev_changes: MyString
+  swap: MyString
+  trade_quantity: MyString
+  position_quantity: MyString
+
+two:
+  data_kbn: MyString
+  trade_date: MyString
+  product_code1: MyString
+  product_code2: MyString
+  product_name: MyString
+  prev_price: MyString
+  open_price: MyString
+  open_price_time: MyString
+  high_price: MyString
+  high_price_time: MyString
+  low_price: MyString
+  low_price_time: MyString
+  close_price: MyString
+  close_price_time: MyString
+  today_price: MyString
+  prev_changes: MyString
+  swap: MyString
+  trade_quantity: MyString
+  position_quantity: MyString

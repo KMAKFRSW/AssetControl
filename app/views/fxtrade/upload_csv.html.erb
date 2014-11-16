@@ -1,0 +1,18 @@
+<%- model_class = Fxtrade -%>
+<div>
+<!--   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1> -->
+   <h1>FX 売買分析 アップロード</h1>
+   <p><%= link_to '戻る',user_fxtrade_index_path , :class => 'btn btn-primary'%></p>
+</div>
+<div>
+<% #アップロード時は:multipartオプションを有効化 %>
+<%= form_tag({ :action => 'upload_fx_csv'}, { :multipart => true}) do %>
+  <label> アップロードするファイル：
+  <%= file_field_tag :upfile %></label>
+  <%= submit_tag 'アップロード', :confirm => '実行してもよろしいでしょうか？' %>
+<% end %>
+</div>
+<br>
+  <%= notice %>
+  <%= alert %>
+</br>

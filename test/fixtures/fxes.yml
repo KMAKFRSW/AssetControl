@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  order_no: MyString
+  trade_date: MyString
+  position_no: MyString
+  currency: MyString
+  trada_type: MyString
+  quantity: MyString
+  price: 9.99
+  commission: 9.99
+  sw_gain: 9.99
+  realized_gain: 9.99
+  sum_gain: 9.99
+
+two:
+  order_no: MyString
+  trade_date: MyString
+  position_no: MyString
+  currency: MyString
+  trada_type: MyString
+  quantity: MyString
+  price: 9.99
+  commission: 9.99
+  sw_gain: 9.99
+  realized_gain: 9.99
+  sum_gain: 9.99
