@@ -1,3 +1,3 @@
 class ChangeFxRateColumnName < ActiveRecord::Migration
-  rename_column :fx_rates, :changes, :prev_changes
+  rename_column :fx_rate, :changes, :prev_changes
 end

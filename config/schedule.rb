@@ -19,9 +19,21 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, :development
+set :environment, :production
 set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
  
-every :tuesday,:wednesday,:thursday,:friday,:saturday, :at => '12am' do
+every :tuesday, :at => '12am' do
+  runner "Tasks::Get_Fx_Rate.execute"
+end
+every :wednesday, :at => '12am' do
+  runner "Tasks::Get_Fx_Rate.execute"
+end
+every :thursday, :at => '12am' do
+  runner "Tasks::Get_Fx_Rate.execute"
+end
+every :friday, :at => '12am' do
+  runner "Tasks::Get_Fx_Rate.execute"
+end
+every :saturday, :at => '12am' do
   runner "Tasks::Get_Fx_Rate.execute"
 end
