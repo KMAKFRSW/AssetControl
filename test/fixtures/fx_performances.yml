@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cur_code: MyString
+  calc_date: MyString
+  item: MyString
+  data: MyString
+
+two:
+  cur_code: MyString
+  calc_date: MyString
+  item: MyString
+  data: MyString

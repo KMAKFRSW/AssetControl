@@ -18,7 +18,9 @@ resources :users do
 end
 
 resources :fx_rate, :only => [:index] do
-   
+end
+
+resources :fx_performance, :only => [:index] do
 end
 
 

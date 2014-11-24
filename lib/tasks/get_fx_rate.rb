@@ -2,28 +2,28 @@
 
 require 'open-uri'
 require 'date'
-require 'kconv' #文字コード操作をよろしくやるライブラリ
-require 'csv' #文字コード操作をよろしくやるライブラリ
-require "#{Rails.root}/app/models/fx_rate" # ActiveRecordを使用する
+require 'kconv' 
+require 'csv' 
+require "#{Rails.root}/app/models/fx_rate" 
 
 class Tasks::Get_Fx_Rate
   def self.execute
-    # 前日日付(YYYYMMDD)を取得する
+    # Get yesterday'date
     yesterday = (Date.today - 1).strftime("%Y%m%d")
     
-    #http getするurlを作成
+    # set url
     url = 'http://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
     
-    # ファイルネームを抽出(Log出力用)
+    # get file name
     filename = url.split(/\//).last
     
-    # urlをopenしてファイル内容を変数に格納、parseしてmodel更新
-    # ★ファイルが取れているかオブジェクトに対するnilチェックが必要
+    # access to url & get the contens file & update table
+    # 【improvement】need to check if the object of file is null 
     open(url) do |source|
       parsed = CSV.parse((source.read).kconv(Kconv::UTF8, Kconv::SJIS), :headers => true )
-      #  parsedの内容を一行ずつ吟味し、更新する
+      # loop that read rows from file & update table
       parsed.each do |row|
-        if row[0] == "D01"   #header, footerは取り込まないようにデータ区分で判断する
+        if row[0] == "D01"   # D01 means header, footer
           if FxRate.exists?({ :data_kbn => row[0], :trade_date => row[1], :product_code1 => row[2], :product_code2 => row[3] })
             @fx = FxRate.find_by_data_kbn_and_trade_date_and_product_code1_and_product_code2(row[0], row[1], row[2], row[3])
             @fx.attributes = {

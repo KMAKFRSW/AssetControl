@@ -5,7 +5,6 @@ class FxRate < ActiveRecord::Base
 
   self.table_name = 'fx_rates'
   
-  # 属性に対応する日本語名
   REAL_ATTRIBUTE_NAMES = {
     :trade_date => 'データ基準日', 
     :product_code2 => '通貨', 
@@ -23,39 +22,32 @@ class FxRate < ActiveRecord::Base
     REAL_ATTRIBUTE_NAMES[key.to_sym]
   end
 
-  # 直近レートを取得する
   def self.get_latest_rate
-    # 引数に渡した通貨の直近為替レートを取得する
      find_by_sql(["select date_format(max.date,'%Y/%m/%d') as recent_date, product_code2, open_price, high_price, low_price, close_price, prev_changes, swap, trade_quantity, position_quantity from fx_rates, ( select distinct MAX(trade_date) as date from fx_rates ) max
       where trade_date = max.date
       and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
-      order by created_at desc
+      order by cast(trade_quantity as unsigned) desc
        ", 'USD/JPY', 'EUR/JPY','GBP/JPY', 'AUD/JPY','CHF/JPY', 'CAD/JPY', 'NZD/JPY', 'ZAR/JPY', 'EUR/USD', 'GBP/USD', 'AUD/USD', 'NZD/USD'])
   end
 
-  # ドル円チャート表示用データ抽出
-  def self.get_usdjpy_1year
-     find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+  def self.get_daily_rate()
+     usdjpy_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'USD/JPY'])
-  end
-  #ユーロ円チャート表示用データ抽出
-  def self.get_eurjpy_1year
-     find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+     eurjpy_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/JPY'])
-  end
-  #ユーロドルチャート表示用データ抽出
-  def self.get_eurusd_1year
-     find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+      eurusd_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/USD'])
+       
+       return usdjpy_1year, eurjpy_1year, eurusd_1year
+       
   end
-
 end

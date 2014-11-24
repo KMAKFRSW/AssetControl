@@ -1,0 +1,9 @@
+<%- model_class = FxPerformance -%>
+<br/>データ年月日：<%= @usdjpy_term_risk[0].date %>
+<br/>
+<br/>
+<div class="row">
+	<div>
+	  <%= high_chart("usejpy_risk", @usdjpy_term_risk_graph) %>
+	</div>
+</div>

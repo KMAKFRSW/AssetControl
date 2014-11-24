@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141110154911) do
+ActiveRecord::Schema.define(:version => 20141122135536) do
+
+  create_table "fx_performances", :force => true do |t|
+    t.string   "cur_code"
+    t.string   "calc_date"
+    t.string   "item"
+    t.string   "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "fx_rates", :force => true do |t|
     t.string   "data_kbn"
