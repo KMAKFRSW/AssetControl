@@ -18,16 +18,12 @@ class Tasks::Calculate_Term_Return
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
-    
-    for day in 1..360 do
-    yesterday = (Date.today - day).strftime("%Y%m%d")
-
 
     ##############################################################
     # calc return(%) using reference date                        #
     ##############################################################
     prev_rates = Array.new
-    prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, round((close_price / prev_price -1) * 100, 3) as 'prev_rate' from fx_rates 
+    prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, round((close_price / prev_price -1) , 3) as 'prev_rate' from fx_rates 
     where trade_date = ?
     and product_code2 IN ( ?, ?, ?)
     ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD'])
@@ -48,6 +44,5 @@ class Tasks::Calculate_Term_Return
             )
       end
     end    
-  end 
   end 
 end
