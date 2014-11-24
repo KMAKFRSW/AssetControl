@@ -53,9 +53,9 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_date_usdjpy, tickInterval: 20)
       f.yAxis(:title => {:text => 'USD/JPY Historical Volatility'}, :min => 0, :max => 5, tickInterval: 0.5 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_usdjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_usdjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdjpy_term_risk_usdjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f}</b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_usdjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} 円 </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_usdjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} 円 </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdjpy_term_risk_usdjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} 円 </b>')
     end
 
     # make array including the values to show chart of EUR/JPY
@@ -90,9 +90,9 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: eurjpy_date_eurjpy, tickInterval: 20)
       f.yAxis(:title => {:text => 'EUR/JPY Historical Volatility'}, :min => 0, :max => 5, tickInterval: 0.5 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_eurjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_eurjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurjpy_term_risk_eurjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f}</b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_eurjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} 円 </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_eurjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} 円 </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurjpy_term_risk_eurjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} 円 </b>')
     end
     
     # make array including the values to show chart of USD/EUR
@@ -127,9 +127,9 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdeur_date_usdeur, tickInterval: 20)
       f.yAxis(:title => {:text => 'USD/EUR Historical Volatility'}, :min => 0, :max => 0.06, tickInterval: 0.01 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_usdeur_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_usdeur_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdeur_term_risk_usdeur_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f}</b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_usdeur_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} ＄ </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_usdeur_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} ＄ </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdeur_term_risk_usdeur_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} ＄ </b>')
     end
 
   end
