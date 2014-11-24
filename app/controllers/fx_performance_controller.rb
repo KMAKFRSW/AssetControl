@@ -52,9 +52,6 @@ class FxPerformanceController < ApplicationController
       f.xAxis(categories: usdjpy_date_usdjpy, tickInterval: 0.5)
       f.yAxis(:title => {:text => 'USD/JPY HV'}, :min => 0, :max => 3, tickInterval: 5 )
       f.series(:type => 'line', name: 'HV(1 month)'   , data: usdjpy_term_risk_usdjpy_1m  , pointFormat: 'HV(1 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'HV(3 month)'   , data: usdjpy_term_risk_usdjpy_3m  , pointFormat: 'HV(3 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'HV(6 month)'   , data: usdjpy_term_risk_usdjpy_6m  , pointFormat: 'HV(6 month): <b>{point.y:.3f}</b>')
-      f.series(:type => 'line', name: 'HV(12 month)'  , data: usdjpy_term_risk_usdjpy_12m , pointFormat: 'HV(12 month): <b>{point.y:.3f}</b>')
     end
   end
 end
