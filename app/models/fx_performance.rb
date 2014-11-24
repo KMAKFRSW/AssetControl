@@ -33,29 +33,28 @@ class FxPerformance < ActiveRecord::Base
   end
   
   def self.get_term_risk()
-      
      usdjpy_term_risk = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'USD/JPY', 'RSK%'])
-       
+
      eurjpy_term_risk = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'EUR/JPY', 'RSK%'])
-       
-     eurusd_term_risk = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+
+     usdeur_term_risk = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'EUR/USD', 'RSK%'])
-       
-       return usdjpy_term_risk, eurjpy_term_risk, eurusd_term_risk
+
+       return usdjpy_term_risk, eurjpy_term_risk, usdeur_term_risk
      
   end  
 end
