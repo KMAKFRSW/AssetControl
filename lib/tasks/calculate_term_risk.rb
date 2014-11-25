@@ -38,12 +38,11 @@ class Tasks::Calculate_Term_Risk
     array_daily_return = Array.new
 
     # get max 60 months rates and store them into array sorting product_code2 and trade_date order
-    max_60m_return = FxPerformance.find_by_sql(["select calc_date, cur_code, data from fx_performances 
-    where calc_date between date_format( ? - INTERVAL 5 YEAR,'%Y%m%d') and ? 
-    and cur_code IN ( ?, ?, ?)
-    and item = ?
+    max_60m_return = FxRate.find_by_sql(["select trade_date as calc_date, product_code2 as cur_code, ((close_price / prev_price) -1) as data from fx_rates 
+    where trade_date between date_format( ? - INTERVAL 5 YEAR,'%Y%m%d') and ? 
+    and product_code2 IN ( ?, ?, ?)
     order by cur_code asc, calc_date desc
-    ", yesterday, yesterday, 'USD/JPY', 'EUR/JPY', 'EUR/USD', 'RTN01'])
+    ", yesterday, yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD'])
     
     # initialize
     wk_cur_code = nil
