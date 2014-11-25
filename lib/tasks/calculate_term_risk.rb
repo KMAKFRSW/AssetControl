@@ -28,7 +28,7 @@ class Tasks::Calculate_Term_Risk
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
-    
+          
     ##############################################################
     # calc risk for n months(n = 1, 2, 3, 6, 12, 24, 36, 48, 60) #
     ##############################################################
