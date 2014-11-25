@@ -22,31 +22,31 @@
 set :environment, :production
 set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
  
-every :tuesday, :at => '12am' do
+every :tuesday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
 end
-every :wednesday, :at => '12am' do
+every :wednesday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
 end
-every :thursday, :at => '12am' do
+every :thursday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
 end
-every :friday, :at => '12am' do
+every :friday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
 end
-every :saturday, :at => '12am' do
+every :saturday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
