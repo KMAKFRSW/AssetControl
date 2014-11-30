@@ -27,28 +27,33 @@ every :tuesday, :at => '12pm' do
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
+  runner "Tasks::Calculate_Term_Avg.execute"
 end
 every :wednesday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
+  runner "Tasks::Calculate_Term_Avg.execute"
 end
 every :thursday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
+  runner "Tasks::Calculate_Term_Avg.execute"
 end
 every :friday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
+  runner "Tasks::Calculate_Term_Avg.execute"
 end
 every :saturday, :at => '12pm' do
   runner "Tasks::Get_Fx_Rate.execute"
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
   runner "Tasks::Calculate_Term_Risk.execute"
+  runner "Tasks::Calculate_Term_Avg.execute"
 end
