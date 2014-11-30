@@ -7,129 +7,254 @@ class FxPerformanceController < ApplicationController
     ########################################################
     @usdjpy_term_risk, @eurjpy_term_risk, @usdeur_term_risk = FxPerformance.get_term_risk()
     
-    ########################################################
-    # variable for chart of USD/JPY                        #
-    ########################################################
+    ###################################################################
+    # get average of daily range for USD/JPY, EUR/JPY, EUR/USD        # 
+    ###################################################################
+    @usdjpy_avg_range, @eurjpy_avg_range, @eurusd_avg_range = FxPerformance.get_avg_daily_range()
+    
+    ##########################################################################
+    # variable for histrical volatility chart of USD/JPY, EUR/JPY, EUR/USD   #
+    ##########################################################################
     # define each item codes
-    item_risk_1m    = "RSK01"
-    item_risk_2m    = "RSK02"
-    item_risk_3m    = "RSK03"
-    item_risk_6m    = "RSK06"
-    item_risk_12m   = "RSK12"
-    item_risk_24m   = "RSK24"
-    item_risk_36m   = "RSK36"
-    item_risk_48m   = "RSK48"
-    item_risk_60m   = "RSK60"
-
-    # make array including the values to show chart of USD/JPY
-    usdjpy_date_usdjpy          = Array.new
-    usdjpy_term_risk_usdjpy_1m  = Array.new
-    usdjpy_term_risk_usdjpy_3m  = Array.new
-    usdjpy_term_risk_usdjpy_6m  = Array.new
-    usdjpy_term_risk_usdjpy_12m = Array.new
+    item_risk_1m    = Settings[:item][:risk_1m]
+    item_risk_2m    = Settings[:item][:risk_2m]
+    item_risk_3m    = Settings[:item][:risk_3m]
+    item_risk_6m    = Settings[:item][:risk_6m]
+    item_risk_12m   = Settings[:item][:risk_12m]
+    item_risk_24m   = Settings[:item][:risk_24m]
+    item_risk_36m   = Settings[:item][:risk_36m]
+    item_risk_48m   = Settings[:item][:risk_48m]
+    item_risk_60m   = Settings[:item][:risk_60m]
 
     wk_date = nil
+
+    # make array including the values to show chart of USD/JPY
+    usdjpy_date          = Array.new
+    usdjpy_term_risk_1m  = Array.new
+    usdjpy_term_risk_3m  = Array.new
+    usdjpy_term_risk_6m  = Array.new
+    usdjpy_term_risk_12m = Array.new
     
     @usdjpy_term_risk.each do |usdjpy_term_risk|
       # if date is changed, store new date to array for date
       if wk_date != usdjpy_term_risk.date then
-        usdjpy_date_usdjpy.push(usdjpy_term_risk.date)
+        usdjpy_date.push(usdjpy_term_risk.date)
       end
       # restore wk_date
       wk_date = usdjpy_term_risk.date        
       # judging from item, store data to each array
       case usdjpy_term_risk.item
       when item_risk_1m then
-        usdjpy_term_risk_usdjpy_1m.push(usdjpy_term_risk.data.to_f)
+        usdjpy_term_risk_1m.push(usdjpy_term_risk.data.to_f)
       when item_risk_3m then
-        usdjpy_term_risk_usdjpy_3m.push(usdjpy_term_risk.data.to_f)
+        usdjpy_term_risk_3m.push(usdjpy_term_risk.data.to_f)
       when item_risk_6m then
-        usdjpy_term_risk_usdjpy_6m.push(usdjpy_term_risk.data.to_f)
+        usdjpy_term_risk_6m.push(usdjpy_term_risk.data.to_f)
       end
     end
     
     @usdjpy_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ドル円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdjpy_date_usdjpy, tickInterval: 20)
+      f.xAxis(categories: usdjpy_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'USD/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_usdjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_usdjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdjpy_term_risk_usdjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
     end
 
     # make array including the values to show chart of EUR/JPY
-    eurjpy_date_eurjpy          = Array.new
-    eurjpy_term_risk_eurjpy_1m  = Array.new
-    eurjpy_term_risk_eurjpy_3m  = Array.new
-    eurjpy_term_risk_eurjpy_6m  = Array.new
-    eurjpy_term_risk_eurjpy_12m = Array.new
-
-    wk_date = nil
+    eurjpy_date          = Array.new
+    eurjpy_term_risk_1m  = Array.new
+    eurjpy_term_risk_3m  = Array.new
+    eurjpy_term_risk_6m  = Array.new
+    eurjpy_term_risk_12m = Array.new
     
     @eurjpy_term_risk.each do |eurjpy_term_risk|
       # if date is changed, store new date to array for date
       if wk_date != eurjpy_term_risk.date then
-        eurjpy_date_eurjpy.push(eurjpy_term_risk.date)
+        eurjpy_date.push(eurjpy_term_risk.date)
       end
       # restore wk_date
       wk_date = eurjpy_term_risk.date        
       # judging from item, store data to each array
       case eurjpy_term_risk.item
       when item_risk_1m then
-        eurjpy_term_risk_eurjpy_1m.push(eurjpy_term_risk.data.to_f)
+        eurjpy_term_risk_1m.push(eurjpy_term_risk.data.to_f)
       when item_risk_3m then
-        eurjpy_term_risk_eurjpy_3m.push(eurjpy_term_risk.data.to_f)
+        eurjpy_term_risk_3m.push(eurjpy_term_risk.data.to_f)
       when item_risk_6m then
-        eurjpy_term_risk_eurjpy_6m.push(eurjpy_term_risk.data.to_f)
+        eurjpy_term_risk_6m.push(eurjpy_term_risk.data.to_f)
       end
     end
     
     @eurjpy_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロ円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: eurjpy_date_eurjpy, tickInterval: 20)
+      f.xAxis(categories: eurjpy_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'EUR/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_eurjpy_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_eurjpy_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurjpy_term_risk_eurjpy_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
     end
     
     # make array including the values to show chart of USD/EUR
-    usdeur_date_usdeur          = Array.new
-    usdeur_term_risk_usdeur_1m  = Array.new
-    usdeur_term_risk_usdeur_3m  = Array.new
-    usdeur_term_risk_usdeur_6m  = Array.new
-    usdeur_term_risk_usdeur_12m = Array.new
-
-    wk_date = nil
+    usdeur_date          = Array.new
+    usdeur_term_risk_1m  = Array.new
+    usdeur_term_risk_3m  = Array.new
+    usdeur_term_risk_6m  = Array.new
+    usdeur_term_risk_12m = Array.new
     
     @usdeur_term_risk.each do |usdeur_term_risk|
       # if date is changed, store new date to array for date
       if wk_date != usdeur_term_risk.date then
-        usdeur_date_usdeur.push(usdeur_term_risk.date)
+        usdeur_date.push(usdeur_term_risk.date)
       end
       # restore wk_date
       wk_date = usdeur_term_risk.date        
       # judging from item, store data to each array
       case usdeur_term_risk.item
       when item_risk_1m then
-        usdeur_term_risk_usdeur_1m.push(usdeur_term_risk.data.to_f)
+        usdeur_term_risk_1m.push(usdeur_term_risk.data.to_f)
       when item_risk_3m then
-        usdeur_term_risk_usdeur_3m.push(usdeur_term_risk.data.to_f)
+        usdeur_term_risk_3m.push(usdeur_term_risk.data.to_f)
       when item_risk_6m then
-        usdeur_term_risk_usdeur_6m.push(usdeur_term_risk.data.to_f)
+        usdeur_term_risk_6m.push(usdeur_term_risk.data.to_f)
       end
     end
     
     @usdeur_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロドル：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdeur_date_usdeur, tickInterval: 20)
+      f.xAxis(categories: usdeur_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'USD/EUR Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_usdeur_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_usdeur_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdeur_term_risk_usdeur_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdeur_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
+    end
+
+    ##########################################################################
+    # variable for average of daily range chart of USD/JPY, EUR/JPY, EUR/USD #
+    ##########################################################################
+    # define each item codes
+    item_range_5d_avg      = Settings[:item][:range_5d_avg]
+    item_range_25d_avg     = Settings[:item][:range_25d_avg]
+    item_range_75d_avg     = Settings[:item][:range_75d_avg]
+    item_range_100d_avg    = Settings[:item][:range_100d_avg]
+
+    # make array including the values to show chart of USD/JPY
+    usdjpy_avg_date          = Array.new
+    usdjpy_range_5d_avg      = Array.new
+    usdjpy_range_25d_avg     = Array.new
+    usdjpy_range_75d_avg     = Array.new
+    usdjpy_range_100d_avg    = Array.new
+    
+    @usdjpy_avg_range.each do |usdjpy_avg_range|
+      # if date is changed, store new date to array for date
+      if wk_date != usdjpy_avg_range.date then
+        usdjpy_avg_date.push(usdjpy_avg_range.date)
+      end
+
+      # restore wk_date
+      wk_date = usdjpy_avg_range.date        
+      # judging from item, store data to each array
+      case usdjpy_avg_range.item
+      when item_range_5d_avg then
+        usdjpy_range_5d_avg.push(usdjpy_avg_range.data.to_f)
+      when item_range_25d_avg then
+        usdjpy_range_25d_avg.push(usdjpy_avg_range.data.to_f)
+      when item_range_75d_avg then
+        usdjpy_range_75d_avg.push(usdjpy_avg_range.data.to_f)
+      when item_range_100d_avg then
+        usdjpy_range_100d_avg.push(usdjpy_avg_range.data.to_f)
+      end
+    end
+    
+    @usdjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ドル円：値幅 チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: usdjpy_avg_date, tickInterval: 20)
+      f.yAxis(:title => {:text => 'USD/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
+      f.series(:type => 'line', name: '移動平均線(5 day)'   , data: usdjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(25 day)'   , data: usdjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(75 day)'   , data: usdjpy_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: usdjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+    end
+    # make array including the values to show chart of USD/JPY
+    eurjpy_avg_date          = Array.new
+    eurjpy_range_5d_avg      = Array.new
+    eurjpy_range_25d_avg     = Array.new
+    eurjpy_range_75d_avg     = Array.new
+    eurjpy_range_100d_avg    = Array.new
+    
+    @eurjpy_avg_range.each do |eurjpy_avg_range|
+      # if date is changed, store new date to array for date
+      if wk_date != eurjpy_avg_range.date then
+        eurjpy_avg_date.push(eurjpy_avg_range.date)
+      end
+
+      # restore wk_date
+      wk_date = eurjpy_avg_range.date        
+      # judging from item, store data to each array
+      case eurjpy_avg_range.item
+      when item_range_5d_avg then
+        eurjpy_range_5d_avg.push(eurjpy_avg_range.data.to_f)
+      when item_range_25d_avg then
+        eurjpy_range_25d_avg.push(eurjpy_avg_range.data.to_f)
+      when item_range_75d_avg then
+        eurjpy_range_75d_avg.push(eurjpy_avg_range.data.to_f)
+      when item_range_100d_avg then
+        eurjpy_range_100d_avg.push(eurjpy_avg_range.data.to_f)
+      end
+    end
+    
+    @eurjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ユーロ円：値幅 チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: eurjpy_avg_date, tickInterval: 20)
+      f.yAxis(:title => {:text => 'EUR/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
+      f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(25 day)'   , data: eurjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(75 day)'   , data: eurjpy_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+    end
+    # make array including the values to show chart of USD/JPY
+    eurusd_avg_date          = Array.new
+    eurusd_range_5d_avg      = Array.new
+    eurusd_range_25d_avg     = Array.new
+    eurusd_range_75d_avg     = Array.new
+    eurusd_range_100d_avg    = Array.new
+    
+    @eurusd_avg_range.each do |eurusd_avg_range|
+      # if date is changed, store new date to array for date
+      if wk_date != eurusd_avg_range.date then
+        eurusd_avg_date.push(eurusd_avg_range.date)
+      end
+
+      # restore wk_date
+      wk_date = eurusd_avg_range.date        
+      # judging from item, store data to each array
+      case eurusd_avg_range.item
+      when item_range_5d_avg then
+        eurusd_range_5d_avg.push(eurusd_avg_range.data.to_f)
+      when item_range_25d_avg then
+        eurusd_range_25d_avg.push(eurusd_avg_range.data.to_f)
+      when item_range_75d_avg then
+        eurusd_range_75d_avg.push(eurusd_avg_range.data.to_f)
+      when item_range_100d_avg then
+        eurusd_range_100d_avg.push(eurusd_avg_range.data.to_f)
+      end
+    end
+    
+    @eurusd_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ユーロドル：値幅 チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: eurusd_avg_date, tickInterval: 20)
+      f.yAxis(:title => {:text => 'EUR/USD 値幅'}, :min =>   0, :max => 0.02, tickInterval: 0.01 )
+      f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(25 day)'   , data: eurusd_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(75 day)'   , data: eurusd_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurusd_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
     end
 
   end

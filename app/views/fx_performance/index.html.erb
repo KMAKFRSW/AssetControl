@@ -2,13 +2,26 @@
 <br/>
 <br/>
 <div class="row">
-	<div>
-	  <%= high_chart("usejpy_risk", @usdjpy_term_risk_graph) %>
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+		<div>
+		  <%= high_chart("usejpy_risk", @usdjpy_term_risk_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurjpy_risk", @eurjpy_term_risk_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("usdeur_risk", @usdeur_term_risk_graph) %>
+		</div>
 	</div>
-	<div>
-	  <%= high_chart("eurjpy_risk", @eurjpy_term_risk_graph) %>
-	</div>
-	<div>
-	  <%= high_chart("usdeur_risk", @usdeur_term_risk_graph) %>
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+		<div>
+		  <%= high_chart("usdjpy_avg_daily_range", @usdjpy_avg_daily_range_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurjpy_avg_daily_range", @eurjpy_avg_daily_range_graph) %>
+		</div>
+		<div>
+		  <%= high_chart("eurusd_avg_daily_range", @eurusd_avg_daily_range_graph) %>
+		</div>
 	</div>
 </div>

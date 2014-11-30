@@ -56,5 +56,33 @@ class FxPerformance < ActiveRecord::Base
 
        return usdjpy_term_risk, eurjpy_term_risk, usdeur_term_risk
      
-  end  
+  end
+
+  def self.get_avg_daily_range()
+      
+     usdjpy_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'USD/JPY', 'AVG0%'])
+       
+     eurjpy_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'EUR/JPY', 'AVG0%'])
+       
+     eurusd_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'EUR/USD', 'AVG0%'])
+       
+       return usdjpy_avg_range, eurjpy_avg_range, eurusd_avg_range 
+     
+  end
+  
 end

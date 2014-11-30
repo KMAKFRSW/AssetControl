@@ -18,7 +18,7 @@ class FxRateController < ApplicationController
     @usdjpy_1year, @eurjpy_1year, @eurusd_1year = FxRate.get_daily_rate()
      
     ########################################################
-    # variable for chart of USD/JPY                        #
+    # declare variable for chart of USD/JPY                #
     ########################################################
     # make array including the values to show chart of USD/JPY
     usdjpy_trade_date_array        = Array.new

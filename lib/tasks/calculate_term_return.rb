@@ -14,7 +14,7 @@ class Tasks::Calculate_Term_Return
     ##############################################################
 
     # define each item codes
-    item_daily_return    = "RTN01"
+    item_daily_return    = Settings[:item][:daily_return]
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")

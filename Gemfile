@@ -12,12 +12,12 @@ gem 'mysql2'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'bootstrap-sass', '~>2.3.1.0' #2014/10/01(Wed)add
+  gem 'bootstrap-sass', '~>2.3.1.0' #20141001 add
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-#  gem 'less-rails' # Railsでlessを使えるようにする。Bootstrapがlessで書かれているため
-#  gem 'twitter-bootstrap-rails' # Bootstrapの本体
+#  gem 'less-rails' 
+#  gem 'twitter-bootstrap-rails'
 
   gem 'uglifier', '>= 1.0.3'
   #gem 'sprockets', '2.2.2'
@@ -25,12 +25,13 @@ end
 
 gem 'jquery-rails'
 gem 'roo'
-#gem 'chartkick' # 20141002 add
+#gem 'chartkick' # 20141002 add => change to lazy_high_charts
 gem 'groupdate' # 20141002 add
 gem 'nokogiri' # 20141006 add
 gem 'whenever', :require => false #20141012 add
 gem 'lazy_high_charts' # 20141013 add
 gem 'devise' # 20141026 add
+gem 'rails_config' # 20141129 add
 
 
 # To use ActiveModel has_secure_password
