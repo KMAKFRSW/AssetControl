@@ -22,38 +22,22 @@
 set :environment, :production
 set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
  
-every :tuesday, :at => '12pm' do
+every '0 12 * * 2-6' do
   runner "Tasks::Get_Fx_Rate.execute"
-  runner "Tasks::Calculate_Term_Range.execute"
-  runner "Tasks::Calculate_Term_Return.execute"
-  runner "Tasks::Calculate_Term_Risk.execute"
-  runner "Tasks::Calculate_Term_Avg.execute"
 end
-every :wednesday, :at => '12pm' do
-  runner "Tasks::Get_Fx_Rate.execute"
+
+every '5 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Range.execute"
-  runner "Tasks::Calculate_Term_Return.execute"
-  runner "Tasks::Calculate_Term_Risk.execute"
-  runner "Tasks::Calculate_Term_Avg.execute"
 end
-every :thursday, :at => '12pm' do
-  runner "Tasks::Get_Fx_Rate.execute"
-  runner "Tasks::Calculate_Term_Range.execute"
+
+every '5 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Return.execute"
-  runner "Tasks::Calculate_Term_Risk.execute"
-  runner "Tasks::Calculate_Term_Avg.execute"
 end
-every :friday, :at => '12pm' do
-  runner "Tasks::Get_Fx_Rate.execute"
-  runner "Tasks::Calculate_Term_Range.execute"
-  runner "Tasks::Calculate_Term_Return.execute"
+
+every '10 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Risk.execute"
-  runner "Tasks::Calculate_Term_Avg.execute"
 end
-every :saturday, :at => '12pm' do
-  runner "Tasks::Get_Fx_Rate.execute"
-  runner "Tasks::Calculate_Term_Range.execute"
-  runner "Tasks::Calculate_Term_Return.execute"
-  runner "Tasks::Calculate_Term_Risk.execute"
+
+every '10 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Avg.execute"
 end
