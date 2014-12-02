@@ -8,21 +8,21 @@ class FxPerformance < ActiveRecord::Base
   def self.get_daily_range()
       
      usdjpy_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item = ?
        order by date asc, item asc
        ", 'USD/JPY', 'RNG01'])
        
      eurjpy_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item = ?
        order by date asc, item asc
        ", 'EUR/JPY', 'RNG01'])
        
      eurusd_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item = ?
        order by date asc, item asc
@@ -61,21 +61,21 @@ class FxPerformance < ActiveRecord::Base
   def self.get_avg_daily_range()
       
      usdjpy_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'USD/JPY', 'AVG0%'])
        
      eurjpy_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'EUR/JPY', 'AVG0%'])
        
      eurusd_avg_range = find_by_sql(["select date_format(calc_date, '%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 5 MONTH,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc

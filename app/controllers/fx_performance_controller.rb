@@ -11,6 +11,11 @@ class FxPerformanceController < ApplicationController
     # get average of daily range for USD/JPY, EUR/JPY, EUR/USD        # 
     ###################################################################
     @usdjpy_avg_range, @eurjpy_avg_range, @eurusd_avg_range = FxPerformance.get_avg_daily_range()
+
+    ########################################################
+    # get daily range for USD/JPY, EUR/JPY, EUR/USD        # 
+    ########################################################
+    @usdjpy_range, @eurjpy_range, @eurusd_range = FxPerformance.get_daily_range()
     
     ##########################################################################
     # variable for histrical volatility chart of USD/JPY, EUR/JPY, EUR/USD   #
@@ -148,6 +153,11 @@ class FxPerformanceController < ApplicationController
     usdjpy_range_25d_avg     = Array.new
     usdjpy_range_75d_avg     = Array.new
     usdjpy_range_100d_avg    = Array.new
+    usdjpy_range_array       = Array.new
+    
+    @usdjpy_range.each do |usdjpy_range|
+      usdjpy_range_array.push(usdjpy_range.data.to_f)
+    end
     
     @usdjpy_avg_range.each do |usdjpy_avg_range|
       # if date is changed, store new date to array for date
@@ -175,10 +185,11 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'USD/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
+      f.series(:type => 'line', name: '値幅'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: usdjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: usdjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(75 day)'   , data: usdjpy_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: usdjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+#      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: usdjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
     end
     # make array including the values to show chart of USD/JPY
     eurjpy_avg_date          = Array.new
@@ -186,6 +197,11 @@ class FxPerformanceController < ApplicationController
     eurjpy_range_25d_avg     = Array.new
     eurjpy_range_75d_avg     = Array.new
     eurjpy_range_100d_avg    = Array.new
+    eurjpy_range_array       = Array.new
+    
+    @eurjpy_range.each do |eurjpy_range|
+      eurjpy_range_array.push(eurjpy_range.data.to_f)
+    end
     
     @eurjpy_avg_range.each do |eurjpy_avg_range|
       # if date is changed, store new date to array for date
@@ -213,10 +229,11 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: eurjpy_avg_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'EUR/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
+      f.series(:type => 'line', name: '値幅'        , data: eurjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: eurjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(75 day)'   , data: eurjpy_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+#      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurjpy_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
     end
     # make array including the values to show chart of USD/JPY
     eurusd_avg_date          = Array.new
@@ -224,7 +241,12 @@ class FxPerformanceController < ApplicationController
     eurusd_range_25d_avg     = Array.new
     eurusd_range_75d_avg     = Array.new
     eurusd_range_100d_avg    = Array.new
+    eurusd_range_array       = Array.new
     
+    @eurusd_range.each do |eurusd_range|
+      eurusd_range_array.push(eurusd_range.data.to_f)
+    end
+
     @eurusd_avg_range.each do |eurusd_avg_range|
       # if date is changed, store new date to array for date
       if wk_date != eurusd_avg_range.date then
@@ -251,10 +273,11 @@ class FxPerformanceController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: eurusd_avg_date, tickInterval: 20)
       f.yAxis(:title => {:text => 'EUR/USD 値幅'}, :min =>   0, :max => 0.02, tickInterval: 0.01 )
+      f.series(:type => 'line', name: '値幅'        , data: eurusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: eurusd_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(75 day)'   , data: eurusd_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurusd_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+#      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: eurusd_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
     end
 
   end
