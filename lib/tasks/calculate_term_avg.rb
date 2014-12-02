@@ -24,9 +24,9 @@ class Tasks::Calculate_Term_Avg
     
     # define array for loop procedure
     arr_calc_target = [
-      [5  ,item_avg_range_5d  ],
-      [25 ,item_avg_range_25d ],
-      [75 ,item_avg_range_75d ],
+      [5,item_avg_range_5d],
+      [25,item_avg_range_25d],
+      [75,item_avg_range_75d],
       [100,item_avg_range_100d]
     ]
           
@@ -35,13 +35,13 @@ class Tasks::Calculate_Term_Avg
 
     # calculate avg of daily range for past 5 day
     arr_calc_target.each do |term, item_code|
-      array_avg_range = FxPerformance.find_by_sql(["select cur_code, round(avg(data), 3) as avg from fx_performances 
+      array_avg_range = FxPerformance.find_by_sql(["select cur_code, round(avg(data), 3) as avg from fx_performances
       where calc_date between date_format( ? - INTERVAL ? DAY,'%Y%m%d')  and ?
       and cur_code IN ( ?, ?, ?)
       and item = 'RNG01'
       group by cur_code
       order by cur_code asc
-      ", yesterday, term, yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD'])
+      ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD'])
       
       array_avg_range.each do |row|
         if FxPerformance.exists?({ :cur_code => row.cur_code, :calc_date => yesterday, :item => item_code })
