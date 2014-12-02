@@ -272,7 +272,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ユーロドル：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: eurusd_avg_date, tickInterval: 20)
-      f.yAxis(:title => {:text => 'EUR/USD 値幅'}, :min =>   0, :max => 0.02, tickInterval: 0.01 )
+      f.yAxis(:title => {:text => 'EUR/USD 値幅'}, :min =>   0, :max => 0.03, tickInterval: 0.01 )
       f.series(:type => 'line', name: '値幅'        , data: eurusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: eurusd_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
