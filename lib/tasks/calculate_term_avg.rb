@@ -22,7 +22,7 @@ class Tasks::Calculate_Term_Avg
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
     
-    # define array for calc terms
+    # define array for loop procedure
     arr_calc_target = [
       [5  ,item_avg_range_5d  ],
       [25 ,item_avg_range_25d ],
