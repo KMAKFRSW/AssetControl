@@ -28,16 +28,11 @@ end
 
 every '5 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Range.execute"
-end
-
-every '5 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Return.execute"
 end
 
 every '10 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Risk.execute"
-end
-
-every '10 12 * * 2-6' do
-  runner "Tasks::Calculate_Term_Avg.execute"
+  runner "Tasks::Calculate_Term_Avg.calc_range_avg"
+  runner "Tasks::Calculate_Term_Avg.calc_rate_avg"
 end

@@ -14,3 +14,7 @@ item:
   range_25d_avg:  'AVG02'
   range_75d_avg:  'AVG03'
   range_100d_avg: 'AVG04'
+  rate_5d_avg:    'AVG11'
+  rate_25d_avg:   'AVG12'
+  rate_75d_avg:   'AVG13'
+  rate_100d_avg:  'AVG14'
