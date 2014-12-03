@@ -11,7 +11,82 @@ class FxRateController < ApplicationController
     # get daily rate for USD/JPY, EUR/JPY, EUR/USD        # 
     ########################################################
     @usdjpy_1year, @eurjpy_1year, @eurusd_1year = FxRate.get_daily_rate()
-     
+    
+    ##########################################################################
+    # make array for average of daily rate chart of USD/JPY, EUR/JPY, EUR/USD #
+    ##########################################################################
+    # define each item codes
+    item_rate_5d_avg      = Settings[:item][:rate_5d_avg]
+    item_rate_25d_avg     = Settings[:item][:rate_25d_avg]
+    item_rate_75d_avg     = Settings[:item][:rate_75d_avg]
+    item_rate_100d_avg    = Settings[:item][:rate_100d_avg]
+ 
+    # get avg of daily rate
+    @usdjpy_avg_rate, @eurjpy_avg_rate, @eurusd_avg_rate = FxPerformance.get_avg_daily_rate()
+
+    # make array including the values to show chart of USD/JPY
+    usdjpy_avg_rate_5d_avg      = Array.new
+    usdjpy_avg_rate_25d_avg     = Array.new
+    usdjpy_avg_rate_75d_avg     = Array.new
+    usdjpy_avg_rate_100d_avg    = Array.new
+    usdjpy_avg_rate_array       = Array.new
+        
+    @usdjpy_avg_rate.each do |usdjpy_avg_rate|
+      # judging from item, store data to each array
+      case usdjpy_avg_rate.item
+      when item_rate_5d_avg then
+        usdjpy_avg_rate_5d_avg.push(usdjpy_avg_rate.data.to_f)
+      when item_rate_25d_avg then
+        usdjpy_avg_rate_25d_avg.push(usdjpy_avg_rate.data.to_f)
+      when item_rate_75d_avg then
+        usdjpy_avg_rate_75d_avg.push(usdjpy_avg_rate.data.to_f)
+      when item_rate_100d_avg then
+        usdjpy_avg_rate_100d_avg.push(usdjpy_avg_rate.data.to_f)
+      end
+    end
+    
+    # make array including the values to show chart of USD/JPY
+    eurjpy_avg_rate_5d_avg      = Array.new
+    eurjpy_avg_rate_25d_avg     = Array.new
+    eurjpy_avg_rate_75d_avg     = Array.new
+    eurjpy_avg_rate_100d_avg    = Array.new
+    eurjpy_avg_rate_array       = Array.new
+    
+    @eurjpy_avg_rate.each do |eurjpy_avg_rate|
+      # judging from item, store data to each array
+      case eurjpy_avg_rate.item
+      when item_rate_5d_avg then
+        eurjpy_avg_rate_5d_avg.push(eurjpy_avg_rate.data.to_f)
+      when item_rate_25d_avg then
+        eurjpy_avg_rate_25d_avg.push(eurjpy_avg_rate.data.to_f)
+      when item_rate_75d_avg then
+        eurjpy_avg_rate_75d_avg.push(eurjpy_avg_rate.data.to_f)
+      when item_rate_100d_avg then
+        eurjpy_avg_rate_100d_avg.push(eurjpy_avg_rate.data.to_f)
+      end
+    end
+    
+    # make array including the values to show chart of USD/JPY
+    eurusd_avg_rate_5d_avg      = Array.new
+    eurusd_avg_rate_25d_avg     = Array.new
+    eurusd_avg_rate_75d_avg     = Array.new
+    eurusd_avg_rate_100d_avg    = Array.new
+    eurusd_avg_rate_array       = Array.new
+    
+    @eurusd_avg_rate.each do |eurusd_avg_rate|
+      # judging from item, store data to each array
+      case eurusd_avg_rate.item
+      when item_rate_5d_avg then
+        eurusd_avg_rate_5d_avg.push(eurusd_avg_rate.data.to_f)
+      when item_rate_25d_avg then
+        eurusd_avg_rate_25d_avg.push(eurusd_avg_rate.data.to_f)
+      when item_rate_75d_avg then
+        eurusd_avg_rate_75d_avg.push(eurusd_avg_rate.data.to_f)
+      when item_rate_100d_avg then
+        eurusd_avg_rate_100d_avg.push(eurusd_avg_rate.data.to_f)
+      end
+    end
+
     ########################################################
     # declare variable for chart of USD/JPY                #
     ########################################################
@@ -42,6 +117,9 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: usdjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: usdjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: usdjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: usdjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: usdjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: usdjpy_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} 円</b>')
     end
     @usdjpy_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ドル円:FXポシションチャート')
@@ -84,6 +162,9 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: eurjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: eurjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: eurjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: eurjpy_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} 円</b>')
     end
     @eurjpy_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロ円:FXポシションチャート')
@@ -125,6 +206,9 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: eurusd_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: eurusd_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: eurusd_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: eurusd_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} ＄</b>')
     end
     @eurusd_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロドル:FXポシションチャート')
@@ -137,5 +221,6 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: eurusd_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
       f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: eurusd_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
     end
+        
   end
 end
