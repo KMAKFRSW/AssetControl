@@ -112,7 +112,7 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_trade_date_array, tickInterval: 20)
       f.yAxis [
-        {:title => {:text => 'USD/JPY'}, :min => 95, :max => 125, tickInterval: 5 , format: '{value} 円'},
+        {:title => {:text => 'USD/JPY'}, :min => 80, :max => 125, tickInterval: 5 , format: '{value} 円'},
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: usdjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: usdjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
@@ -157,7 +157,7 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories:eurjpy_trade_date_array, tickInterval: 20)
       f.yAxis [
-        {:title => {:text => 'EUR/JPY'}, :min => 130, :max => 150, tickInterval: 5 , format: '{value} 円'},
+        {:title => {:text => 'EUR/JPY'}, :min => 95, :max => 150, tickInterval: 5 , format: '{value} 円'},
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
