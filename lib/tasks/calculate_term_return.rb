@@ -19,7 +19,7 @@ class Tasks::Calculate_Term_Return
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
     
-    for num in 360..730 do
+    for num in 2..730 do
     yesterday = (Date.today - num).strftime("%Y%m%d")
     weekday = (Date.today - num).wday 
     if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
