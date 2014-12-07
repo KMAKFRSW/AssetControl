@@ -114,8 +114,8 @@ class FxRateController < ApplicationController
       f.yAxis [
         {:title => {:text => 'USD/JPY'}, :min => 80, :max => 125, tickInterval: 5 , format: '{value} 円'},
       ]
-      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: usdjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
-      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: usdjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: usdjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: usdjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: usdjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: usdjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: usdjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} 円</b>')
@@ -159,8 +159,8 @@ class FxRateController < ApplicationController
       f.yAxis [
         {:title => {:text => 'EUR/JPY'}, :min => 95, :max => 150, tickInterval: 5 , format: '{value} 円'},
       ]
-      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
-      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} 円</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: eurjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: eurjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} 円</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: eurjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} 円</b>')
@@ -203,8 +203,8 @@ class FxRateController < ApplicationController
       f.yAxis [
         {:title => {:text => 'EUR/USD'}, :min => 1.2, :max => 1.4, tickInterval: 0.05 , format: '{value} ＄'},
       ]
-      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
-      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: eurusd_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: eurusd_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: eurusd_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
