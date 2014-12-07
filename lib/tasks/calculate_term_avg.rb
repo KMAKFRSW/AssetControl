@@ -32,6 +32,12 @@ class Tasks::Calculate_Term_Avg
           
     # declare some arrays for each terms
     array_avg_range = Array.new
+    
+    for num in 360..730 do
+    yesterday = (Date.today - num).strftime("%Y%m%d")
+    weekday = (Date.today - num).wday 
+    if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
+
 
     # calculate avg of daily range for past 5 day
     arr_calc_target.each do |term, item_code|
@@ -60,6 +66,8 @@ class Tasks::Calculate_Term_Avg
         end
       end
     end
+  end
+  end
   end
   
   def self.calc_rate_avg
