@@ -4,6 +4,7 @@ class FxPerformance < ActiveRecord::Base
   attr_accessible :calc_date, :cur_code, :data, :item
 
   self.table_name = 'fx_performances'
+  self.primary_keys = :calc_date, :cur_code, :item
 
   def self.get_daily_range()
       

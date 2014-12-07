@@ -11,6 +11,11 @@ class Tasks::Get_Fx_Rate
     # Get yesterday'date
     yesterday = (Date.today - 1).strftime("%Y%m%d")
     
+    for num in 2..365 do
+    yesterday = (Date.today - num).strftime("%Y%m%d")
+    weekday = (Date.today - num).wday 
+    if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
+    
     # set url
     url = 'http://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
     
@@ -70,5 +75,7 @@ class Tasks::Get_Fx_Rate
         end
       end
     end
+  end
+  end
   end
 end

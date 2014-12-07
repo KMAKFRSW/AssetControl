@@ -4,6 +4,7 @@ class FxRate < ActiveRecord::Base
   attr_accessible :close_price, :close_price_time, :data_kbn, :high_price, :high_price_time, :low_price, :low_price_time, :open_price, :open_price_time, :position_quantity, :prev_changes, :prev_price, :product_code1, :product_code2, :product_name, :swap, :today_price, :trade_date, :trade_quantity
 
   self.table_name = 'fx_rates'
+  self.primary_keys = :trade_date, :product_code2
   
   REAL_ATTRIBUTE_NAMES = {
     :trade_date => 'データ基準日', 

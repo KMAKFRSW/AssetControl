@@ -32,7 +32,7 @@ gem 'whenever', :require => false #20141012 add
 gem 'lazy_high_charts' # 20141013 add
 gem 'devise' # 20141026 add
 gem 'rails_config' # 20141129 add
-
+gem 'composite_primary_keys' # 20141207 add
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
