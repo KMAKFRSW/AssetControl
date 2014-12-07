@@ -29,11 +29,6 @@ class Tasks::Calculate_Term_Risk
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
     
-    for num in 2..730 do
-    yesterday = (Date.today - num).strftime("%Y%m%d")
-    weekday = (Date.today - num).wday 
-    if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
-          
     ##############################################################
     # calc risk for n months(n = 1, 2, 3, 6, 12, 24, 36, 48, 60) #
     ##############################################################
@@ -111,6 +106,4 @@ class Tasks::Calculate_Term_Risk
       wk_cur_code = row.cur_code
     end        
   end 
-end
-end
 end
