@@ -32,23 +32,23 @@ class FxRate < ActiveRecord::Base
   end
 
   def self.get_daily_rate()
-     usdjpy_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+     usdjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'USD/JPY'])
-     eurjpy_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+     eurjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/JPY'])
-      eurusd_1year = find_by_sql(["select date_format(trade_date, '%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
+      eurusd_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/USD'])
        
-       return usdjpy_1year, eurjpy_1year, eurusd_1year
+       return usdjpy_2year, eurjpy_2year, eurusd_2year
        
   end
 end
