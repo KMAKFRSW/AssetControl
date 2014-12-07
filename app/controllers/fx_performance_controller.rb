@@ -61,7 +61,7 @@ class FxPerformanceController < ApplicationController
     @usdjpy_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ドル円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdjpy_date, tickInterval: 20)
+      f.xAxis(categories: usdjpy_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'USD/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
@@ -96,7 +96,7 @@ class FxPerformanceController < ApplicationController
     @eurjpy_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロ円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: eurjpy_date, tickInterval: 20)
+      f.xAxis(categories: eurjpy_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'EUR/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
@@ -131,7 +131,7 @@ class FxPerformanceController < ApplicationController
     @usdeur_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロドル：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdeur_date, tickInterval: 20)
+      f.xAxis(categories: usdeur_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'USD/EUR Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
@@ -183,7 +183,7 @@ class FxPerformanceController < ApplicationController
     @usdjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ドル円：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdjpy_avg_date, tickInterval: 20)
+      f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'USD/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
       f.series(:type => 'line', name: '値幅'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: usdjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
@@ -227,7 +227,7 @@ class FxPerformanceController < ApplicationController
     @eurjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロ円：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: eurjpy_avg_date, tickInterval: 20)
+      f.xAxis(categories: eurjpy_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'EUR/JPY 値幅'}, :min =>   0, :max =>   4, tickInterval: 2 )
       f.series(:type => 'line', name: '値幅'        , data: eurjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
@@ -271,7 +271,7 @@ class FxPerformanceController < ApplicationController
     @eurusd_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロドル：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: eurusd_avg_date, tickInterval: 20)
+      f.xAxis(categories: eurusd_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'EUR/USD 値幅'}, :min =>   0, :max => 0.03, tickInterval: 0.01 )
       f.series(:type => 'line', name: '値幅'        , data: eurusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: eurusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
