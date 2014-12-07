@@ -88,21 +88,21 @@ class FxPerformance < ActiveRecord::Base
   
   def self.get_avg_daily_rate()
       
-     usdjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
+     usdjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
        where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'USD/JPY', 'AVG1%'])
        
-     eurjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
+     eurjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
        where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", 'EUR/JPY', 'AVG1%'])
        
-     eurusd_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
+     eurusd_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
        where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
