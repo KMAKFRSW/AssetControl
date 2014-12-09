@@ -61,8 +61,6 @@ class Tasks::Calculate_Term_Avg
       end
     end
   end
-  end
-  end
   
   def self.calc_rate_avg
     ##############################################################
@@ -88,11 +86,6 @@ class Tasks::Calculate_Term_Avg
       [75,item_avg_rate_75d],
       [100,item_avg_rate_100d]
     ]
-
-    for num in 2..730 do
-    yesterday = (Date.today - num).strftime("%Y%m%d")
-    weekday = (Date.today - num).wday 
-    if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
           
     # declare some arrays for each terms
     array_avg_range = Array.new
@@ -124,5 +117,5 @@ class Tasks::Calculate_Term_Avg
       end
     end
   end
-  
 end
+
