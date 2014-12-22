@@ -38,13 +38,13 @@ every '10 12 * * 2-6' do
 end
 
 every '0 18 * * 1-5' do
-  runner "'Tasks::Get_Market_Data.execute('IX','AS')'"
+  runner "Tasks::Get_Market_Data.execute('IX','AS')"
 end
 
 every '0 2 * * 2-6' do
-  runner "'Tasks::Get_Market_Data.execute('IX','EU')'"
+  runner "Tasks::Get_Market_Data.execute('IX','EU')"
 end
 
 every '0 6 * * 2-6' do
-  runner "'Tasks::Get_Market_Data.execute('IX','AM')'"
+  runner "Tasks::Get_Market_Data.execute('IX','AM')"
 end
