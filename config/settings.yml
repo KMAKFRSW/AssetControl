@@ -1,4 +1,4 @@
-item:
+item_fx:
   daily_range:  'RNG01'
   daily_return: 'RTN01'
   risk_1m:  'RSK01'
@@ -18,3 +18,16 @@ item:
   rate_25d_avg:   'AVG12'
   rate_75d_avg:   'AVG13'
   rate_100d_avg:  'AVG14'
+
+item_equity:
+  open_price:     'PRC01'
+  high_price:     'PRC02'
+  low_price:      'PRC03'
+  close_price:    'PRC04'
+  volume:         'PRC05'
+  prev_price:     'PRC06'
+  changes:        'PRC07'
+  high_in_1year:  'PRC20'
+  low_in_1year:   'PRC21'
+  chart_image:    'PRC50'
+  trade_time:     'PRC51'

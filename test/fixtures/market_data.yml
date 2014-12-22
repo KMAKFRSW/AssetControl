@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  security_code: MyString
+  vendor_code: MyString
+  market_code: MyString
+  from_date: 2014-12-21
+  to_date: 2014-12-21
+  asset_class: MyString
+  region_code: MyString
+
+two:
+  security_code: MyString
+  vendor_code: MyString
+  market_code: MyString
+  from_date: 2014-12-21
+  to_date: 2014-12-21
+  asset_class: MyString
+  region_code: MyString

@@ -14,7 +14,7 @@ class Tasks::Calculate_Term_Range
     ##############################################################
 
     # define each item codes
-    item_range    = Settings[:item][:daily_range]
+    item_range    = Settings[:item_fx][:daily_range]
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")

@@ -16,15 +16,15 @@ class Tasks::Calculate_Term_Risk
     ##############################################################
 
     # define each item codes
-    item_risk_1m    = Settings[:item][:risk_1m]
-    item_risk_2m    = Settings[:item][:risk_2m]
-    item_risk_3m    = Settings[:item][:risk_3m]
-    item_risk_6m    = Settings[:item][:risk_6m]
-    item_risk_12m   = Settings[:item][:risk_12m]
-    item_risk_24m   = Settings[:item][:risk_24m]
-    item_risk_36m   = Settings[:item][:risk_36m]
-    item_risk_48m   = Settings[:item][:risk_48m]
-    item_risk_60m   = Settings[:item][:risk_60m]
+    item_risk_1m    = Settings[:item_fx][:risk_1m]
+    item_risk_2m    = Settings[:item_fx][:risk_2m]
+    item_risk_3m    = Settings[:item_fx][:risk_3m]
+    item_risk_6m    = Settings[:item_fx][:risk_6m]
+    item_risk_12m   = Settings[:item_fx][:risk_12m]
+    item_risk_24m   = Settings[:item_fx][:risk_24m]
+    item_risk_36m   = Settings[:item_fx][:risk_36m]
+    item_risk_48m   = Settings[:item_fx][:risk_48m]
+    item_risk_60m   = Settings[:item_fx][:risk_60m]
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")

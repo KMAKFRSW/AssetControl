@@ -23,7 +23,7 @@ class Tasks::Get_Fx_Rate
       parsed = CSV.parse((source.read).kconv(Kconv::UTF8, Kconv::SJIS), :headers => true )
       # loop that read rows from file & update table
       parsed.each do |row|
-        if row[0] == "D01"   # D01 means header, footer
+        if row[0] == "D01"   # D01 means header or footer
           if FxRate.exists?({ :data_kbn => row[0], :trade_date => row[1], :product_code1 => row[2], :product_code2 => row[3] })
             @fx = FxRate.find_by_data_kbn_and_trade_date_and_product_code1_and_product_code2(row[0], row[1], row[2], row[3])
             @fx.attributes = {

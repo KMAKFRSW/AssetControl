@@ -14,10 +14,10 @@ class Tasks::Calculate_Term_Avg
     ##############################################################
 
     # define each item codes
-    item_avg_range_5d     = Settings[:item][:range_5d_avg]
-    item_avg_range_25d    = Settings[:item][:range_25d_avg]
-    item_avg_range_75d    = Settings[:item][:range_75d_avg]
-    item_avg_range_100d   = Settings[:item][:range_100d_avg]
+    item_avg_range_5d     = Settings[:item_fx][:range_5d_avg]
+    item_avg_range_25d    = Settings[:item_fx][:range_25d_avg]
+    item_avg_range_75d    = Settings[:item_fx][:range_75d_avg]
+    item_avg_range_100d   = Settings[:item_fx][:range_100d_avg]
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
@@ -71,10 +71,10 @@ class Tasks::Calculate_Term_Avg
     ##############################################################
 
     # define each item codes
-    item_avg_rate_5d     = Settings[:item][:rate_5d_avg]
-    item_avg_rate_25d    = Settings[:item][:rate_25d_avg]
-    item_avg_rate_75d    = Settings[:item][:rate_75d_avg]
-    item_avg_rate_100d   = Settings[:item][:rate_100d_avg]
+    item_avg_rate_5d     = Settings[:item_fx][:rate_5d_avg]
+    item_avg_rate_25d    = Settings[:item_fx][:rate_25d_avg]
+    item_avg_rate_75d    = Settings[:item_fx][:rate_75d_avg]
+    item_avg_rate_100d   = Settings[:item_fx][:rate_100d_avg]
 
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")
