@@ -40,7 +40,7 @@ class Acquirer
         market_code:        mkt_attr.market_code,
         name:               html.css('table.stocksTable th.symbol h1').inner_text,
         price:              html.css('table.stocksTable td.stoksPrice')[1].content,
-        changes:            html.css('td.change span.icoUpGreen').inner_text,
+        changes:            html.css('td.change').inner_text,
         trade_time:         html.css('dd.yjSb')[1].content,
         prev_price:         prev_price,
         open_price:         open_price,
