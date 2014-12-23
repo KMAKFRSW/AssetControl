@@ -89,8 +89,8 @@ class Acquirer
         [:high_price, Settings[:item_price][:high_price]],
         [:low_price, Settings[:item_price][:low_price]],
         [:volume, Settings[:item_price][:volume]],
-        [:high_in_1year, Settings[:item_price][:high_in_1year]],
-        [:low_in_1year, Settings[:item_price][:low_in_1year]],
+#        [:high_in_1year, Settings[:item_price][:high_in_1year]],
+#        [:low_in_1year, Settings[:item_price][:low_in_1year]],
         [:trade_time, Settings[:item_price][:trade_time]],
       ]
 
