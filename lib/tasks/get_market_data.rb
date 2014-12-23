@@ -12,6 +12,6 @@ class Tasks::Get_Market_Data
     # get target securities
     array_universe, data_date = Universe.get_universe(asset_class, region_code)
     # get recent prices
-    Acquirer.get_info(array_universe, data_date)
+    Acquirer.scrape_info(array_universe, data_date)
   end
 end

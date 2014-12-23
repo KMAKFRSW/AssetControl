@@ -45,6 +45,7 @@ every '0 2 * * 2-6' do
   runner "Tasks::Get_Market_Data.execute('IX','EU')"
 end
 
-every '0 6 * * 2-6' do
+every '0 7 * * 2-6' do
   runner "Tasks::Get_Market_Data.execute('IX','AM')"
+  runner "Tasks::Get_Market_Data.execute('BD','AM')"
 end

@@ -19,7 +19,7 @@ item_fx:
   rate_75d_avg:   'AVG13'
   rate_100d_avg:  'AVG14'
 
-item_equity:
+item_price:
   open_price:     'PRC01'
   high_price:     'PRC02'
   low_price:      'PRC03'
