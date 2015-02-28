@@ -7,7 +7,7 @@ class Fxtrade < ActiveRecord::Base
   
   belongs_to :user, dependent: :destroy
 
-  # 属性に対応する日本語名
+  # define the name of attributes
   REAL_ATTRIBUTE_NAMES = {
     :order_no => '注文番号',
     :trade_date => '約定日',
@@ -21,28 +21,44 @@ class Fxtrade < ActiveRecord::Base
     :realized_gain => '損益(¥)',
     :sum_gain => '合計損益(¥)', 
     :updated_at => '更新日付',
-    # その他個別
     :trade_num => '決済回数',
-    :week => '週'
+    :week => '週',
+    :winning_percentage => '勝率'
   }
   
   def self.real_attribute_name(key)
     REAL_ATTRIBUTE_NAMES[key.to_sym]
   end
 
-  # 過去全期間平均
+  # get the last total summary
   def self.avg(user_id)
-     find_by_sql(["select concat(date_format(max(updated_at),'%Y/%m/%d %H:%i:%s')) as UpdatedDate, count(*) as TradeNum,SUM(sw_gain) as TotalSwapGain, SUM(realized_gain)  as TotalRealizedGain, SUM(realized_gain) + SUM(sw_gain) as TotalGain from fx_trade 
+     # get the score of trade for last 30 days
+        find_by_sql(["select concat(date_format(max(updated_at),'%Y/%m/%d %H:%i:%s')) as UpdatedDate, count(*) as TradeNum,SUM(sw_gain) as TotalSwapGain, SUM(realized_gain)  as TotalRealizedGain, SUM(realized_gain) + SUM(sw_gain) as TotalGain from fx_trade 
         where fx_trade.trade_type like ? and user_id = ? ", '決済%', user_id])
   end
 
-  # 直近30日損益取得
+  # last 30 days
   def self.last_30_day(user_id)
-     find_by_sql(["select date_format(cast(trade_date as date),'%Y/%m/%d') as Date, SUM(sw_gain) as SwapGain_Last30day, SUM(realized_gain) as RealizedGain_Last30day from fx_trade 
-        where fx_trade.trade_type like ? and user_id = ? group by Date order by Date desc, currency desc limit 30 ", '決済%', user_id])
+        find_by_sql(["select A.Date, A.SwapGain_Last30day, A.RealizedGain_Last30day, B.WinningPercentage from (
+              select date_format(cast(trade_date as date),'%Y/%m/%d') as Date, SUM(sw_gain) as SwapGain_Last30day, SUM(realized_gain) as RealizedGain_Last30day from fx_trade 
+              where fx_trade.trade_type like ? and user_id = ? group by Date order by Date desc limit 30
+              ) A LEFT JOIN (
+              select Y.Date as Date, Case when X.WinningTradeNum > 0 then round(X.WinningTradeNum/Y.TortalTradeNum*100, 2) when X.WinningTradeNum is NULL then 0 end as WinningPercentage from (
+                select date_format(cast(trade_date as date),'%Y/%m/%d') as Date, count(*) as WinningTradeNum from fx_trade 
+                  where fx_trade.trade_type like  ? and user_id =  ? and sum_gain >= 0 group by Date order by Date desc limit 30
+                  ) X RIGHT JOIN (
+                  select date_format(cast(trade_date as date),'%Y/%m/%d') as Date, count(*) as TortalTradeNum from fx_trade 
+                  where fx_trade.trade_type like  ? and user_id =  ? group by Date order by Date desc limit 30
+                  ) Y
+              ON X.Date = Y.Date 
+              limit 30 
+              ) B
+              ON A.Date = B.Date
+              order by A.Date desc
+              ", '決済%', user_id, '決済%', user_id, '決済%', user_id])
   end
 
-  # 直近5週損益取得
+  # last 5 week
   def self.last_5_week(user_id)
      find_by_sql(["select DATE_FORMAT(MAX(trade_date),'%Y/%m/%d') as Date, YEARWEEK(trade_date) as YearWeek, SUM(sw_gain) as SwapGain_Week, SUM(realized_gain)  as RealizedGain_Week from fx_trade
       where fx_trade.trade_type like ?
@@ -80,7 +96,7 @@ class Fxtrade < ActiveRecord::Base
       and user_id = ?
       order by cast('trade_date' as date) desc", '決済%', trade_date, user_id])
   end
-  # 月次損益
+  # get monthly interest
   def self.monthly_interest(user_id)
      find_by_sql([" select date_format(trade_date,'%Y/%m') as month, sum(sum_gain) as sum_gain from fx_trade
       where trade_type like ?
@@ -90,18 +106,18 @@ class Fxtrade < ActiveRecord::Base
       order by trade_date asc", '決済%',  user_id])
   end
 
-  # csv登録機能(注文番号をKEYに新規であればinsertし、既存レコードが存在すればレコードをupdateする）
+  # csv upload
   def self.load_csv(csv_file, user_id)
-    require 'csv'   #csv操作を可能にするライブラリ
-    require 'kconv' #文字コード操作をよろしくやるライブラリ
- 
-    #params[:upfile]にファイルが格納されているので
-    #受け取って文字列にする処理
+    require 'csv'   # library for manipulate csv file
+    require 'kconv' # library for changing encoding
+     
+    # extract the contents of csv file from params[:upfile]
     content = csv_file.read
     parsed = Kconv.toutf8(content)
-    parsed = CSV.parse(content.kconv(Kconv::UTF8, Kconv::SJIS), :headers => true) # headerは除く
+    # exclude header
+    parsed = CSV.parse(content.kconv(Kconv::UTF8, Kconv::SJIS), :headers => true) 
     
-    #  parsedの内容を一行ずつ取り込むorder番号が重複する場合はupdate、そうでない場合はinsert
+    # update databases
     parsed.each do |row|
 
       if Fxtrade.exists?({ :order_no => row[0], :user_id => user_id })

@@ -4,15 +4,17 @@ class FxtradeController < ApplicationController
 before_filter :authenticate_user!
 
   def index
-    # 現在のユーザIDを取得
+    # get current logined user id
     user_id = current_user.id
-
+    
+    # get the data of trade peforemance summary for chart
     @fx_avg = Fxtrade.avg(user_id)
     @fx_best10 = Fxtrade.best10(user_id)
     @fx_worst10 = Fxtrade.worst10(user_id)
     @fx_last_30_day = Fxtrade.last_30_day(user_id)
     @fx_last_5_week = Fxtrade.last_5_week(user_id)
-    #月次損利益チャート用配列作成
+
+    # make the array for monthly bar graph
     @fx_monthly_interest = Fxtrade.monthly_interest(user_id)
       i = 0
       monthly_interest_array = Array.new
@@ -33,7 +35,7 @@ before_filter :authenticate_user!
   end
 
   def upload_fx_csv
-    # 現在のユーザIDを取得
+    # get the logined user id
     user_id = current_user.id
 
     if params[:upfile].blank?
@@ -47,7 +49,7 @@ before_filter :authenticate_user!
   end
 
   def daily_detail
-    # 現在のユーザIDを取得
+    # get the logined user id
     user_id = current_user.id
     @fx_daily_detail = Fxtrade.daily_detail(params[:trade_date], user_id)
   end

@@ -16,10 +16,10 @@ class FxRateController < ApplicationController
     # make array for average of daily rate chart of USD/JPY, EUR/JPY, EUR/USD #
     ##########################################################################
     # define each item codes
-    item_rate_5d_avg      = Settings[:item][:rate_5d_avg]
-    item_rate_25d_avg     = Settings[:item][:rate_25d_avg]
-    item_rate_75d_avg     = Settings[:item][:rate_75d_avg]
-    item_rate_100d_avg    = Settings[:item][:rate_100d_avg]
+    item_rate_5d_avg      = Settings[:item_fx][:rate_5d_avg]
+    item_rate_25d_avg     = Settings[:item_fx][:rate_25d_avg]
+    item_rate_75d_avg     = Settings[:item_fx][:rate_75d_avg]
+    item_rate_100d_avg    = Settings[:item_fx][:rate_100d_avg]
  
     # get avg of daily rate
     @usdjpy_avg_rate, @eurjpy_avg_rate, @eurusd_avg_rate = FxPerformance.get_avg_daily_rate()
@@ -221,6 +221,18 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: eurusd_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
       f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: eurusd_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
     end
-        
-  end
+      
+    str = ''
+    # '日付,始値,高値,安値,終値\n'
+    # 行末に\nがあるとちゃんと表示されない。
+    @usdjpy_2year.each_with_index do |usdjpy_2year, i|
+      str = str + '\n' if i > 0
+      str = str + usdjpy_2year.date + ','
+      str = str + usdjpy_2year.open_price.to_s + ','
+      str = str + usdjpy_2year.high_price.to_s + ','
+      str = str + usdjpy_2year.low_price.to_s + ','
+      str = str + usdjpy_2year.close_price.to_s
+    end
+    @fx_rate_ohlc = str
+  end  
 end

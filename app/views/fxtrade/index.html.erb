@@ -41,6 +41,7 @@
       <th><div class="text-center"><%= model_class.real_attribute_name(:trade_date) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:winning_percentage) %></div></th>
     </tr>
   </thead>
   <tbody>
@@ -49,6 +50,7 @@
         <td><div class="text-center"><%= link_to(fx.Date, :controller => "fxtrade", :action => "daily_detail", :trade_date => fx.Date ) %></td>
         <td><div class="text-right"><%= number_to_currency(fx.SwapGain_Last30day, :unit => "￥", :precision => 0) %></td>
         <td><div class="text-right"><%= number_to_currency(fx.RealizedGain_Last30day, :unit => "￥", :precision => 0) %></td>
+        <td><div class="text-right"><%= number_to_currency(fx.WinningPercentage, :unit => "%") %></td>
       </tr>
     <% end %>
   </tbody>
