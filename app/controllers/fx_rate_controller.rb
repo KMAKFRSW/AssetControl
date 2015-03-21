@@ -201,7 +201,7 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories:eurusd_trade_date_array, tickInterval: 60)
       f.yAxis [
-        {:title => {:text => 'EUR/USD'}, :min => 1.2, :max => 1.4, tickInterval: 0.05 , format: '{value} ＄'},
+        {:title => {:text => 'EUR/USD'}, :min => 1.0, :max => 1.4, tickInterval: 0.05 , format: '{value} ＄'},
       ]
 #      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: eurusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
 #      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: eurusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
@@ -223,7 +223,7 @@ class FxRateController < ApplicationController
     end
       
     str = ''
-    # '日付,始値,高値,安値,終値\n'
+    # 'date,open,high,low,close,\n'
     # 行末に\nがあるとちゃんと表示されない。
     @usdjpy_2year.each_with_index do |usdjpy_2year, i|
       str = str + '\n' if i > 0

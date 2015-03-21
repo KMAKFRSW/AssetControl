@@ -29,7 +29,7 @@ before_filter :authenticate_user!
         f.chart(:type => 'column')
         f.plotOptions(line: {marker: {radius: 0}})
         f.xAxis(categories: monthly_interest_month_array, tickInterval: 1)
-        f.yAxis(:min => -400000, :max => 400000, tickInterval: 100000, :title => {:text => 'Monthly Interest'}, labels: {format: '{value} 円'})
+        f.yAxis(:min => -500000, :max => 500000, tickInterval: 100000, :title => {:text => 'Monthly Interest'}, labels: {format: '{value} 円'})
         f.series(name: 'Monthly Interest', data: monthly_interest_array, pointFormat: 'Low Price: <b>{point.y} 円</b>')
       end
   end

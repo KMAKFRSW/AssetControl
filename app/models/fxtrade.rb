@@ -90,7 +90,7 @@ class Fxtrade < ActiveRecord::Base
 
   # 日次詳細
   def self.daily_detail(trade_date, user_id)
-     find_by_sql(["select trade_date, currency, quantity, price, sw_gain, realized_gain, sum_gain from fx_trade
+     find_by_sql(["select trade_date, currency, quantity, trade_type, price, sw_gain, realized_gain, sum_gain from fx_trade
       where trade_type like ?
       and date_format(trade_date,'%Y/%m/%d') = ?
       and user_id = ?

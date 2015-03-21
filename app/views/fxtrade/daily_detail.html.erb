@@ -11,6 +11,7 @@
       <th><div class="text-center"><%= model_class.real_attribute_name(:trade_date) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:currency) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:quantity) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:trade_type) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:price) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:sw_gain) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:realized_gain) %></div></th>
@@ -23,6 +24,7 @@
         <td><div class="text-center"><%= fx.trade_date %></td>
         <td><div class="text-center"><%= fx.currency %></td>
         <td><div class="text-center"><%= fx.quantity %></td>
+        <td><div class="text-center"><%= fx.trade_type %></td>
         <td><div class="text-center"><%= fx.price %></td>
         <td><div class="text-right"><%= number_to_currency(fx.sw_gain, :unit => "￥", :precision => 0) %></td>
         <td><div class="text-right"><%= number_to_currency(fx.realized_gain, :unit => "￥", :precision => 0) %></td>
