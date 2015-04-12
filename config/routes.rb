@@ -13,6 +13,9 @@ resources :users do
       get 'upload_csv'
       post 'upload_fx_csv'
       get 'daily_detail'
+      get 'edit_comment'
+      post 'update_comment'
+      put 'update_comment'
     }
   end
 end

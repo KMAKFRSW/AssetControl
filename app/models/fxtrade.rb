@@ -88,14 +88,15 @@ class Fxtrade < ActiveRecord::Base
         limit 10", '決済%', user_id])
   end
 
-  # 日次詳細
+  # summary of daily trade
   def self.daily_detail(trade_date, user_id)
      find_by_sql(["select trade_date, currency, quantity, trade_type, price, sw_gain, realized_gain, sum_gain from fx_trade
       where trade_type like ?
       and date_format(trade_date,'%Y/%m/%d') = ?
       and user_id = ?
-      order by cast('trade_date' as date) desc", '決済%', trade_date, user_id])
+      order by trade_date asc", '決済%', trade_date, user_id])
   end
+  
   # get monthly interest
   def self.monthly_interest(user_id)
      find_by_sql([" select date_format(trade_date,'%Y/%m') as month, sum(sum_gain) as sum_gain from fx_trade
@@ -108,7 +109,7 @@ class Fxtrade < ActiveRecord::Base
 
   # csv upload
   def self.load_csv(csv_file, user_id)
-    require 'csv'   # library for manipulate csv file
+    require 'csv'   # library for editing csv file
     require 'kconv' # library for changing encoding
      
     # extract the contents of csv file from params[:upfile]

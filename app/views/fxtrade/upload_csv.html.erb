@@ -7,9 +7,10 @@
 <div>
 <% #アップロード時は:multipartオプションを有効化 %>
 <%= form_tag({ :action => 'upload_fx_csv'}, { :multipart => true}) do %>
-  <label> アップロードするファイル：
+  <p>ファイルを選択して下さい。(ex.kessaiYYYYMMDD.csv)</p>
+  <label> <p>アップロードするファイル：</p>
   <%= file_field_tag :upfile %></label>
-  <%= submit_tag 'アップロード', :confirm => '実行してもよろしいでしょうか？' %>
+  <%= submit_tag '更新', :confirm => '実行してもよろしいでしょうか？' , :class => 'btn btn-primary' %>
 <% end %>
 </div>
 <br>

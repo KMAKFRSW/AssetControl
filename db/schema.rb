@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141221114418) do
+ActiveRecord::Schema.define(:version => 20150322141759) do
+
+  create_table "dairies", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "trade_date"
+    t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "fx_performances", :force => true do |t|
     t.string   "cur_code"

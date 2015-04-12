@@ -1,0 +1,2 @@
+module DairyHelper
+end

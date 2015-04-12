@@ -51,6 +51,29 @@ before_filter :authenticate_user!
   def daily_detail
     # get the logined user id
     user_id = current_user.id
+    # show information of dairy trade detail
+    @fx_daily_detail = Fxtrade.daily_detail(params[:trade_date], user_id)
+    # show information of comment
+    @dairy = Dairy.show(params[:trade_date], user_id)
+  end
+  
+  def edit_comment
+    # get the logined user id
+    user_id = current_user.id
+    # make the instancce for editting comment
+    @dairy = Dairy.new
+    # show information of dairy trade detail
     @fx_daily_detail = Fxtrade.daily_detail(params[:trade_date], user_id)
   end
+
+  def update_comment
+    # get the logined user id
+    user_id = current_user.id
+    comment = params[:dairy][:comment]
+    trade_date = params[:trade_date]
+    # update diry model
+    Dairy.update(comment, trade_date, user_id)
+    redirect_to(daily_detail_user_fxtrade_index_path(:trade_date => trade_date), {notice => '編集に成功しました。'})
+  end
+  
 end
