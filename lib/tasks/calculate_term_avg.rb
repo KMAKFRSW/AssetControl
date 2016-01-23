@@ -41,7 +41,7 @@ class Tasks::Calculate_Term_Avg
       and item = 'RNG01'
       group by cur_code
       order by cur_code asc
-      ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD'])
+      ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
       
       array_avg_range.each do |row|
         if FxPerformance.exists?({ :cur_code => row.cur_code, :calc_date => yesterday, :item => item_code })
@@ -97,7 +97,7 @@ class Tasks::Calculate_Term_Avg
       and product_code2 IN ( ?, ?, ?)
       group by product_code2
       order by product_code2 asc
-      ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD'])
+      ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
       
       array_avg_range.each do |row|
         if FxPerformance.exists?({ :cur_code => row.product_code2, :calc_date => yesterday, :item => item_code })

@@ -10,7 +10,7 @@ class FxRateController < ApplicationController
     ########################################################
     # get daily rate for USD/JPY, EUR/JPY, EUR/USD        # 
     ########################################################
-    @usdjpy_2year, @eurjpy_2year, @eurusd_2year = FxRate.get_daily_rate()
+    @usdjpy_2year, @eurjpy_2year, @eurusd_2year, @audjpy_2year, @gbpjpy_2year, @audusd_2year, @gbpusd_2year = FxRate.get_daily_rate()
     
     ##########################################################################
     # make array for average of daily rate chart of USD/JPY, EUR/JPY, EUR/USD #
@@ -221,18 +221,178 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: eurusd_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
       f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: eurusd_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
     end
-      
-    str = ''
-    # 'date,open,high,low,close,\n'
-    # 行末に\nがあるとちゃんと表示されない。
-    @usdjpy_2year.each_with_index do |usdjpy_2year, i|
-      str = str + '\n' if i > 0
-      str = str + usdjpy_2year.date + ','
-      str = str + usdjpy_2year.open_price.to_s + ','
-      str = str + usdjpy_2year.high_price.to_s + ','
-      str = str + usdjpy_2year.low_price.to_s + ','
-      str = str + usdjpy_2year.close_price.to_s
+    
+  ########################################################
+  # variable for chart of AUD/JPY                        #
+  ########################################################
+    audjpy_trade_date_array = Array.new
+    audjpy_low_price_array = Array.new
+    audjpy_high_price_array = Array.new
+    audjpy_close_price_array = Array.new
+    audjpy_position_quantity_array = Array.new
+    audjpy_trade_quantity_array = Array.new
+    
+    @audjpy_2year.each do |audjpy_2year|
+      audjpy_trade_date_array.push(audjpy_2year.date)
+      audjpy_low_price_array.push(audjpy_2year.low_price.to_f)
+      audjpy_high_price_array.push(audjpy_2year.high_price.to_f)
+      audjpy_close_price_array.push(audjpy_2year.close_price.to_f)
+      audjpy_position_quantity_array.push(audjpy_2year.position_quantity.to_i)
+      audjpy_trade_quantity_array.push(audjpy_2year.trade_quantity.to_i)
     end
-    @fx_rate_ohlc = str
+    @audjpy_price_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '豪ドル円:FXチャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories:audjpy_trade_date_array, tickInterval: 60)
+      f.yAxis [
+        {:title => {:text => 'AUD/JPY'}, :min => 50, :max => 110, tickInterval: 5 , format: '{value} 円'},
+      ]
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: audjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: audjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: audjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: audjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: audjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: audjpy_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} ＄</b>')
+    end
+    @audjpy_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '豪ドル円:FXポシションチャート')
+      f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
+      f.xAxis(categories: audjpy_trade_date_array, tickInterval: 60)
+      f.yAxis [
+       {:title => {:text => 'AUD/JPY 建玉量'}, labels: {tickInterval: 5000, format: '{value} 枚'}},
+       {:title => {:text => 'AUD/JPY 取引量'}, labels: {tickInterval: 1000, format: '{value} 枚'}, opposite: true}, 
+      ]
+      f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: audjpy_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
+      f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: audjpy_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
+    end
+  ########################################################
+  # variable for chart of AUD/USD                       #
+  ########################################################
+    audusd_trade_date_array = Array.new
+    audusd_low_price_array = Array.new
+    audusd_high_price_array = Array.new
+    audusd_close_price_array = Array.new
+    audusd_position_quantity_array = Array.new
+    audusd_trade_quantity_array = Array.new
+    
+    @audusd_2year.each do |audusd_2year|
+      audusd_trade_date_array.push(audusd_2year.date)
+      audusd_low_price_array.push(audusd_2year.low_price.to_f)
+      audusd_high_price_array.push(audusd_2year.high_price.to_f)
+      audusd_close_price_array.push(audusd_2year.close_price.to_f)
+      audusd_position_quantity_array.push(audusd_2year.position_quantity.to_i)
+      audusd_trade_quantity_array.push(audusd_2year.trade_quantity.to_i)
+    end
+    @audusd_price_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '豪ドルドル:FXチャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories:audusd_trade_date_array, tickInterval: 60)
+      f.yAxis [
+        {:title => {:text => 'AUD/USD'}, :min => 0.5, :max => 1.1, tickInterval: 0.1 , format: '{value} $'},
+      ]
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: audusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: audusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: audusd_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: audusd_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: audusd_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: audusd_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} ＄</b>')
+    end
+    @audusd_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '豪ドルドル:FXポシションチャート')
+      f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
+      f.xAxis(categories: audusd_trade_date_array, tickInterval: 60)
+      f.yAxis [
+       {:title => {:text => 'AUD/USD 建玉量'}, labels: {tickInterval: 5000, format: '{value} 枚'}},
+       {:title => {:text => 'AUD/USD 取引量'}, labels: {tickInterval: 1000, format: '{value} 枚'}, opposite: true}, 
+      ]
+      f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: audusd_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
+      f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: audusd_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
+    end
+  ########################################################
+  # variable for chart of GBP/JPY                        #
+  ########################################################
+    gbpjpy_trade_date_array = Array.new
+    gbpjpy_low_price_array = Array.new
+    gbpjpy_high_price_array = Array.new
+    gbpjpy_close_price_array = Array.new
+    gbpjpy_position_quantity_array = Array.new
+    gbpjpy_trade_quantity_array = Array.new
+    
+    @gbpjpy_2year.each do |gbpjpy_2year|
+      gbpjpy_trade_date_array.push(gbpjpy_2year.date)
+      gbpjpy_low_price_array.push(gbpjpy_2year.low_price.to_f)
+      gbpjpy_high_price_array.push(gbpjpy_2year.high_price.to_f)
+      gbpjpy_close_price_array.push(gbpjpy_2year.close_price.to_f)
+      gbpjpy_position_quantity_array.push(gbpjpy_2year.position_quantity.to_i)
+      gbpjpy_trade_quantity_array.push(gbpjpy_2year.trade_quantity.to_i)
+    end
+    @gbpjpy_price_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ポンド円:FXチャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories:gbpjpy_trade_date_array, tickInterval: 60)
+      f.yAxis [
+        {:title => {:text => 'GBP/JPY'}, :min => 110, :max => 250, tickInterval: 10 , format: '{value} 円'},
+      ]
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: gbpjpy_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: gbpjpy_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: gbpjpy_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: gbpjpy_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: gbpjpy_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: gbpjpy_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} ＄</b>')
+    end
+    @gbpjpy_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ポンド円:FXポシションチャート')
+      f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
+      f.xAxis(categories: gbpjpy_trade_date_array, tickInterval: 60)
+      f.yAxis [
+       {:title => {:text => 'GBP/JPY 建玉量'}, labels: {tickInterval: 5000, format: '{value} 枚'}},
+       {:title => {:text => 'GBP/JPY 取引量'}, labels: {tickInterval: 1000, format: '{value} 枚'}, opposite: true}, 
+      ]
+      f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: gbpjpy_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
+      f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: gbpjpy_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
+    end
+  ########################################################
+  # variable for chart of GBP/USD                       #
+  ########################################################
+    gbpusd_trade_date_array = Array.new
+    gbpusd_low_price_array = Array.new
+    gbpusd_high_price_array = Array.new
+    gbpusd_close_price_array = Array.new
+    gbpusd_position_quantity_array = Array.new
+    gbpusd_trade_quantity_array = Array.new
+    
+    @gbpusd_2year.each do |gbpusd_2year|
+      gbpusd_trade_date_array.push(gbpusd_2year.date)
+      gbpusd_low_price_array.push(gbpusd_2year.low_price.to_f)
+      gbpusd_high_price_array.push(gbpusd_2year.high_price.to_f)
+      gbpusd_close_price_array.push(gbpusd_2year.close_price.to_f)
+      gbpusd_position_quantity_array.push(gbpusd_2year.position_quantity.to_i)
+      gbpusd_trade_quantity_array.push(gbpusd_2year.trade_quantity.to_i)
+    end
+    @gbpusd_price_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ポンドドル:FXチャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories:gbpusd_trade_date_array, tickInterval: 60)
+      f.yAxis [
+        {:title => {:text => 'GBP/USD'}, :min => 1.3, :max => 2.1, tickInterval: 0.2 , format: '{value} $'},
+      ]
+#      f.series(:yAxis => 0, :type => 'line', name: 'Low Pirce'  , data: gbpusd_low_price_array  , pointFormat: 'Low Price:   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: 'High Pirce' , data: gbpusd_high_price_array , pointFormat: 'High Price:  <b>{point.y:.3f} ＄</b>')
+      f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: gbpusd_close_price_array, pointFormat: 'Close Price: <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: gbpusd_avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: gbpusd_avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} ＄</b>')
+#      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: gbpusd_avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} ＄</b>')
+    end
+    @gbpusd_position_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: 'ポンドドル:FXポシションチャート')
+      f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
+      f.xAxis(categories: gbpusd_trade_date_array, tickInterval: 60)
+      f.yAxis [
+       {:title => {:text => 'GBP/USD 建玉量'}, labels: {tickInterval: 5000, format: '{value} 枚'}},
+       {:title => {:text => 'GBP/USD 取引量'}, labels: {tickInterval: 1000, format: '{value} 枚'}, opposite: true}, 
+      ]
+      f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: gbpusd_position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
+      f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: gbpusd_trade_quantity_array, pointFormat: '取引数量: <b>{point.y} 枚</b>')
+    end
   end  
 end

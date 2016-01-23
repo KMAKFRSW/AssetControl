@@ -26,7 +26,7 @@ class Tasks::Calculate_Term_Range
     ranges = FxRate.find_by_sql(["select trade_date, product_code2, format(round(high_price - low_price, 3),3) as 'range' from fx_rates 
     where trade_date = ?
     and product_code2 IN ( ?, ?, ?)
-    ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD'])
+    ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
     ranges.each do |row|
       if FxPerformance.exists?({ :cur_code => row.product_code2, :calc_date => row.trade_date, :item => item_range })

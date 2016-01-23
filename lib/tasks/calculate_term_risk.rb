@@ -42,7 +42,7 @@ class Tasks::Calculate_Term_Risk
     where trade_date between date_format( ? - INTERVAL 5 YEAR,'%Y%m%d') and ? 
     and product_code2 IN ( ?, ?, ?)
     order by cur_code asc, calc_date desc
-    ", yesterday, yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD'])
+    ", yesterday, yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
     # initialize
     wk_cur_code = nil
