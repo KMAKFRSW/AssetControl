@@ -18,6 +18,12 @@ resources :users do
       put 'update_comment'
     }
   end
+  resources :alert, :only => [:index, :create, :new, :destroy, :edit, :update] do
+    collection {
+      get 'edit_all'
+      put 'update_all'
+    }
+  end
 end
 
 resources :fx_rate, :only => [:index] do
@@ -25,7 +31,6 @@ end
 
 resources :fx_performance, :only => [:index] do
 end
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

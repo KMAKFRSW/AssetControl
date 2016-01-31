@@ -1,0 +1,26 @@
+<%- model_class = Alerts -%>
+
+<div> 
+   <h1>レートアラート 新規登録</h1> 
+     <tr>
+       <%= link_to '戻る', user_alert_index_path(current_user.id), :class => 'btn btn-primary'%>
+     </tr>
+</div>
+<br>
+<%= h(flash[:notice]) %>
+<td>
+	<%= form_for @alert, :url => {:action => 'update'}  do |f| %>
+	  <div><%= f.label model_class.real_attribute_name(:code) %>
+	  <%= f.collection_select :code, MarketData.find_by_sql(["select security_code, security_name from market_data where asset_class = ?",'FX']), :security_code,:security_code, :prompt => "選択してください" %></div>
+	  <div><%= f.label model_class.real_attribute_name(:alertvalue) %>
+	  <%= f.number_field :alertvalue ,:step => 0.01 %></div>
+	  <div><%= f.label model_class.real_attribute_name(:checkrule) %>
+	  <%= select_tag 'alert[checkrule]', options_for_select("以上"=>"0","以下"=>"1"), :prompt => "選択してください"%></div>
+	  <div><%= f.label model_class.real_attribute_name(:memo) %>
+	  <%= f.text_field :memo %></div>
+</td>
+<br>
+  <tr>
+    <td ><%= f.submit "更新" ,:class => 'btn btn-primary'%></td>
+  </tr>
+<% end %>

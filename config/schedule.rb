@@ -49,3 +49,7 @@ every '0 7 * * 2-6' do
   runner "Tasks::Get_Market_Data.execute('IX','AM')"
   runner "Tasks::Get_Market_Data.execute('BD','AM')"
 end
+
+every 3.minute do
+  runner "Tasks::Check_Alert_Rate.execute('FX','DMY')"
+end

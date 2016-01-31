@@ -36,4 +36,18 @@ AssetControl::Application.configure do
   config.assets.debug = true
   # add for devise 20141026
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
+  # add setting for mail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => 'smtp.gmail.com',
+    :port => '587',
+    :domain => 'smtp.gmail.com',
+    :authentication => 'plain',
+    :user_name => 'mailfromassetcontrol@gmail.com',
+    :password => 'mfac0001'
+    }
+  
 end

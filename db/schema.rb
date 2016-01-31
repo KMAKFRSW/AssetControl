@@ -11,7 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150322141759) do
+ActiveRecord::Schema.define(:version => 20160130155613) do
+
+  create_table "alert_mails", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "subject"
+    t.string   "to"
+    t.string   "from"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "body1"
+    t.text     "body2"
+    t.string   "status"
+  end
+
+  create_table "alerts", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "code"
+    t.string   "alertvalue"
+    t.text     "memo"
+    t.string   "checkrule"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "dairies", :force => true do |t|
     t.integer  "user_id"

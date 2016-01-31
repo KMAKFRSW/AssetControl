@@ -5,7 +5,7 @@ class Dairy < ActiveRecord::Base
   
   self.table_name = 'dairies'
   
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 
   # define the name of attributes
   REAL_ATTRIBUTE_NAMES = {

@@ -1,11 +1,21 @@
 <%- model_class = Fxtrade -%>
 <div> 
-<!--   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1> -->
    <h1>FX 売買分析</h1> 
-   <p class="text-left"><%= link_to t('.upload_csv', :default => t("helpers.links.upload_csv")),upload_csv_user_fxtrade_index_path, :class => 'btn btn-primary' %></p>
 </div>
-<br>
 
+<% if current_user.id = 1 then%>
+<p>===========================================================================================================================</p>
+<h3>【My Rule】</h3>
+<p>１．私は自己資本の5%の含み損が発生した段階で全てのポジションを絶対にクローズします。</p>
+<p>２．私は含み損を抱えたポジションに対してLCとなる逆指値注文を指定せず、寝ることはしません。</p>
+<p>３．私はFXで人生に大切なものを失いません。家族、仕事、人生。</p>
+<p>４．FXで失ったものは絶対にFXで取り返します。</p>
+<p>以上</p>
+<p>===========================================================================================================================</p>
+<%end%>
+
+<br>
+<p class="text-left"><%= link_to t('.upload_csv', :default => t("helpers.links.upload_csv")),upload_csv_user_fxtrade_index_path, :class => 'btn btn-primary' %></p>
 <div>
   <%= high_chart("monthly_interest", @fx_monthly_interest_graph) %>
 </div>

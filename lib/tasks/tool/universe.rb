@@ -11,6 +11,8 @@ class Universe
       data_date = (Date.today ).strftime("%Y%m%d")
     when 'EU', 'AM'
       data_date = (Date.today - 1).strftime("%Y%m%d")
+    when 'DMY' # At the time of 2016/01/30 the'DMY' is used only for FX
+      data_date = (Date.today).strftime("%Y%m%d")
     end
   
     # get the kinds of target market data

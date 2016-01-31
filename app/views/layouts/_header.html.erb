@@ -13,7 +13,12 @@
 	          <li><%= link_to "FX 売買分析", new_user_session_path %></li>
 	      <% end %>
           <% if user_signed_in? %>
-		      <li><%= link_to "アカウントInfo", edit_user_registration_path %></li>
+	          <li><%= link_to "レートアラート", user_alert_index_path(current_user.id) %></li>
+	      <% else %>
+	          <li><%= link_to "レートアラート", new_user_session_path %></li>
+	      <% end %>
+          <% if user_signed_in? %>
+		      <li><%= link_to "パスワード変更", edit_user_registration_path %></li>
 	          <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
 	      <% else %>
 		      <li><%= link_to "新規登録", new_user_registration_path %></li>

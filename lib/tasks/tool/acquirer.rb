@@ -2,42 +2,47 @@
 
 class Acquirer
 
-  def self.scrape_info(array_mkt_attr, data_date)
-    array_scrape_info = scrape_vendor_price(array_mkt_attr)
+  def self.scrape_info(universe, data_date)
+    array_scrape_info = scrape_vendor_price(universe)
     store_info_to_database(array_scrape_info, data_date)
+  end
+
+  def self.scrape_for_alert_rate(universe)
+    array_scrape_info = scrape_vendor_price(universe)
+    return array_scrape_info
   end
 
   private
 
-    def self.scrape_vendor_price(array_mkt_attr)
-      array_mkt_attr.map do |mkt_attr|
-        # Judging from vendor_code and asset class, get the recent price from each sources
-        case mkt_attr.vendor_code
-        when '01' then #Yahoo Finance
-          case mkt_attr.asset_class
-          when 'IX' # Index
-            scrape_index_price_from_Yahoo(mkt_attr)
-          when 'BD' # Bond
-            scrape_bond_price_from_Yahoo(mkt_attr)
-          end
-        else
-          raise "vendor_code #{mkt_attr.vendor_code} is not defined in this method."
+    def self.scrape_vendor_price(universe)
+      # Judging from vendor_code and asset class, get the recent price from each sources
+      case universe.vendor_code
+      when '01' then #Yahoo Finance
+        case universe.asset_class
+        when 'IX' # Index
+          scrape_index_price_from_Yahoo(universe)
+        when 'BD' # Bond
+          scrape_bond_price_from_Yahoo(universe)
+        when 'FX' # FX
+          scrape_fx_price_from_Yahoo(universe)
         end
+      else
+        raise "vendor_code #{universe.vendor_code} is not defined in this method."
       end
     end
 
-    def self.scrape_index_price_from_Yahoo(mkt_attr)
+    def self.scrape_index_price_from_Yahoo(universe)
       # TODO: ugly..
-      url = "http://stocks.finance.yahoo.co.jp/stocks/detail/?code=#{mkt_attr.security_code}"
+      url = "http://stocks.finance.yahoo.co.jp/stocks/detail/?code=#{universe.security_code}"
       html = HttpClient.get(url)
               
       # get recent prices
       prev_price, open_price, high_price, low_price, volume, high_in_1year, low_in_1year = html.css('div.innerDate dd').map{|x| x.css('strong').inner_text }
 
       array_scrape_info = {
-        code:               mkt_attr.security_code,
-        vendor_code:        mkt_attr.vendor_code,
-        market_code:        mkt_attr.market_code,
+        code:               universe.security_code,
+        vendor_code:        universe.vendor_code,
+        market_code:        universe.market_code,
         name:               html.css('table.stocksTable th.symbol h1').inner_text,
         price:              html.css('table.stocksTable td.stoksPrice')[1].content,
         changes:            html.css('td.change').inner_text,
@@ -52,18 +57,19 @@ class Acquirer
         chart_image:        html.css("div.styleChart img")[0][:src],
       }
     end
-    def self.scrape_bond_price_from_Yahoo(mkt_attr)
+    
+    def self.scrape_bond_price_from_Yahoo(universe)
       # TODO: ugly..
-      url = "http://stocks.finance.yahoo.co.jp/stocks/detail/?code=#{mkt_attr.security_code}"
+      url = "http://stocks.finance.yahoo.co.jp/stocks/detail/?code=#{universe.security_code}"
       html = HttpClient.get(url)
               
       # get recent prices
       prev_price, open_price, high_price, low_price, volume, high_in_1year, low_in_1year = html.css('div.innerDate dd').map{|x| x.css('strong').inner_text }
 
       array_scrape_info = {
-        code:               mkt_attr.security_code,
-        vendor_code:        mkt_attr.vendor_code,
-        market_code:        mkt_attr.market_code,
+        code:               universe.security_code,
+        vendor_code:        universe.vendor_code,
+        market_code:        universe.market_code,
         name:               html.css('table.stocksTable th.symbol h1').inner_text,
         price:              html.css('table.stocksTable td.stoksPrice')[1].content,
         changes:            html.css('span.icoDownRed').inner_text,
@@ -78,6 +84,22 @@ class Acquirer
         chart_image:        html.css("div.styleChart img")[0][:src],
       }
     end
+    
+    def self.scrape_fx_price_from_Yahoo(universe)
+      # TODO: ugly..
+      url = "http://info.finance.yahoo.co.jp/fx/detail/?code=#{universe.security_code}=FX"
+      html = HttpClient.get(url)
+              
+      # get recent prices
+      prev_price, open_price, high_price, low_price, volume, high_in_1year, low_in_1year = html.css('div.innerDate dd').map{|x| x.css('strong').inner_text }
+
+      array_scrape_info = {
+        code:               universe.security_code,
+        ask_price:          html.css('li.ask dd').inner_text,
+        bid_price:          html.css('li.bid dd').inner_text,
+      }
+    end
+
     
     def self.store_info_to_database(array_scrape_info, data_date)
       # define array for loop 
@@ -94,7 +116,7 @@ class Acquirer
         [:trade_time, Settings[:item_price][:trade_time]],
       ]
 
-      array_scrape_info.each do |row|          
+      array_scrape_info.each do |row|
         
         code        = row[:code]
         vendor_code = row[:vendor_code]

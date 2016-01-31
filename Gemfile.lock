@@ -157,6 +157,7 @@ DEPENDENCIES
   groupdate
   jquery-rails
   lazy_high_charts
+  mail
   mysql2
   nokogiri
   rails (= 3.2.13)

@@ -5,7 +5,7 @@ class Fxtrade < ActiveRecord::Base
 
   self.table_name = 'fx_trade'
   
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
 
   # define the name of attributes
   REAL_ATTRIBUTE_NAMES = {
@@ -102,7 +102,7 @@ class Fxtrade < ActiveRecord::Base
      find_by_sql([" select date_format(trade_date,'%Y/%m') as month, sum(sum_gain) as sum_gain from fx_trade
       where trade_type like ?
       and user_id = ?
-      and date_format(trade_date,'%Y/%m') >= date_format(now() - INTERVAL 1 YEAR,'%Y/%m')
+      and date_format(trade_date,'%Y/%m') >= date_format(now() - INTERVAL 2 YEAR,'%Y/%m')
       group by date_format(trade_date,'%Y/%m')
       order by trade_date asc", '決済%',  user_id])
   end

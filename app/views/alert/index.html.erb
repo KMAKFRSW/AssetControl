@@ -1,0 +1,37 @@
+<%- model_class = Alerts -%>
+<div> 
+   <h1>レートアラート 設定一覧</h1> 
+     <tr>
+       <%= link_to '新規登録', new_user_alert_path, :class => 'btn btn-primary'%>
+       <!-- <%= link_to '一括編集', edit_all_user_alert_index_path, :class => 'btn btn-primary'%> -->
+       <%= link_to '戻る', :back, :class => 'btn btn-primary'%>
+     </tr>
+</div>
+<br>
+<% count = 0%>
+<table class="table table-bordered table-hover table-condensed">レートアラート：設定一覧
+  <thead>
+    <tr>
+      <th><div class="text-center">No</div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:code) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:alertvalue) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:checkrule) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:memo) %></div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:status) %></div></th>
+      <th><div class="text-center">操作</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @alerts.each do |alert| %>
+      <tr>
+        <td><div class="text-center"><% count = count + 1 %><%= count%></div></td>
+        <td><div class="text-center"><%= alert.code %></div></td>
+        <td><div class="text-center"><%= alert.alertvalue %></div></td>
+        <td><div class="text-center"><% if alert.checkrule == "0" then %>以上<%else%>以下<%end%></div></td>
+        <td><div class="text-center"><%= alert.memo %></div></td>
+        <td><div class="text-center"><% if alert.status == "0" then %>未済<%else%>済<%end%></div></td>
+        <td><div class="text-center"><%= link_to '編集',{ :controller => 'alert', :action => 'edit', :id => alert.id },:method => :get %>&nbsp;<%= link_to '削除',{ :controller => 'alert', :action => 'destroy', :id => alert.id }, :confirm => '本当に削除しますか?',:method => :delete %></div></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

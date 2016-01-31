@@ -1,0 +1,44 @@
+<%- model_class = Alerts -%>
+<div> 
+   <h1>レートアラート 一括編集</h1> 
+   <tr>
+   	<%= link_to '戻る',  user_alert_index_path(current_user.id), :class => 'btn btn-primary'%>
+   	</tr>
+</div>
+<br>
+<% count = 0%>
+<%= form_for :alerts, :url => {:action => :update_all } do |f| %>
+<table class="table table-bordered table-hover table-condensed">レートアラート：設定一覧
+  <thead>
+	  <tr >
+ 	      <th><div class="text-center">No</div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:code) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:alertvalue) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:checkrule) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:memo) %></div></th>
+	      <th><div class="text-center"><%= model_class.real_attribute_name(:status) %></div></th>
+	  </tr>
+  </thead>
+  <tbody>
+	  <% @alerts.each_with_index{|r, idx| @r=r %>
+	  <tr>
+        <td><div class="text-center"><% count = count + 1 %><%= count%></div></td>
+	    <td><div class="text-center"><%= @r.code %></div></td>
+	    <td><div class="text-center"><%= @r.alertvalue %></div></td>
+	    <td><div class="text-center"><%= @r.checkrule %></div></td>
+	    <td><div class="text-center"><%= @r.memo %></div></td>
+	    <td><div class="text-center"><%= @r.status %></div></td>
+	    <td><%= hidden_field 'r', :code, :index => idx %></td>
+	  </tr>
+  <%}%>
+  <tbody>
+</table>
+<br>
+  <tr>
+    <td ><%= f.submit "更新" ,:class => 'btn btn-primary'%></td>
+  </tr>
+<% end %>
+<br>
+  <%= notice %>
+  <%= alert %>
+</br>

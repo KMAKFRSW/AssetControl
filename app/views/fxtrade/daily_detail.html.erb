@@ -34,9 +34,9 @@
   </tbody>
 </table>
 
-<div >コメント
+<div>コメント
 	<% @dairy.each do |dairy| %>
-    <td><div class="text-center"><%= dairy.comment %></div></td>
+    <div class="text-left" style=”border-style: solid ; border-width: 1px;”><%= dairy.comment %></div>
 	<% end %>
 	<p><%= link_to "編集", edit_comment_user_fxtrade_index_path(:trade_date => @fx_daily_detail[0].trade_date.split[0]), :class => 'btn btn-primary' %></p>
 </div>
