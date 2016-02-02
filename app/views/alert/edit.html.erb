@@ -13,7 +13,7 @@
 	  <div><%= f.label model_class.real_attribute_name(:code) %>
 	  <%= f.collection_select :code, MarketData.find_by_sql(["select security_code, security_name from market_data where asset_class = ?",'FX']), :security_code,:security_code, :prompt => "選択してください" %></div>
 	  <div><%= f.label model_class.real_attribute_name(:alertvalue) %>
-	  <%= f.number_field :alertvalue ,:step => 0.01 %></div>
+	  <%= f.number_field :alertvalue ,:step => 0.0001 %></div>
 	  <div><%= f.label model_class.real_attribute_name(:checkrule) %>
 	  <%= select_tag 'alert[checkrule]', options_for_select("以上"=>"0","以下"=>"1"), :prompt => "選択してください"%></div>
 	  <div><%= f.label model_class.real_attribute_name(:memo) %>

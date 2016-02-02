@@ -19,6 +19,7 @@
       <th><div class="text-center"><%= model_class.real_attribute_name(:memo) %></div></th>
       <th><div class="text-center"><%= model_class.real_attribute_name(:status) %></div></th>
       <th><div class="text-center">操作</div></th>
+      <th><div class="text-center"><%= model_class.real_attribute_name(:updated_at) %></div></th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,7 @@
         <td><div class="text-center"><%= alert.memo %></div></td>
         <td><div class="text-center"><% if alert.status == "0" then %>未済<%else%>済<%end%></div></td>
         <td><div class="text-center"><%= link_to '編集',{ :controller => 'alert', :action => 'edit', :id => alert.id },:method => :get %>&nbsp;<%= link_to '削除',{ :controller => 'alert', :action => 'destroy', :id => alert.id }, :confirm => '本当に削除しますか?',:method => :delete %></div></td>
+        <td><div class="text-center"><%= alert.UpdateDate %></div></td>
       </tr>
     <% end %>
   </tbody>

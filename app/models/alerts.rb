@@ -16,17 +16,18 @@ class Alerts < ActiveRecord::Base
     :code => 'コード', 
     :memo => '備考', 
     :status => '状態', 
-    :user_id=> 'ユーザID'
+    :user_id=> 'ユーザID',
+    :updated_at=> '更新日時'
   }
   
   def self.real_attribute_name(key)
     REAL_ATTRIBUTE_NAMES[key.to_sym]
   end
-  
+
   def self.get_alerts(user_id)
-     find_by_sql(["select id, code, checkrule, alertvalue, memo, status from alerts
+     find_by_sql(["select id, code, checkrule, alertvalue, memo, status, DATE_FORMAT(updated_at,'%Y/%m/%d/ %k:%i') as UpdateDate from alerts
       where user_id = ?
-      order by code", user_id])
+      order by code,alertvalue desc", user_id])
   end
 
   def self.get_all_unchecked_alerts(universe)

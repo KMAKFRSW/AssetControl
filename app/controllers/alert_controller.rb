@@ -74,14 +74,16 @@ class AlertController < ApplicationController
   def update
     # get current logined user id
     @alert = Alerts.find(params[:id])
-    @alert.code = params[:alerts]["code"]
-    @alert.alertvalue = params[:alerts]["alertvalue"]
-    @alert.checkrule =  params[:alert]["checkrule"]
-    @alert.memo = params[:alerts]["memo"]
-    @alert.status = 0
+
+    @alert.attributes = {
+        :code => params[:alerts]["code"],
+        :alertvalue => params[:alerts]["alertvalue"],
+        :checkrule =>  params[:alert]["checkrule"],
+        :memo => params[:alerts]["memo"],
+        :status => 0
+    }
     
     if @alert.save
-      # @userはuser_path(@user) に自動変換される
       flash[:notice]= "更新に成功しました。"
       redirect_to( {:action => 'index'})
     else
