@@ -25,7 +25,7 @@ class Tasks::Calculate_Term_Range
     ranges = Array.new
     ranges = FxRate.find_by_sql(["select trade_date, product_code2, format(round(high_price - low_price, 3),3) as 'range' from fx_rates 
     where trade_date = ?
-    and product_code2 IN ( ?, ?, ?)
+    and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
     ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
     ranges.each do |row|

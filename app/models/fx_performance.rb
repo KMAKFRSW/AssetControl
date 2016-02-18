@@ -102,7 +102,7 @@ class FxPerformance < ActiveRecord::Base
        and cur_code = ?
        and item like ?
        order by date asc, item asc
-       ", 'EUR/JPY', 'RSK%'])
+       ", 'GBP/JPY', 'RSK%'])
 
      gbpusd_term_risk = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
        where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')

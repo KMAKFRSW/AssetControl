@@ -5,7 +5,7 @@ class FxPerformanceController < ApplicationController
     ########################################################
     # get daily rate for USD/JPY, EUR/JPY, EUR/USD        # 
     ########################################################
-    @usdjpy_term_risk, @eurjpy_term_risk, @usdeur_term_risk , @audjpy_term_risk, @audusd_term_risk , @gbpjpy_term_risk, @gbpusd_term_risk = FxPerformance.get_term_risk()
+    @usdjpy_term_risk, @eurjpy_term_risk, @eurusd_term_risk , @audjpy_term_risk, @audusd_term_risk , @gbpjpy_term_risk, @gbpusd_term_risk = FxPerformance.get_term_risk()
     
     ###################################################################
     # get average of daily range for USD/JPY, EUR/JPY, EUR/USD        # 
@@ -104,41 +104,41 @@ class FxPerformanceController < ApplicationController
     end
     
     # make array including the values to show chart of USD/EUR
-    usdeur_date          = Array.new
-    usdeur_term_risk_1m  = Array.new
-    usdeur_term_risk_3m  = Array.new
-    usdeur_term_risk_6m  = Array.new
-    usdeur_term_risk_12m = Array.new
+    eurusd_date          = Array.new
+    eurusd_term_risk_1m  = Array.new
+    eurusd_term_risk_3m  = Array.new
+    eurusd_term_risk_6m  = Array.new
+    eurusd_term_risk_12m = Array.new
     
-    @usdeur_term_risk.each do |usdeur_term_risk|
+    @eurusd_term_risk.each do |eurusd_term_risk|
       # if date is changed, store new date to array for date
-      if wk_date != usdeur_term_risk.date then
-        usdeur_date.push(usdeur_term_risk.date)
+      if wk_date != eurusd_term_risk.date then
+        eurusd_date.push(eurusd_term_risk.date)
       end
       # restore wk_date
-      wk_date = usdeur_term_risk.date        
+      wk_date = eurusd_term_risk.date        
       # judging from item, store data to each array
-      case usdeur_term_risk.item
+      case eurusd_term_risk.item
       when item_risk_1m then
-        usdeur_term_risk_1m.push(usdeur_term_risk.data.to_f)
+        eurusd_term_risk_1m.push(eurusd_term_risk.data.to_f)
       when item_risk_3m then
-        usdeur_term_risk_3m.push(usdeur_term_risk.data.to_f)
+        eurusd_term_risk_3m.push(eurusd_term_risk.data.to_f)
       when item_risk_6m then
-        usdeur_term_risk_6m.push(usdeur_term_risk.data.to_f)
+        eurusd_term_risk_6m.push(eurusd_term_risk.data.to_f)
       end
     end
     
-    @usdeur_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
+    @eurusd_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(text: 'ユーロドル：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
-      f.xAxis(categories: usdeur_date, tickInterval: 60)
+      f.xAxis(categories: eurusd_date, tickInterval: 60)
       f.yAxis(:title => {:text => 'USD/EUR Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
-      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdeur_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdeur_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
-      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdeur_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurusd_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurusd_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurusd_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
     end
 
-    # make array including the values to show chart of aud/JPY
+    # make array including the values to show chart of AUD/JPY
     audjpy_date          = Array.new
     audjpy_term_risk_1m  = Array.new
     audjpy_term_risk_3m  = Array.new
@@ -167,7 +167,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '豪ドル円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: audjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'aud/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'AUD/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: audjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: audjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: audjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -207,7 +207,7 @@ class FxPerformanceController < ApplicationController
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: audusd_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: audusd_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
     end
-    # make array including the values to show chart of gbp/JPY
+    # make array including the values to show chart of GBP/JPY
     gbpjpy_date          = Array.new
     gbpjpy_term_risk_1m  = Array.new
     gbpjpy_term_risk_3m  = Array.new
@@ -236,7 +236,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ポンド円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: gbpjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'gbp/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'GBP/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: gbpjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: gbpjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: gbpjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -457,7 +457,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '豪ドル円：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: audjpy_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'aud/JPY 値幅'}, :min =>   0, :max =>   5, tickInterval: 1 )
+      f.yAxis(:title => {:text => 'AUD/JPY 値幅'}, :min =>   0, :max =>   5, tickInterval: 1 )
       f.series(:type => 'line', name: '値幅'        , data: audjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: audjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: audjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
@@ -546,7 +546,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ポンド円：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: gbpjpy_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'gbp/JPY 値幅'}, :min =>   0, :max =>   5, tickInterval: 1 )
+      f.yAxis(:title => {:text => 'GBP/JPY 値幅'}, :min =>   0, :max =>   5, tickInterval: 1 )
       f.series(:type => 'line', name: '値幅'        , data: gbpjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} 円</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: gbpjpy_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: gbpjpy_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')

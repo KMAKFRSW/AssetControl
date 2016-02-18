@@ -37,7 +37,7 @@ class Tasks::Calculate_Term_Avg
     arr_calc_target.each do |term, item_code|
       array_avg_range = FxPerformance.find_by_sql(["select cur_code, round(avg(data), 3) as avg from fx_performances
       where calc_date between date_format( ? - INTERVAL ? DAY,'%Y%m%d')  and ?
-      and cur_code IN ( ?, ?, ?)
+      and cur_code IN ( ?, ?, ?, ?, ?, ?, ?)
       and item = 'RNG01'
       group by cur_code
       order by cur_code asc
@@ -94,7 +94,7 @@ class Tasks::Calculate_Term_Avg
     arr_calc_target.each do |term, item_code|
       array_avg_range = FxRate.find_by_sql(["select product_code2, round(avg(close_price), 3) as avg from fx_rates
       where trade_date between date_format( ? - INTERVAL ? DAY,'%Y%m%d')  and ?
-      and product_code2 IN ( ?, ?, ?)
+      and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
       group by product_code2
       order by product_code2 asc
       ", yesterday, term, yesterday,'USD/JPY','EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])

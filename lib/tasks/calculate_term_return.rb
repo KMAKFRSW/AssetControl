@@ -25,7 +25,7 @@ class Tasks::Calculate_Term_Return
     prev_rates = Array.new
     prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, round((close_price / prev_price -1) , 3) as 'prev_rate' from fx_rates 
     where trade_date = ?
-    and product_code2 IN ( ?, ?, ?)
+    and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
     ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
     prev_rates.each do |row|
