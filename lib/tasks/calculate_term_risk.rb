@@ -40,7 +40,7 @@ class Tasks::Calculate_Term_Risk
     # get max 60 months rates and store them into array sorting product_code2 and trade_date order
     max_60m_return = FxRate.find_by_sql(["select trade_date as calc_date, product_code2 as cur_code, (((close_price / prev_price) -1) * 100) as data from fx_rates 
     where trade_date between date_format( ? - INTERVAL 5 YEAR,'%Y%m%d') and ? 
-    and product_code2 IN ( ?, ?, ?)
+    and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
     order by cur_code asc, calc_date desc
     ", yesterday, yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
