@@ -62,7 +62,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ドル円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'USD/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'USD/JPY Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: usdjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: usdjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: usdjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -97,7 +97,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ユーロ円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: eurjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'EUR/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'EUR/JPY Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: eurjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: eurjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: eurjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -167,7 +167,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '豪ドル円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: audjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'AUD/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'AUD/JPY Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: audjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: audjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: audjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -202,7 +202,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '豪ドルドル：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: audusd_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'AUD/USD Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'AUD/USD Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: audusd_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: audusd_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: audusd_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -236,7 +236,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ポンド円：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: gbpjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'GBP/JPY Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'GBP/JPY Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: gbpjpy_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: gbpjpy_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: gbpjpy_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -271,7 +271,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ポンドドル：Historical Volatility チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: gbpusd_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'GBP/USD Historical Volatility'}, :min => 0, :max => 20, tickInterval: 10 )
+      f.yAxis(:title => {:text => 'GBP/USD Historical Volatility'}, :min => 0, :max => 25, tickInterval: 5)
       f.series(:type => 'line', name: 'Historical Volatility(1 month)'   , data: gbpusd_term_risk_1m  , pointFormat: 'Historical Volatility(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: gbpusd_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: gbpusd_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
@@ -501,7 +501,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '豪ドルドル：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: audusd_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'aud/USD 値幅'}, :min =>   0, :max => 0.05, tickInterval: 0.01 )
+      f.yAxis(:title => {:text => 'AUD/USD 値幅'}, :min =>   0, :max => 0.05, tickInterval: 0.01 )
       f.series(:type => 'line', name: '値幅'        , data: audusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: audusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: audusd_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
@@ -590,12 +590,36 @@ class FxPerformanceController < ApplicationController
       f.title(text: 'ポンドドル：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: gbpusd_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => 'gbp/USD 値幅'}, :min =>   0, :max => 0.05, tickInterval: 0.01 )
+      f.yAxis(:title => {:text => 'GBP/USD 値幅'}, :min =>   0, :max => 0.05, tickInterval: 0.01 )
       f.series(:type => 'line', name: '値幅'        , data: gbpusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: '移動平均線(5 day)'   , data: gbpusd_range_5d_avg  , pointFormat: '移動平均線(5 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(25 day)'   , data: gbpusd_range_25d_avg  , pointFormat: '移動平均線(25 day): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: '移動平均線(75 day)'   , data: gbpusd_range_75d_avg  , pointFormat: '移動平均線(75 day): <b>{point.y:.3f} % </b>')
 #      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: gbpusd_range_100d_avg  , pointFormat: '移動平均線(100 day): <b>{point.y:.3f} % </b>')
+    end
+
+
+
+# test graph
+    @allcurjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '全通貨：値幅 チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
+      f.yAxis(:title => {:text => '全通貨（クロス円） 値幅'}, :min =>   0, :max => 5, tickInterval: 0.5 )
+      f.series(:type => 'line', name: 'USD/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'EUR/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'AUD/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'GBP/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+    end
+
+    @allcurusd_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '全通貨：値幅 チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
+      f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min =>   0, :max => 0.1, tickInterval: 0.02 )
+      f.series(:type => 'line', name: 'EUR/USD'        , data: eurusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'AUD/USD'        , data: audusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'GBP/USD'        , data: gbpusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
     end
 
 
