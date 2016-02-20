@@ -6,6 +6,7 @@ class FxPerformance < ActiveRecord::Base
   self.table_name = 'fx_performances'
   self.primary_keys = :calc_date, :cur_code, :item
 
+
   def self.get_daily_range()
       
      usdjpy_range = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
