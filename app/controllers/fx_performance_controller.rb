@@ -607,9 +607,9 @@ class FxPerformanceController < ApplicationController
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => '全通貨（クロス円） 値幅'}, :min =>   0, :max => 5, tickInterval: 0.5 )
       f.series(:type => 'line', name: 'USD/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
-      f.series(:type => 'line', name: 'EUR/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
-      f.series(:type => 'line', name: 'AUD/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
-      f.series(:type => 'line', name: 'GBP/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'EUR/JPY'        , data: eurjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'AUD/JPY'        , data: audjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
+      f.series(:type => 'line', name: 'GBP/JPY'        , data: gbojpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
     end
 
     @allcurusd_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
