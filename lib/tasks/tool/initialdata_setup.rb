@@ -5,7 +5,9 @@ require "#{Rails.root}/app/models/fx_rate"
 require "#{Rails.root}/app/models/fx_performance"
 
 class Tasks::Calculate_Term_Avg_Setup
+
   def self.execute
+    
     ##############################################################
     # calc following performance items :                         #
     #     average of daily range for each terms                  #
