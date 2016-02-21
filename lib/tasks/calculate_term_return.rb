@@ -23,10 +23,6 @@ class Tasks::Calculate_Term_Return
     # calc return(%) using reference date                        #
     ##############################################################
     prev_rates = Array.new
-for num in 2..360 do
-yesterday = (Date.today - num).strftime("%Y%m%d")
-weekday = (Date.today - num).wday 
-if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
 
     prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, round((close_price / prev_price -1) , 3) as 'prev_rate' from fx_rates 
     where trade_date = ?
@@ -50,6 +46,4 @@ if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 
       end
     end    
   end 
-end
-end
 end

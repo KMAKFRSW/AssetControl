@@ -33,11 +33,6 @@ class Tasks::Calculate_Term_Avg
     # declare some arrays for each terms
     array_avg_range = Array.new
     
-for num in 2..360 do
-yesterday = (Date.today - num).strftime("%Y%m%d")
-weekday = (Date.today - num).wday 
-if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
-
     # calculate avg of daily range for past 5 day
     arr_calc_target.each do |term, item_code|
       array_avg_range = FxPerformance.find_by_sql(["select cur_code, round(avg(data), 3) as avg from fx_performances
@@ -65,8 +60,6 @@ if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 
         end
       end
     end
-  end
-  end
   end
   
   def self.calc_rate_avg
@@ -97,11 +90,6 @@ if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 
     # declare some arrays for each terms
     array_avg_range = Array.new
 
-for num in 2..360 do
-yesterday = (Date.today - num).strftime("%Y%m%d")
-weekday = (Date.today - num).wday 
-if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
-
     # calculate avg of daily range for past 5 day
     arr_calc_target.each do |term, item_code|
       array_avg_range = FxRate.find_by_sql(["select product_code2, round(avg(close_price), 3) as avg from fx_rates
@@ -128,8 +116,6 @@ if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 
         end
       end
     end
-  end
-  end
   end
 end
 
