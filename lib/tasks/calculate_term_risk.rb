@@ -37,6 +37,10 @@ class Tasks::Calculate_Term_Risk
     max_60m_return     = Array.new
     array_daily_return = Array.new
 
+for num in 2..360 do
+yesterday = (Date.today - num).strftime("%Y%m%d")
+weekday = (Date.today - num).wday 
+if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
     # get max 60 months rates and store them into array sorting product_code2 and trade_date order
     max_60m_return = FxRate.find_by_sql(["select trade_date as calc_date, product_code2 as cur_code, (((close_price / prev_price) -1) * 100) as data from fx_rates 
     where trade_date between date_format( ? - INTERVAL 5 YEAR,'%Y%m%d') and ? 
@@ -104,6 +108,10 @@ class Tasks::Calculate_Term_Risk
       end
       # change the value of matching key
       wk_cur_code = row.cur_code
-    end        
-  end 
+    end
+end        
+end        
+  end  
 end
+
+

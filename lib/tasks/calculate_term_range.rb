@@ -23,6 +23,12 @@ class Tasks::Calculate_Term_Range
     # calc range using reference date                            #
     ##############################################################
     ranges = Array.new
+
+for num in 2..360 do
+yesterday = (Date.today - num).strftime("%Y%m%d")
+weekday = (Date.today - num).wday 
+if weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5 then
+
     ranges = FxRate.find_by_sql(["select trade_date, product_code2, format(round(high_price - low_price, 3),3) as 'range' from fx_rates 
     where trade_date = ?
     and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
@@ -45,4 +51,6 @@ class Tasks::Calculate_Term_Range
       end
     end    
   end 
+end
+end
 end
