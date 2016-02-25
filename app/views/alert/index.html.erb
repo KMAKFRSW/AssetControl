@@ -24,7 +24,7 @@
   </thead>
   <tbody>
     <% @alerts.each do |alert| %>
-      <tr <% if alert.status == "0" then %>bgcolor="#d3d3d3"<%end%>>
+      <tr <% if alert.status == "1" then %>bgcolor="#d3d3d3"<%end%>>
         <td><div class="text-center"><% count = count + 1 %><%= count%></div></td>
         <td><div class="text-center"><%= alert.code %></div></td>
         <td><div class="text-center"><%= alert.alertvalue %></div></td>
