@@ -276,6 +276,21 @@ class FxPerformanceController < ApplicationController
       f.series(:type => 'line', name: 'Historical Volatility(3 month)'   , data: gbpusd_term_risk_3m  , pointFormat: 'Historical Volatility(3 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'Historical Volatility(6 month)'   , data: gbpusd_term_risk_6m  , pointFormat: 'Historical Volatility(6 month): <b>{point.y:.3f} % </b>')
     end
+    
+    # add historical vlatikity chart for all currencies
+    @allcurusd_term_risk_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '全通貨：Historical Volatility(1 month) チャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: usdjpy_date, tickInterval: 60)
+      f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min => 0, :max => 30, tickInterval: 5)
+      f.series(:type => 'line', name: 'ドル円 (1 month)'   , data: usdjpy_term_risk_1m  , pointFormat: 'ドル円(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'ユーロ円 (1 month)'   , data: eurjpy_term_risk_1m  , pointFormat: 'ユーロ円(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'ユーロドル (1 month)'   , data: eurusd_term_risk_1m  , pointFormat: 'ユーロドル(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '豪ドル円 (1 month)'   , data: audjpy_term_risk_1m  , pointFormat: '豪ドル円(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: '豪ドルドル (1 month)'   , data: audusd_term_risk_1m  , pointFormat: '豪ドルドル(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'ポンド円 (1 month)'   , data: gbpjpy_term_risk_1m  , pointFormat: 'ポンド円(1 month): <b>{point.y:.3f} % </b>')
+      f.series(:type => 'line', name: 'ポンドドル (1 month)'   , data: gbpusd_term_risk_1m  , pointFormat: 'ポンドドル(1 month): <b>{point.y:.3f} % </b>')
+    end
 
     ##########################################################################
     # variable for average of daily range chart of USD/JPY, EUR/JPY, EUR/USD #
@@ -602,7 +617,7 @@ class FxPerformanceController < ApplicationController
 
 # test graph
     @allcurjpy_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: '全通貨：値幅 チャート')
+      f.title(text: '全通貨（クロス円）：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => '全通貨（クロス円） 値幅'}, :min =>   0, :max => 10, tickInterval: 1 )
@@ -613,7 +628,7 @@ class FxPerformanceController < ApplicationController
     end
 
     @allcurusd_avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: '全通貨：値幅 チャート')
+      f.title(text: '全通貨（ドルストレート）：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
       f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min =>   0, :max => 0.1, tickInterval: 0.02 )
@@ -621,7 +636,5 @@ class FxPerformanceController < ApplicationController
       f.series(:type => 'line', name: 'AUD/USD'        , data: audusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: 'GBP/USD'        , data: gbpusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
     end
-
-
   end
 end
