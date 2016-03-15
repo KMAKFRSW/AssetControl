@@ -24,16 +24,23 @@ class Tasks::Calculate_Term_Range
     ##############################################################
     ranges = Array.new
 
-    ranges = FxRate.find_by_sql(["select trade_date, product_code2, format(round(high_price - low_price, 3),3) as 'range' from fx_rates 
+    ranges = FxRate.find_by_sql(["select trade_date, product_code2, (high_price - low_price) as 'range' from fx_rates 
     where trade_date = ?
     and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
     ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
     
     ranges.each do |row|
+      # indicate digits
+      if row.product_code2[4..6] = 'JPY'
+        digits = "%.3f"
+      else
+        digits = "%.5f"
+      end
+
       if FxPerformance.exists?({ :cur_code => row.product_code2, :calc_date => row.trade_date, :item => item_range })
           @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(row.product_code2, row.trade_date, item_range)
           @FxPerformance.attributes = {
-              :data=> sprintf( "%.3f", row.range)
+              :data=> sprintf( digits, row.range)
           }
           @FxPerformance.save!
       else
@@ -41,7 +48,7 @@ class Tasks::Calculate_Term_Range
             :cur_code  => row.product_code2,
             :calc_date => row.trade_date,
             :item      => item_range,
-            :data      => sprintf( "%.3f", row.range)
+            :data      => sprintf( digits, row.range)
             )
       end
     end    

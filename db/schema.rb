@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160130155613) do
+ActiveRecord::Schema.define(:version => 20160314143700) do
 
   create_table "alert_mails", :force => true do |t|
     t.integer  "user_id"
@@ -37,10 +37,34 @@ ActiveRecord::Schema.define(:version => 20160130155613) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "bolinger_bands", :force => true do |t|
+    t.string   "calc_date"
+    t.string   "cur_code"
+    t.string   "term"
+    t.string   "MA"
+    t.string   "plus1sigma"
+    t.string   "plus2sigma"
+    t.string   "plus3sigma"
+    t.string   "minus1sigma"
+    t.string   "minus2sigma"
+    t.string   "minus3sigma"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "dairies", :force => true do |t|
     t.integer  "user_id"
     t.string   "trade_date"
     t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "difference_from_mas", :force => true do |t|
+    t.string   "calc_date"
+    t.string   "cur_code"
+    t.string   "term"
+    t.string   "DFMA"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -117,6 +141,42 @@ ActiveRecord::Schema.define(:version => 20160130155613) do
     t.string   "data"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "pivots", :force => true do |t|
+    t.string   "calc_date"
+    t.string   "cur_code"
+    t.string   "cycle"
+    t.string   "P"
+    t.string   "R1"
+    t.string   "R2"
+    t.string   "R3"
+    t.string   "S1"
+    t.string   "S2"
+    t.string   "S3"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "rsis", :force => true do |t|
+    t.string   "calc_date"
+    t.string   "cur_code"
+    t.string   "term"
+    t.string   "RSI"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "stochastics", :force => true do |t|
+    t.string   "calc_date"
+    t.string   "cur_code"
+    t.string   "kterm"
+    t.string   "dterm"
+    t.string   "K"
+    t.string   "D"
+    t.string   "SD"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

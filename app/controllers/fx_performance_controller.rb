@@ -282,7 +282,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '全通貨：Historical Volatility(1 month) チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_date, tickInterval: 60)
-      f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min => 0, :max => 30, tickInterval: 5)
+      f.yAxis(:title => {:text => '全通貨 値幅'}, :min => 0, :max => 30, tickInterval: 5)
       f.series(:type => 'line', name: 'ドル円 (1 month)'   , data: usdjpy_term_risk_1m  , pointFormat: 'ドル円(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'ユーロ円 (1 month)'   , data: eurjpy_term_risk_1m  , pointFormat: 'ユーロ円(1 month): <b>{point.y:.3f} % </b>')
       f.series(:type => 'line', name: 'ユーロドル (1 month)'   , data: eurusd_term_risk_1m  , pointFormat: 'ユーロドル(1 month): <b>{point.y:.3f} % </b>')

@@ -24,7 +24,7 @@ class Tasks::Calculate_Term_Return
     ##############################################################
     prev_rates = Array.new
 
-    prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, round((close_price / prev_price -1) , 3) as 'prev_rate' from fx_rates 
+    prev_rates = FxRate.find_by_sql(["select trade_date, product_code2, (close_price / prev_price -1) as 'prev_rate' from fx_rates 
     where trade_date = ?
     and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?)
     ", yesterday, 'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'])
@@ -33,7 +33,7 @@ class Tasks::Calculate_Term_Return
       if FxPerformance.exists?({ :cur_code => row.product_code2, :calc_date => row.trade_date, :item => item_daily_return })
           @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(row.product_code2, row.trade_date, item_daily_return)
           @FxPerformance.attributes = {
-              :data => sprintf( "%.3f", row.prev_rate)
+              :data => row.prev_rate
           }
           @FxPerformance.save!
       else
@@ -41,7 +41,7 @@ class Tasks::Calculate_Term_Return
             :cur_code  => row.product_code2,
             :calc_date => row.trade_date,
             :item      => item_daily_return,
-            :data      => sprintf( "%.3f", row.prev_rate)
+            :data      => row.prev_rate
             )
       end
     end    

@@ -37,6 +37,14 @@ every '10 12 * * 2-6' do
   runner "Tasks::Calculate_Term_Avg.calc_rate_avg"
 end
 
+every '10 12 * * 2-6' do
+  runner "Tasks::Calculate_Bolinger_Band.execute"
+  runner "Tasks::Calculate_Rsi.execute"
+  runner "Tasks::Calculate_Stochastics.execute"
+  runner "Tasks::Calculate_Difference_From_Ma.execute"
+end
+
+=begin
 every '0 18 * * 1-5' do
   runner "Tasks::Get_Market_Data.execute('IX','AS')"
 end
@@ -49,6 +57,7 @@ every '0 7 * * 2-6' do
   runner "Tasks::Get_Market_Data.execute('IX','AM')"
   runner "Tasks::Get_Market_Data.execute('BD','AM')"
 end
+=end
 
 every 3.minute do
   runner "Tasks::Check_Alert_Rate.execute('FX','DMY')"
