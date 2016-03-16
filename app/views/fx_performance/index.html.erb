@@ -1,6 +1,80 @@
 <%- model_class = FxPerformance -%>
 <br/>
 <br/>
+<div>
+	<table class="table table-bordered table-hover table-condensed">Daily Pivot
+	  <thead>
+	    <tr>
+	      <th><div class="text-center">日付</div></th>
+	      <th><div class="text-center">通貨コード</div></th>
+	      <th><div class="text-center">S3</div></th>
+	      <th><div class="text-center">S2</div></th>
+	      <th><div class="text-center">S1</div></th>
+	      <th><div class="text-center">P</div></th>
+	      <th><div class="text-center">R1</div></th>
+	      <th><div class="text-center">R2</div></th>
+	      <th><div class="text-center">R3</div></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @daily_pivot.each do |pivot| %>
+	      <tr>
+	        <td><div class="text-center"><%= pivot.calc_date %></td>
+	        <td><div class="text-center"><%= pivot.cur_code %></td>
+	        <td><div class="text-right"><%= pivot.S3 %></td>
+	        <td><div class="text-right"><%= pivot.S2 %></td>
+	        <td><div class="text-right"><%= pivot.S1 %></td>
+	        <td><div class="text-right"><%= pivot.P %></td>
+	        <td><div class="text-right"><%= pivot.R1 %></td>
+	        <td><div class="text-right"><%= pivot.R2 %></td>
+	        <td><div class="text-right"><%= pivot.R3 %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
+<div>
+	<table class="table table-bordered table-hover table-condensed">Technical Indicator
+	  <thead>
+	    <tr>
+	      <th><div class="text-center">日付</div></th>
+	      <th><div class="text-center">通貨コード</div></th>
+	      <th><div class="text-center">-3σ</div></th>
+	      <th><div class="text-center">-2σ</div></th>
+	      <th><div class="text-center">-1σ</div></th>
+	      <th><div class="text-center">25MA</div></th>
+	      <th><div class="text-center">+1σ</div></th>
+	      <th><div class="text-center">+2σ</div></th>
+	      <th><div class="text-center">+3σ</div></th>
+	      <th><div class="text-center">移動平均乖離率(5日間)</div></th>
+	      <th><div class="text-center">移動平均乖離率(25日間)</div></th>
+	      <th><div class="text-center">RSI</div></th>
+	      <th><div class="text-center">STC %K</div></th>
+	      <th><div class="text-center">STC %D</div></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @daily_technical_data.each do |technical_data| %>
+	      <tr>
+	        <td><div class="text-center"><%= technical_data.calc_date %></td>
+	        <td><div class="text-center"><%= technical_data.cur_code %></td>
+	        <td><div class="text-right"><%= technical_data.minus3sigma %></td>
+	        <td><div class="text-right"><%= technical_data.minus2sigma %></td>
+	        <td><div class="text-right"><%= technical_data.minus1sigma %></td>
+	        <td><div class="text-right"><%= technical_data.MA %></td>
+	        <td><div class="text-right"><%= technical_data.plus1sigma %></td>
+	        <td><div class="text-right"><%= technical_data.plus2sigma %></td>
+	        <td><div class="text-right"><%= technical_data.plus3sigma %></td>
+	        <td><div class="text-right"><%= technical_data.DFMA5 %></td>
+	        <td><div class="text-right"><%= technical_data.DFMA25 %></td>
+	        <td><div class="text-right"><%= technical_data.RSI %></td>
+	        <td><div class="text-right"><%= technical_data.K %></td>
+	        <td><div class="text-right"><%= technical_data.D %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>
 <div class="row">
 	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
 		<div>
@@ -48,12 +122,16 @@
 		  <%= high_chart("gbpusd_avg_daily_range", @gbpusd_avg_daily_range_graph) %>
 		</div>
 	</div>
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
 		<div>
 		  <%= high_chart("allcurjpy_avg_daily_range", @allcurjpy_avg_daily_range_graph) %>
 		</div>
+	</div>
+	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
 		<div>
 		  <%= high_chart("allcurusd_avg_daily_range", @allcurusd_avg_daily_range_graph) %>
 		</div>
+	</div>
 		<div>
 		  <%= high_chart("allcurusd_term_risk_range", @allcurusd_term_risk_graph) %>
 		</div>

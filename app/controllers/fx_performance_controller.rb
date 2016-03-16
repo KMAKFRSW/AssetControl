@@ -620,7 +620,7 @@ class FxPerformanceController < ApplicationController
       f.title(text: '全通貨（クロス円）：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => '全通貨（クロス円） 値幅'}, :min =>   0, :max => 10, tickInterval: 1 )
+      f.yAxis(:title => {:text => '全通貨（クロス円） 値幅'}, :min =>   0, :max => 6, tickInterval: 1 )
       f.series(:type => 'line', name: 'USD/JPY'        , data: usdjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: 'EUR/JPY'        , data: eurjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: 'AUD/JPY'        , data: audjpy_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
@@ -631,10 +631,21 @@ class FxPerformanceController < ApplicationController
       f.title(text: '全通貨（ドルストレート）：値幅 チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: usdjpy_avg_date, tickInterval: 60)
-      f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min =>   0, :max => 0.1, tickInterval: 0.02 )
+      f.yAxis(:title => {:text => '全通貨（ドルストレート） 値幅'}, :min =>   0, :max => 0.06, tickInterval: 0.02 )
       f.series(:type => 'line', name: 'EUR/USD'        , data: eurusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: 'AUD/USD'        , data: audusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
       f.series(:type => 'line', name: 'GBP/USD'        , data: gbpusd_range_array      , pointFormat: '値幅:         <b>{point.y:.3f} ＄</b>')
     end
+
+    ########################################################
+    # get daily pivot                                      # 
+    ########################################################
+    @daily_pivot = FxPerformance.get_daily_pivot()
+
+    ########################################################
+    # get daily pivot                                      # 
+    ########################################################
+    @daily_technical_data = FxPerformance.get_technical_data()
+
   end
 end
