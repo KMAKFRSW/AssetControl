@@ -235,9 +235,9 @@ module Technical_Indicator
     # initialize
     pivot = Array.new
     cycle = 'D'
-    
+        
     # settingdigits for computing
-    if cur_code[4..6] = 'JPY'
+    if cur_code[4..6] == 'JPY'
       digits = "%.3f"
     else
       digits = "%.5f"
