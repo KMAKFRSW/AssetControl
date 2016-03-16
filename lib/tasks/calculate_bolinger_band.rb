@@ -9,12 +9,15 @@ class Tasks::Calculate_Bolinger_Band
     # get reference date (format:YYYYMMDD)
     yesterday = (Date.today - 1).strftime("%Y%m%d")    
     wrkweekday = yesterday.to_date.wday
-    case wrkweekday
+
     # if Sunday or Saturday, adjust to Friday
+    case wrkweekday
     when 0 then
       batchdate = (yesterday.to_date - 2).strftime("%Y%m%d")
     when 6 then
       batchdate = (yesterday.to_date - 1).strftime("%Y%m%d")
+    else
+      batchdate = yesterday
     end
 
     Technical_Indicator.calc_bolinger_band('USD/JPY', 25, batchdate)

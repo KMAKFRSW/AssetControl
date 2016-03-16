@@ -15,6 +15,8 @@ class Tasks::Calculate_Daily_Pivot
       batchdate = (yesterday.to_date - 2).strftime("%Y%m%d")
     when 6 then
       batchdate = (yesterday.to_date - 1).strftime("%Y%m%d")
+    else
+      batchdate = yesterday      
     end
 
     Technical_Indicator.calc_daily_pivot('USD/JPY', batchdate)
