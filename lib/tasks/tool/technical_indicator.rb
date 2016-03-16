@@ -268,7 +268,7 @@ module Technical_Indicator
       ) as B
       where A.product_code2 = B.product_code2
       and A.trade_date = ?
-      ) as C", cur_code, previous_day, previous_day])
+      ) as C", cur_code, previous_day, calc_date])
       
     if pivot.empty?
       p  = nil

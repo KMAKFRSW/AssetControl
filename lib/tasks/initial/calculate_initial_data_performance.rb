@@ -1,9 +1,9 @@
 #encoding: utf-8
 
 require 'date'
-include Technical_Indicator
+include Performance
 
-class Tasks::Calculate_Initial_Data  
+class Tasks::Calculate_Initial_Data_Performance
   def self.setup
  
     for num in 2..360 do
