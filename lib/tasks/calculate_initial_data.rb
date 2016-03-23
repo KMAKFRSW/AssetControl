@@ -86,7 +86,7 @@ class Tasks::Calculate_Initial_Data
     FxPerformance.destroy_all("item = 'RNG01'")
     FxPerformance.destroy_all("item like 'AVG%'")
 
-    for num in 20..360 do
+    for num in 2..360 do
 
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
