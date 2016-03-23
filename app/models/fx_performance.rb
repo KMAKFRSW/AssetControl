@@ -72,7 +72,7 @@ class FxPerformance < ActiveRecord::Base
           ) DFMA25
         where DFMA5.cur_code = DFMA25.cur_code
         and DFMA5.calc_date = DFMA25.calc_date
-        order by date desc
+        order by date asc
        ", cur_code, cur_code])
        
        return avg_rate_day      
