@@ -147,11 +147,10 @@ module Performance
     # calculate avg of daily range for past 5 day
     arr_calc_target.each do |term, item_code|
       array_avg_range = FxPerformance.find_by_sql(["select X.cur_code, avg(X.data) as avg from (
-        select cur_code, data from fx_performances
-        where calc_date <= ?
-        and cur_code = ?
-        and item = 'RNG01'
-        order by calc_date desc
+        select product_code2 as cur_code , ABS(high_price - low_price) as data from fx_rates
+        where trade_date <= ?
+        and product_code2 = ?
+        order by trade_date desc
         limit ?
         ) X
       ", calc_date, cur_code, term])
