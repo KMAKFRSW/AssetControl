@@ -2,6 +2,9 @@
 
 class FxPerformanceController < ApplicationController
   def index
+    # get technical data
+    @daily_pivot = FxPerformance.get_daily_pivot()
+    @daily_bolinger_band = FxPerformance.get_bolinger_band()
     
     # make instance for HV graph
     @usdjpy_term_risk_graph = term_risk_graph('USD/JPY','ドル円')
@@ -30,11 +33,14 @@ class FxPerformanceController < ApplicationController
     @audusd_dfma_graph = dfma_graph('AUD/USD','豪ドルドル')
     @gbpusd_dfma_graph = dfma_graph('GBP/USD','ポンドドル') 
 
-    # get daily pivot                                       
-    @daily_pivot = FxPerformance.get_daily_pivot()
-
-    # get daily pivot                                       
-    @daily_technical_data = FxPerformance.get_technical_data()
+     # make instance for rsi_and_st graph
+    @usdjpy_rsi_and_st_graph = rsi_and_st_graph('USD/JPY','ドル円')
+    @eurjpy_rsi_and_st_graph = rsi_and_st_graph('EUR/JPY','ユーロ円')
+    @audjpy_rsi_and_st_graph = rsi_and_st_graph('AUD/JPY','豪ドル円')
+    @gbpjpy_rsi_and_st_graph = rsi_and_st_graph('GBP/JPY','ポンド円')
+    @eurusd_rsi_and_st_graph = rsi_and_st_graph('EUR/USD','ユーロドル')
+    @audusd_rsi_and_st_graph = rsi_and_st_graph('AUD/USD','豪ドルドル')
+    @gbpusd_rsi_and_st_graph = rsi_and_st_graph('GBP/USD','ポンドドル') 
 
   end
 
@@ -172,5 +178,35 @@ class FxPerformanceController < ApplicationController
       return @dfma_graph
       
     end
+
+    def rsi_and_st_graph(cur_code,cur_name)
+      date     = Array.new
+      rsi_and_st_rsi  = Array.new
+      rsi_and_st_k = Array.new
+      rsi_and_st_d = Array.new
+    
+      @rsi_and_st = FxPerformance.get_rsi_and_st(cur_code)
+      
+      @rsi_and_st.each do |rsi_and_st|
+        date.push(rsi_and_st.date)
+        rsi_and_st_rsi.push(rsi_and_st.RSI.to_f)
+        rsi_and_st_k.push(rsi_and_st.K.to_f)
+        rsi_and_st_d.push(rsi_and_st.D.to_f)
+      end
+      
+      @rsi_and_st_graph = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title(text: cur_name + '：RSI & Stochastic チャート')
+        f.plotOptions(line: {marker: {radius: 0}})
+        f.xAxis(categories: date, tickInterval: 90)
+        f.yAxis(:title => {:text => cur_code + 'RSI & Stochastic'}, :min => 0, :max => 100, tickInterval: 10)
+        f.series(:type => 'line', name: 'RSI'   , data: rsi_and_st_rsi  , pointFormat: 'RSI')
+        f.series(:type => 'line', name: 'Stochastic(%K)'   , data: rsi_and_st_k  , pointFormat: 'Stochastic(%K)')
+        f.series(:type => 'line', name: 'Stochastic(%D)'   , data: rsi_and_st_d  , pointFormat: 'Stochastic(%D)')
+      end
+      
+      return @rsi_and_st_graph
+      
+    end
+
 
 end
