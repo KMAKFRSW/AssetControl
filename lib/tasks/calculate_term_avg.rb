@@ -11,7 +11,7 @@ class Tasks::Calculate_Term_Avg
     # get reference date (format:YYYYMMDD)
     batchdate = (Date.today - 1).strftime("%Y%m%d")
     
-    # calculate term risk
+    # calculate average range for 5, 25, 75, 100 days
     Performance.calc_avg_range('USD/JPY', batchdate)
     Performance.calc_avg_range('EUR/JPY', batchdate)
     Performance.calc_avg_range('EUR/USD', batchdate)
