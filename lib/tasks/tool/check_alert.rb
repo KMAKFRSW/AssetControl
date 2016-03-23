@@ -83,7 +83,7 @@ module CheckAlert
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate > pivot.first.P.to_f
+    if border_rate < pivot.first.P.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -97,7 +97,7 @@ module CheckAlert
         :status => '0'
         )    
 
-    if border_rate > pivot.first.R1.to_f
+    if border_rate < pivot.first.R1.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -110,7 +110,7 @@ module CheckAlert
         :checkrule => checkrule,
         :status => '0'
         )
-    if border_rate > pivot.first.R2.to_f
+    if border_rate < pivot.first.R2.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -123,7 +123,7 @@ module CheckAlert
         :checkrule => checkrule,
         :status => '0'
         )    
-    if border_rate > pivot.first.R3.to_f
+    if border_rate < pivot.first.R3.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -136,7 +136,7 @@ module CheckAlert
         :checkrule => checkrule,
         :status => '0'
         )    
-    if border_rate > pivot.first.S1.to_f
+    if border_rate < pivot.first.S1.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -149,7 +149,7 @@ module CheckAlert
         :checkrule => checkrule,
         :status => '0'
         )    
-    if border_rate > pivot.first.S2.to_f
+    if border_rate < pivot.first.S2.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -162,7 +162,7 @@ module CheckAlert
         :checkrule => checkrule,
         :status => '0'
         )    
-    if border_rate > pivot.first.S3.to_f
+    if border_rate < pivot.first.S3.to_f
       checkrule = 0
     else
       checkrule = 1
