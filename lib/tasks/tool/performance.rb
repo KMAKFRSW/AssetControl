@@ -158,21 +158,19 @@ module Performance
       
       unless array_avg_range.empty? then
         # in case that the value of array is not empty, accomodate data to database
-        array_avg_range.each do |row|
-          if FxPerformance.exists?({ :cur_code => row.cur_code, :calc_date => calc_date, :item => item_code })
-              @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(row.cur_code, calc_date, item_code)
-              @FxPerformance.attributes = {
-                  :data => row.avg
-              }
-              @FxPerformance.save!
-          else
-            FxPerformance.create!(
-                :cur_code  => row.cur_code,
-                :calc_date => calc_date,
-                :item      => item_code,
-                :data      => row.avg
-                )
-          end
+        if FxPerformance.exists?({ :cur_code => cur_code, :calc_date => calc_date, :item => item_code })
+            @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(cur_code, calc_date, item_code)
+            @FxPerformance.attributes = {
+                :data => array_avg_range.first.avg
+            }
+            @FxPerformance.save!
+        else
+          FxPerformance.create!(
+              :cur_code  => cur_code,
+              :calc_date => calc_date,
+              :item      => item_code,
+              :data      => array_avg_range.first.avg
+              )
         end
       end        
     end
@@ -210,24 +208,21 @@ module Performance
       ", calc_date, cur_code, term])
       
       unless array_avg_range.empty? then
-        array_avg_range.each do |row|
-          if FxPerformance.exists?({ :cur_code => row.product_code2, :calc_date => calc_date, :item => item_code })
-              @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(row.product_code2, calc_date, item_code)
-              @FxPerformance.attributes = {
-                  :data => row.avg
-              }
-              @FxPerformance.save!
-          else
-            FxPerformance.create!(
-                :cur_code  => row.product_code2,
-                :calc_date => calc_date,
-                :item      => item_code,
-                :data      => row.avg
-                )
+        if FxPerformance.exists?({ :cur_code => cur_code, :calc_date => calc_date, :item => item_code })
+            @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(cur_code, calc_date, item_code)
+            @FxPerformance.attributes = {
+                :data => array_avg_range.first.avg
+            }
+            @FxPerformance.save!
+        else
+          FxPerformance.create!(
+              :cur_code  => cur_code,
+              :calc_date => calc_date,
+              :item      => item_code,
+              :data      => array_avg_range.first.avg
+              )
           end
-        end
       end
     end  
-  end
-  
+  end  
 end
