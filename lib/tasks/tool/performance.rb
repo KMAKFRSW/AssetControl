@@ -14,16 +14,6 @@ module Performance
     # define each item codes
     item_range    = Settings[:item_fx][:daily_range]
 
-    ##############################################################
-    # calc range using reference date                            #
-    ##############################################################
-    range = Array.new
-
-    range = FxRate.find_by_sql(["select trade_date, product_code2, ABS(high_price - low_price) as 'range' from fx_rates 
-    where trade_date = ?
-    and product_code2 = ?
-    ", batchdate, cur_code])
-    
     # indicate digits
     if cur_code[4..6] == 'JPY'
       digits = "%.3f"
@@ -31,19 +21,29 @@ module Performance
       digits = "%.5f"
     end
 
-    if FxPerformance.exists?({ :cur_code => range.first.product_code2, :calc_date => range.first.trade_date, :item => item_range })
-        @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(range.first.product_code2, range.first.trade_date, item_range)
-        @FxPerformance.attributes = {
-            :data=> sprintf( digits, range.first.range)
-        }
-        @FxPerformance.save!
-    else
-      FxPerformance.create!(
-          :cur_code  => range.first.product_code2,
-          :calc_date => range.first.trade_date,
-          :item      => item_range,
-          :data      => sprintf( digits, range.first.range)
-          )
+    # calc range using reference date
+    range = Array.new
+
+    range = FxRate.find_by_sql(["select trade_date, product_code2, ABS(high_price - low_price) as 'range' from fx_rates 
+    where trade_date = ?
+    and product_code2 = ?
+    ", batchdate, cur_code])
+    
+    unless range.empty? then
+      if FxPerformance.exists?({ :cur_code => range.first.product_code2, :calc_date => range.first.trade_date, :item => item_range })
+          @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(range.first.product_code2, range.first.trade_date, item_range)
+          @FxPerformance.attributes = {
+              :data=> sprintf( digits, range.first.range)
+          }
+          @FxPerformance.save!
+      else
+        FxPerformance.create!(
+            :cur_code  => range.first.product_code2,
+            :calc_date => range.first.trade_date,
+            :item      => item_range,
+            :data      => sprintf( digits, range.first.range)
+            )
+      end
     end
   end
   

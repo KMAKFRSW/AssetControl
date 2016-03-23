@@ -82,14 +82,17 @@ class Tasks::Calculate_Initial_Data
   end
 
   def self.setup_performance
-    for num in 2..360 do
+    # delete all data
+    FxPerformance.destroy_all("item = 'RNG01'")
+
+    for num in 20..360 do
+
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
 
         # calculate term range
-        FxPerformance.destroy_all("item = 'RNG01'")
         Performance.calc_term_range('USD/JPY', batchdate)
         Performance.calc_term_range('EUR/JPY', batchdate)
         Performance.calc_term_range('EUR/USD', batchdate)
