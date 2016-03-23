@@ -171,16 +171,58 @@ class FxPerformance < ActiveRecord::Base
      
   end
   
-  def self.get_avg_daily_rate(cur_code)
+  def self.get_avg_daily_rate()
       
-     avg_rate_day = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+     usdjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
        where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
-       ", cur_code, 'AVG1%'])
+       ", 'USD/JPY', 'AVG1%'])
        
-       return avg_rate_day 
+     eurjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'EUR/JPY', 'AVG1%'])
+       
+     eurusd_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'EUR/USD', 'AVG1%'])
+       
+     audjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'AUD/JPY', 'AVG1%'])
+       
+     audusd_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'AUD/USD', 'AVG1%'])
+       
+     gbpjpy_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'GBP/JPY', 'AVG1%'])
+       
+     gbpusd_avg_rate = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       and cur_code = ?
+       and item like ?
+       order by date asc, item asc
+       ", 'GBP/USD', 'AVG1%'])
+       
+       return usdjpy_avg_rate, eurjpy_avg_rate, eurusd_avg_rate, audjpy_avg_rate, audusd_avg_rate, audjpy_avg_rate, audusd_avg_rate 
      
   end
   
