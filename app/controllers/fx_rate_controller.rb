@@ -67,9 +67,9 @@ class FxRateController < ApplicationController
         {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: (max-min)/10 , format: '{value} '+ unit},
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: close_price_array, pointFormat: 'Close Price')
-      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):   <b>{point.y:.3f} 円</b>')
-      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):   <b>{point.y:.3f} 円</b>')
-      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):   <b>{point.y:.3f} 円</b>')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):')
     end
 
     position_graph = LazyHighCharts::HighChart.new('graph') do |f|
@@ -77,8 +77,8 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
       f.xAxis(categories: trade_date_array, tickInterval: 60) 
       f.yAxis [
-       {:title => {:text => cur_name+' 建玉量'}, labels: {tickInterval: 100000, format: '{value} 枚'}},
-       {:title => {:text => cur_name+' 取引量'}, labels: {tickInterval: 10000 , format: '{value} 枚'} , opposite: true}
+       {:title => {:text => cur_code+' 建玉量'}, labels: {tickInterval: 100000, format: '{value} 枚'}},
+       {:title => {:text => cur_code+' 取引量'}, labels: {tickInterval: 10000 , format: '{value} 枚'} , opposite: true}
       ]
       f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
       f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: trade_quantity_array   , pointFormat: '取引数量: <b>{point.y} 枚</b>')
