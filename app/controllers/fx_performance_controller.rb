@@ -13,13 +13,22 @@ class FxPerformanceController < ApplicationController
     @gbpusd_term_risk_graph = term_risk_graph('GBP/USD','ポンドドル') 
 
     # make instance for range graph
-    @usdjpy_avg_daily_range_graph = avg_daily_range_graph('USD/JPY','ドル円', 0, 10)
-    @eurjpy_avg_daily_range_graph = avg_daily_range_graph('EUR/JPY','ユーロ円', 0, 10)
-    @audjpy_avg_daily_range_graph = avg_daily_range_graph('AUD/JPY','豪ドル円', 0, 10)
-    @gbpjpy_avg_daily_range_graph = avg_daily_range_graph('GBP/JPY','ポンド円', 0, 10)
-    @eurusd_avg_daily_range_graph = avg_daily_range_graph('EUR/USD','ユーロドル', 0, 0.05)
-    @audusd_avg_daily_range_graph = avg_daily_range_graph('AUD/USD','豪ドルドル', 0, 0.05)
-    @gbpusd_avg_daily_range_graph = avg_daily_range_graph('GBP/USD','ポンドドル', 0, 0.05)
+    @usdjpy_avg_daily_range_graph = avg_daily_range_graph('USD/JPY','ドル円', 0, 8)
+    @eurjpy_avg_daily_range_graph = avg_daily_range_graph('EUR/JPY','ユーロ円', 0, 8)
+    @audjpy_avg_daily_range_graph = avg_daily_range_graph('AUD/JPY','豪ドル円', 0, 8)
+    @gbpjpy_avg_daily_range_graph = avg_daily_range_graph('GBP/JPY','ポンド円', 0, 8)
+    @eurusd_avg_daily_range_graph = avg_daily_range_graph('EUR/USD','ユーロドル', 0, 0.04)
+    @audusd_avg_daily_range_graph = avg_daily_range_graph('AUD/USD','豪ドルドル', 0, 0.04)
+    @gbpusd_avg_daily_range_graph = avg_daily_range_graph('GBP/USD','ポンドドル', 0, 0.04)
+    
+     # make instance for dfma graph
+    @usdjpy_dfma_graph = dfma_graph('USD/JPY','ドル円')
+    @eurjpy_dfma_graph = dfma_graph('EUR/JPY','ユーロ円')
+    @audjpy_dfma_graph = dfma_graph('AUD/JPY','豪ドル円')
+    @gbpjpy_dfma_graph = dfma_graph('GBP/JPY','ポンド円')
+    @eurusd_dfma_graph = dfma_graph('EUR/USD','ユーロドル')
+    @audusd_dfma_graph = dfma_graph('AUD/USD','豪ドルドル')
+    @gbpusd_dfma_graph = dfma_graph('GBP/USD','ポンドドル') 
 
     # get daily pivot                                       
     @daily_pivot = FxPerformance.get_daily_pivot()
@@ -116,9 +125,9 @@ class FxPerformanceController < ApplicationController
         when item_range_25d_avg then
           range_25d_avg.push(avg_range.data.to_f)
         when item_range_75d_avg then
-          range_75d_avg.push(avg_range.data.to_f)
+#          range_75d_avg.push(avg_range.data.to_f)
         when item_range_100d_avg then
-          range_100d_avg.push(avg_range.data.to_f)
+#          range_100d_avg.push(avg_range.data.to_f)
         end
       end
       
@@ -130,11 +139,37 @@ class FxPerformanceController < ApplicationController
         f.series(:type => 'line', name: '値幅'        , data: range_array      , pointFormat: '値幅:')
         f.series(:type => 'line', name: '移動平均線(5 day)'   , data: range_5d_avg  , pointFormat: '移動平均線(5 day):')
         f.series(:type => 'line', name: '移動平均線(25 day)'   , data: range_25d_avg  , pointFormat: '移動平均線(25 day):')
-        f.series(:type => 'line', name: '移動平均線(75 day)'   , data: range_75d_avg  , pointFormat: '移動平均線(75 day):')
+  #      f.series(:type => 'line', name: '移動平均線(75 day)'   , data: range_75d_avg  , pointFormat: '移動平均線(75 day):')
   #      f.series(:type => 'line', name: '移動平均線(100 day)'   , data: range_100d_avg  , pointFormat: '移動平均線(100 day):')
       end    
       
       return @avg_daily_range_graph
+      
+    end
+
+    def dfma_graph(cur_code,cur_name)
+      date     = Array.new
+      dfma_5d  = Array.new
+      dfma_25d = Array.new
+    
+      @dfma = FxPerformance.get_dfma(cur_code)
+      
+      @dfma.each do |dfma|
+        date.push(dfma.date.to_f)
+        dfma_5d.push(dfma.DFMA5.to_f)
+        dfma_25d.push(dfma.DFMA25.to_f)
+      end
+      
+      @dfma_graph = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title(text: cur_name + '：移動平均乖離率 チャート')
+        f.plotOptions(line: {marker: {radius: 0}})
+        f.xAxis(categories: date, tickInterval: 60)
+        f.yAxis(:title => {:text => cur_code + '移動平均乖離率'}, :min => -7, :max => 7, tickInterval: 5)
+        f.series(:type => 'line', name: '移動平均乖離率(5 day)'   , data: dfma_5d  , pointFormat: '移動平均乖離率(5 day)')
+        f.series(:type => 'line', name: '移動平均乖離率(25 day)'   , data: dfma_25d  , pointFormat: '移動平均乖離率(25 day)')
+      end
+      
+      return @dfma_graph
       
     end
 

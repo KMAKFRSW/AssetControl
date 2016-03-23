@@ -60,6 +60,6 @@ every '0 7 * * 2-6' do
 end
 =end
 
-every 3.minute do
-  runner "Tasks::Check_Alert_Rate.execute('FX','DMY')"
+every 4.minute do
+  runner "Tasks::Check_Alert_Rate.check_alert_setting('FX','DMY')"
 end

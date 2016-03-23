@@ -12,12 +12,12 @@ require "#{Rails.root}/lib/tasks/tool/universe"
 include CheckAlert
 
 class Tasks::Check_Alert_Rate
-  def self.execute( asset_class, region_code)
+  def self.check_alert_setting( asset_class, region_code)
     
     # get target currencies
     array_universe, data_date = Universe.get_universe(asset_class, region_code)
        
-    # compare rate by user's alert settings
+    # compare current rate by user's alert settings
     array_universe.each do |universe|
       CheckAlert.check_alert_rate(universe)
     end
@@ -28,4 +28,22 @@ class Tasks::Check_Alert_Rate
       AlertMailer.send_alert_email(alert_mail).deliver
     end      
   end
+  
+  def self.check_technical_indicator( asset_class, region_code)
+    
+    # get target currencies
+    array_universe, data_date = Universe.get_universe(asset_class, region_code)
+       
+    # compare current rate by user's alert settings
+    array_universe.each do |universe|
+      CheckAlert.compare_technical_with_rate(universe)
+    end
+    
+    # send email
+    alert_mails = AlertMail.find_by_sql(["select * from alert_mails where status = ? ",'0'])
+    alert_mails.each do |alert_mail|
+      AlertMailer.send_alert_email(alert_mail).deliver
+    end      
+  end
+  
 end

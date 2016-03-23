@@ -48,17 +48,37 @@ class FxPerformance < ActiveRecord::Base
   def self.get_avg_daily_rate(cur_code)
       
      avg_rate_day = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
        ", cur_code, 'AVG1%'])
        
-       return avg_rate_day 
-     
+       return avg_rate_day      
+  end
+
+  def self.get_dfma(cur_code)
+      
+     avg_rate_day = find_by_sql(["select date_format(DFMA5.calc_date, '%Y/%m/%d') as date , DFMA5.cur_code, DFMA5.DFMA as DFMA5, DFMA25.DFMA as DFMA25 from (
+          select * from difference_from_mas
+          where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+          and cur_code = ?
+          and term = '5'
+          ) DFMA5,(
+          select * from difference_from_mas
+          where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+          and cur_code = ?
+          and term = '25'
+          ) DFMA25
+        where DFMA5.cur_code = DFMA25.cur_code
+        and DFMA5.calc_date = DFMA25.calc_date
+        order by date desc
+       ", cur_code, cur_code])
+       
+       return avg_rate_day      
   end
   
-  def self.get_daily_pivot()    
+  def self.get_daily_pivot()
      daily_pivot = find_by_sql(["select date_format(calc_date,?) as calc_date, cur_code, S3, S2, S1, P, R1, R2, R3 from pivots
        where calc_date = (select max(calc_date) as calc_date from pivots)
        order by cur_code asc","%Y/%m/%d"])

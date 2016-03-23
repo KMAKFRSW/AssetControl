@@ -76,7 +76,7 @@
 	</table>
 </div>
 <div class="row">
-	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+	<div class="span4"> <!-- 12分割のグリッドシステムの6を使用 -->
 		<div>
 		  <%= high_chart("usejpy_risk", @usdjpy_term_risk_graph) %>
 		</div>
@@ -99,7 +99,7 @@
 		  <%= high_chart("gbpusd_risk", @gbpusd_term_risk_graph) %>
 		</div>
 	</div>
-	<div class="span6"> <!-- 12分割のグリッドシステムの6を使用 -->
+	<div class="span4"> <!-- 12分割のグリッドシステムの6を使用 -->
 		<div>
 		  <%= high_chart("usdjpy_avg_daily_range", @usdjpy_avg_daily_range_graph) %>
 		</div>
@@ -122,4 +122,27 @@
 		  <%= high_chart("gbpusd_avg_daily_range", @gbpusd_avg_daily_range_graph) %>
 		</div>
 	</div>
+    <div class="span4"> <!-- 12分割のグリッドシステムの6を使用 -->
+            <div>
+              <%= high_chart("usejpy_dfma", @usdjpy_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("eurjpy_dfma", @eurjpy_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("eurusd_dfma", @eurusd_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("audjpy_dfma", @audjpy_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("audusd_dfma", @audusd_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("gbpjpy_dfma", @gbpjpy_dfma_graph) %>
+            </div>
+            <div>
+              <%= high_chart("gbpusd_dfma", @gbpusd_dfma_graph) %>
+            </div>
+    </div>
 </div>
