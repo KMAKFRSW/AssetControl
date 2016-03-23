@@ -62,5 +62,119 @@ module CheckAlert
     }
     @Alert.save!    
   end
+  
+  def reflect_pivot_to_alert(universe, user_id)
+    # get current rate
+    array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
+    # get current pivot rate
+    cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
+    pivot = Pivot.find_by_sql(["select calc_date, cur_code, cycle, P, R1, R2, R3, S1, S2, S3 from pivots
+      where cur_code = ?
+      order by calc_date desc
+      limit 1
+      ", cur_code])
+    # compare each value and reflect setting
+    unless pivot.empty? then      
+      compare_rate_with_pivot(array_scrape_info, pivot, user_id)
+    end
+  end
+  
+  def compare_rate_with_pivot(array_scrape_info,pivot, user_id)
+    # set the border rate from bid and ask
+    border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
+    
+    if border_rate > pivot.first.P.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.P, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" P:"+pivot.first.P, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+
+    if border_rate > pivot.first.R1.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.R1, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" R1:"+pivot.first.R1, 
+        :checkrule => checkrule,
+        :status => '0'
+        )
+    if border_rate > pivot.first.R2.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.R2, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" R2:"+pivot.first.R2, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate > pivot.first.R3.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.R3, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" R3:"+pivot.first.R3, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate > pivot.first.S1.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.S1, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" S1:"+pivot.first.S1, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate > pivot.first.S2.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.S2, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" S2:"+pivot.first.S2, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate > pivot.first.S3.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => pivot.first.cur_code, 
+        :alertvalue => pivot.first.S3, 
+        :memo => '[自動設定]'+pivot.first.calc_date+" S3:"+pivot.first.S3, 
+        :checkrule => checkrule,
+        :status => '0'
+        )            
+  end 
 
 end

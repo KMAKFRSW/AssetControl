@@ -43,6 +43,7 @@ every '10 12 * * 2-6' do
   runner "Tasks::Calculate_Rsi.execute"
   runner "Tasks::Calculate_Stochastics.execute"
   runner "Tasks::Calculate_Difference_From_Ma.execute"
+  runner "Tasks::Check_Alert_Rate.reflect_alert_setting('FX','DMY','1')"
 end
 
 =begin

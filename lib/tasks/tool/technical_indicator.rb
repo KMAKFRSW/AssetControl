@@ -1,6 +1,7 @@
 #encoding: utf-8
 
 module Technical_Indicator
+  
   def calc_bolinger_band(cur_code, term, calc_date)
     ##############################################################
     # calc following performance items :                         #
@@ -316,6 +317,5 @@ module Technical_Indicator
           )
     end
   end
-  
 
 end
