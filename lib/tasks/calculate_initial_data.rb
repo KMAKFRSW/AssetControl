@@ -2,9 +2,10 @@
 
 require 'date'
 include Technical_Indicator
+include Performance
 
-class Tasks::Calculate_Initial_Data_Technical
-  def self.setup
+class Tasks::Calculate_Initial_Data
+  def self.setup_technical
  
     for num in 2..360 do
       # get reference date (format:YYYYMMDD)
@@ -79,6 +80,29 @@ class Tasks::Calculate_Initial_Data_Technical
       end
     end
   end
-    
+
+  def self.setup_performance
+    for num in 2..360 do
+      # get reference date (format:YYYYMMDD)
+      batchdate = (Date.today - num).strftime("%Y%m%d")
+      weekday = batchdate.to_date.wday
+      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
+
+        # calculate term range
+        FxPerformance.destroy_all("item = 'RNG01'")
+        Performance.calc_term_range('USD/JPY', batchdate)
+        Performance.calc_term_range('EUR/JPY', batchdate)
+        Performance.calc_term_range('EUR/USD', batchdate)
+        Performance.calc_term_range('GBP/JPY', batchdate)
+        Performance.calc_term_range('GBP/USD', batchdate)
+        Performance.calc_term_range('AUD/JPY', batchdate)
+        Performance.calc_term_range('AUD/USD', batchdate)
+        Performance.calc_term_range('NZD/JPY', batchdate)
+        Performance.calc_term_range('CAD/JPY', batchdate)
+        
+      end
+    end
+  end    
+
     
 end

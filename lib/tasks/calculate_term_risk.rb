@@ -5,14 +5,6 @@ include Performance
 
 class Tasks::Calculate_Term_Risk
   def self.execute
-    ##############################################################
-    # calc following performance items :                         #
-    #     prev_rate, range                                       #
-    #     risk for n months(n = 1, 2, 3, 6, 12, 24, 36, 48, 60)  #
-    # scope of currency :                                        #
-    #     'USD/JPY', 'EUR/JPY','EUR/USD'                         #
-    ##############################################################
-
     # get reference date (format:YYYYMMDD)
     batchdate = (Date.today - 1).strftime("%Y%m%d")
     

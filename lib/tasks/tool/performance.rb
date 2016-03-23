@@ -2,6 +2,51 @@
 include Calculation
 
 module Performance
+  
+  def self.calc_term_range(cur_code, batchdate)
+    ##################################################################################
+    # calc following performance items :                                             #
+    #     Daily Range                                                                #
+    # scope of currency :                                                            #
+    #     'USD/JPY', 'EUR/JPY','EUR/USD','AUD/JPY','GBP/JPY','AUD/USD','GBP/USD'     #
+    ##################################################################################
+
+    # define each item codes
+    item_range    = Settings[:item_fx][:daily_range]
+
+    ##############################################################
+    # calc range using reference date                            #
+    ##############################################################
+    range = Array.new
+
+    range = FxRate.find_by_sql(["select trade_date, product_code2, ABS(high_price - low_price) as 'range' from fx_rates 
+    where trade_date = ?
+    and product_code2 = ?
+    ", batchdate, cur_code])
+    
+    # indicate digits
+    if cur_code[4..6] == 'JPY'
+      digits = "%.3f"
+    else
+      digits = "%.5f"
+    end
+
+    if FxPerformance.exists?({ :cur_code => range.first.product_code2, :calc_date => range.first.trade_date, :item => item_range })
+        @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(range.first.product_code2, range.first.trade_date, item_range)
+        @FxPerformance.attributes = {
+            :data=> sprintf( digits, range.first.range)
+        }
+        @FxPerformance.save!
+    else
+      FxPerformance.create!(
+          :cur_code  => range.first.product_code2,
+          :calc_date => range.first.trade_date,
+          :item      => item_range,
+          :data      => sprintf( digits, range.first.range)
+          )
+    end
+  end
+  
   def calc_term_risk(cur_code, calc_date)
 
     # define each item codes
