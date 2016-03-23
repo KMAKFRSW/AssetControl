@@ -33,37 +33,37 @@ class FxRate < ActiveRecord::Base
 
   def self.get_daily_rate()
      usdjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'USD/JPY'])
      eurjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/JPY'])
       eurusd_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'EUR/USD'])
       audjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'AUD/JPY'])
       gbpjpy_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'GBP/JPY'])
       audusd_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'AUD/USD'])
       gbpusd_2year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", 'GBP/USD'])
