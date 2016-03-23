@@ -75,11 +75,11 @@ module CheckAlert
       ", cur_code])
     # compare each value and reflect setting
     unless pivot.empty? then      
-      compare_rate_with_pivot(array_scrape_info, pivot, user_id)
+      compare_rate_with_pivot(array_scrape_info, pivot, user_id, universe.security_code)
     end
   end
   
-  def compare_rate_with_pivot(array_scrape_info,pivot, user_id)
+  def compare_rate_with_pivot(array_scrape_info,pivot, user_id, cur_code)
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
@@ -90,7 +90,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.P, 
         :memo => '[自動設定]'+pivot.first.calc_date+" P:"+pivot.first.P, 
         :checkrule => checkrule,
@@ -104,7 +104,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.R1, 
         :memo => '[自動設定]'+pivot.first.calc_date+" R1:"+pivot.first.R1, 
         :checkrule => checkrule,
@@ -117,7 +117,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.R2, 
         :memo => '[自動設定]'+pivot.first.calc_date+" R2:"+pivot.first.R2, 
         :checkrule => checkrule,
@@ -130,7 +130,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.R3, 
         :memo => '[自動設定]'+pivot.first.calc_date+" R3:"+pivot.first.R3, 
         :checkrule => checkrule,
@@ -143,7 +143,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.S1, 
         :memo => '[自動設定]'+pivot.first.calc_date+" S1:"+pivot.first.S1, 
         :checkrule => checkrule,
@@ -156,7 +156,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.S2, 
         :memo => '[自動設定]'+pivot.first.calc_date+" S2:"+pivot.first.S2, 
         :checkrule => checkrule,
@@ -169,7 +169,7 @@ module CheckAlert
     end    
     Alerts.create!(
         :user_id => user_id, 
-        :code => universe.security_code, 
+        :code => cur_code,
         :alertvalue => pivot.first.S3, 
         :memo => '[自動設定]'+pivot.first.calc_date+" S3:"+pivot.first.S3, 
         :checkrule => checkrule,
