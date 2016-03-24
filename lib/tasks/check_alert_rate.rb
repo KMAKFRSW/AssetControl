@@ -23,7 +23,7 @@ class Tasks::Check_Alert_Rate
   
   def self.reflect_alert_setting( asset_class, region_code, user_id)
     # delete previous setting
-    Alerts.destroy_all("memo like '%自動設定%' and user_id = '1'")
+    Alerts.destroy_all("memo like '%自動設定%'")
     # get target currencies
     array_universe, data_date = Universe.get_universe(asset_class, region_code)
     # compare current rate by user's alert settings

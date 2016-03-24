@@ -92,7 +92,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.P, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" P:"+pivot.first.P, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot P:"+pivot.first.P, 
         :checkrule => checkrule,
         :status => '0'
         )    
@@ -106,7 +106,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.R1, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" R1:"+pivot.first.R1, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R1:"+pivot.first.R1, 
         :checkrule => checkrule,
         :status => '0'
         )
@@ -119,7 +119,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.R2, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" R2:"+pivot.first.R2, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R2:"+pivot.first.R2, 
         :checkrule => checkrule,
         :status => '0'
         )    
@@ -132,7 +132,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.R3, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" R3:"+pivot.first.R3, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R3:"+pivot.first.R3, 
         :checkrule => checkrule,
         :status => '0'
         )    
@@ -145,7 +145,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.S1, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" S1:"+pivot.first.S1, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S1:"+pivot.first.S1, 
         :checkrule => checkrule,
         :status => '0'
         )    
@@ -158,7 +158,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.S2, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" S2:"+pivot.first.S2, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S2:"+pivot.first.S2, 
         :checkrule => checkrule,
         :status => '0'
         )    
@@ -171,7 +171,7 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => pivot.first.S3, 
-        :memo => '[自動設定]'+pivot.first.calc_date+" S3:"+pivot.first.S3, 
+        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S3:"+pivot.first.S3, 
         :checkrule => checkrule,
         :status => '0'
         )            

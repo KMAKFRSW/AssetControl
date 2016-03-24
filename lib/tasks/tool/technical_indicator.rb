@@ -245,18 +245,18 @@ module Technical_Indicator
     end
         
     # calc previous day
-    previous_day = (calc_date.to_date - 1).strftime("%Y%m%d")
-    wrkweekday = previous_day.to_date.wday    
-    case wrkweekday
-    when 0 then
-      previous_day = (previous_day.to_date - 2).strftime("%Y%m%d")
-    when 6 then
-      previous_day = (calc_date.to_date - 1).strftime("%Y%m%d")
-    end
+    #previous_day = (calc_date.to_date - 1).strftime("%Y%m%d")
+    #wrkweekday = previous_day.to_date.wday    
+    #case wrkweekday
+    #when 0 then
+    #  previous_day = (previous_day.to_date - 2).strftime("%Y%m%d")
+    #when 6 then
+    #  previous_day = (calc_date.to_date - 1).strftime("%Y%m%d")
+    #end
     
-    if previous_day.to_date.strftime("%m%d") == '0101'
-     previous_day = (previous_day.to_date - 1).strftime("%Y%m%d") 
-    end
+    #if previous_day.to_date.strftime("%m%d") == '0101'
+    # previous_day = (previous_day.to_date - 1).strftime("%Y%m%d") 
+    #end
     
     # calc stochastics for indicated term and currencies
     pivot = FxRate.find_by_sql(["select C.P, C.R1, C.R2,(C.R1 + (C.high_price - C.low_price)) as R3 , C.S1, C.S2,(C.S1 - (C.high_price - C.low_price)) as S3 from (
@@ -269,7 +269,7 @@ module Technical_Indicator
       ) as B
       where A.product_code2 = B.product_code2
       and A.trade_date = ?
-      ) as C", cur_code, previous_day, calc_date])
+      ) as C", cur_code, calc_day, calc_date])
       
     if pivot.empty?
       p  = nil
