@@ -182,18 +182,18 @@ module CheckAlert
     array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
     # get current pivot rate
     cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
-    bb = Pivot.find_by_sql(["select calc_date, cur_code, term, MA, plus1sigma, plus2sigma, plus3sigma, minus1sigma, minus2sigma, minus3sigma from bolinger_bands
+    bb = BolingerBand.find_by_sql(["select calc_date, cur_code, term, MA, plus1sigma, plus2sigma, plus3sigma, minus1sigma, minus2sigma, minus3sigma from bolinger_bands
       where cur_code = ?
       order by calc_date desc
       limit 1
       ", cur_code])
     # compare each value and reflect setting
     unless bb.empty? then      
-      compare_rate_with_bb(array_scrape_info, pivot, user_id, universe.security_code)
+      compare_rate_with_bb(array_scrape_info, bb, user_id, universe.security_code)
     end
   end
   
-  def compare_rate_with_bb(array_scrape_info,pivot, user_id, cur_code)
+  def compare_rate_with_bb(array_scrape_info,bb, user_id, cur_code)
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
