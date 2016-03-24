@@ -29,7 +29,7 @@ class Tasks::Check_Alert_Rate
     # compare current rate by user's alert settings
     array_universe.each do |universe|
       Technical_Indicator.reflect_pivot_to_alert(universe, user_id)
-      #Technical_Indicator.reflect_bb_to_alert(universe, user_id)
+      Technical_Indicator.reflect_bb_to_alert(universe, user_id)
     end          
   end
     

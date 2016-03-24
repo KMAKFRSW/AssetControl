@@ -177,4 +177,118 @@ module CheckAlert
         )            
   end 
 
+  def reflect_bb_to_alert(universe, user_id)
+    # get current rate
+    array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
+    # get current pivot rate
+    cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
+    bb = Pivot.find_by_sql(["select calc_date, cur_code, term, MA, plus1sigma, plus2sigma, plus3sigma, minus1sigma, minus2sigma, minus3sigma from bolinger_bands
+      where cur_code = ?
+      order by calc_date desc
+      limit 1
+      ", cur_code])
+    # compare each value and reflect setting
+    unless bb.empty? then      
+      compare_rate_with_bb(array_scrape_info, pivot, user_id, universe.security_code)
+    end
+  end
+  
+  def compare_rate_with_bb(array_scrape_info,pivot, user_id, cur_code)
+    # set the border rate from bid and ask
+    border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
+    
+    if border_rate < bb.first.MA.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.MA, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb MA:"+bb.first.MA, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+
+    if border_rate < bb.first.plus1sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.plus1sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb +1σ:"+bb.first.plus1sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )
+    if border_rate < bb.first.plus2sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.plus2sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb +2σ:"+bb.first.plus2sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate < bb.first.plus3sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.plus3sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb +3σ:"+bb.first.plus3sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate < bb.first.minus1sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.minus1sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb -1σ:"+bb.first.minus1sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate < bb.first.minus2sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.minus2sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb -2σ:"+bb.first.minus2sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )    
+    if border_rate < bb.first.minus3sigma.to_f
+      checkrule = 0
+    else
+      checkrule = 1
+    end    
+    Alerts.create!(
+        :user_id => user_id, 
+        :code => cur_code,
+        :alertvalue => bb.first.minus3sigma, 
+        :memo => '[自動設定]'+bb.first.calc_date+"bb -3σ:"+bb.first.minus3sigma, 
+        :checkrule => checkrule,
+        :status => '0'
+        )            
+  end 
+
 end
