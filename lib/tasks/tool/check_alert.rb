@@ -117,13 +117,13 @@ module CheckAlert
       ", cur_code])
     # compare each value and reflect setting
     unless bb.empty? then      
-      compare_rate_with_bb(array_scrape_info, bb.first.plus1sigma, "+1σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.plus2sigma, "+2σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.plus3sigma, "+3σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus1sigma, "-1σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus2sigma, "-2σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus3sigma, "-3σ", user_id, universe.security_code, bb.first.date)
-      compare_rate_with_bb(array_scrape_info, bb.first.MA, "25MA", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, bb.first.plus1sigma, "+1σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.plus2sigma, "+2σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.plus3sigma, "+3σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.minus1sigma, "-1σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.minus2sigma, "-2σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.minus3sigma, "-3σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_bb(array_scrape_info, bb.first.MA, "25MA", user_id, universe.security_code, bb.first.calc_date)
     end
   end
   
