@@ -74,107 +74,35 @@ module CheckAlert
       limit 1
       ", cur_code])
     # compare each value and reflect setting
-    unless pivot.empty? then      
-      compare_rate_with_pivot(array_scrape_info, pivot, user_id, universe.security_code)
+    unless pivot.empty? then
+      compare_rate_with_pivot(array_scrape_info, pivot.first.P, 'P', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.R1, 'R1', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.R2, 'R2', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.R3, 'R3', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.S1, 'S1', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.S2, 'S2', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_pivot(array_scrape_info, pivot.first.S3, 'S3', user_id, universe.security_code, pivot.first.calc_date)
     end
   end
   
-  def compare_rate_with_pivot(array_scrape_info,pivot, user_id, cur_code)
+  def compare_rate_with_pivot(array_scrape_info,pivot, pivot_name, user_id, cur_code, calc_date)
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate < pivot.first.P.to_f
+    if border_rate < pivot
       checkrule = 0
     else
       checkrule = 1
-    end    
+    end
     Alerts.create!(
         :user_id => user_id, 
         :code => cur_code,
-        :alertvalue => pivot.first.P, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot P:"+pivot.first.P, 
+        :alertvalue => pivot, 
+        :memo => '[自動設定]Pivot '+pivot_name+':'+pivot+'('+calc_date+')', 
         :checkrule => checkrule,
         :status => '0'
         )    
 
-    if border_rate < pivot.first.R1.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.R1, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R1:"+pivot.first.R1, 
-        :checkrule => checkrule,
-        :status => '0'
-        )
-    if border_rate < pivot.first.R2.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.R2, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R2:"+pivot.first.R2, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < pivot.first.R3.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.R3, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot R3:"+pivot.first.R3, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < pivot.first.S1.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.S1, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S1:"+pivot.first.S1, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < pivot.first.S2.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.S2, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S2:"+pivot.first.S2, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < pivot.first.S3.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot.first.S3, 
-        :memo => '[自動設定]'+pivot.first.calc_date+"Pivot S3:"+pivot.first.S3, 
-        :checkrule => checkrule,
-        :status => '0'
-        )            
   end 
 
   def reflect_bb_to_alert(universe, user_id)
@@ -189,15 +117,21 @@ module CheckAlert
       ", cur_code])
     # compare each value and reflect setting
     unless bb.empty? then      
-      compare_rate_with_bb(array_scrape_info, bb, user_id, universe.security_code)
+      compare_rate_with_bb(array_scrape_info, plus1sigma, "+1σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, plus2sigma, "+2σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, plus3sigma, "+3σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, minus1sigma, "-1σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, minus2sigma, "-2σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, minus3sigma, "-3σ", user_id, universe.security_code, bb.first.date)
+      compare_rate_with_bb(array_scrape_info, MA, "25MA", user_id, universe.security_code, bb.first.date)
     end
   end
   
-  def compare_rate_with_bb(array_scrape_info,bb, user_id, cur_code)
+  def compare_rate_with_bb(array_scrape_info, bb, bb_name, user_id, cur_code, calc_date)
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate < bb.first.MA.to_f
+    if border_rate < bb
       checkrule = 0
     else
       checkrule = 1
@@ -206,89 +140,10 @@ module CheckAlert
         :user_id => user_id, 
         :code => cur_code,
         :alertvalue => bb.first.MA, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb MA:"+bb.first.MA, 
+        :memo => '[自動設定]BolingerBand '+bb_name+':'+bb+'('+calc_date+')', 
         :checkrule => checkrule,
         :status => '0'
         )    
-
-    if border_rate < bb.first.plus1sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.plus1sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb +1σ:"+bb.first.plus1sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )
-    if border_rate < bb.first.plus2sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.plus2sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb +2σ:"+bb.first.plus2sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < bb.first.plus3sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.plus3sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb +3σ:"+bb.first.plus3sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < bb.first.minus1sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.minus1sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb -1σ:"+bb.first.minus1sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < bb.first.minus2sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.minus2sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb -2σ:"+bb.first.minus2sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-    if border_rate < bb.first.minus3sigma.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end    
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => bb.first.minus3sigma, 
-        :memo => '[自動設定]'+bb.first.calc_date+"bb -3σ:"+bb.first.minus3sigma, 
-        :checkrule => checkrule,
-        :status => '0'
-        )            
   end 
 
 end
