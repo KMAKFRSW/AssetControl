@@ -139,7 +139,7 @@ module CheckAlert
     Alerts.create!(
         :user_id => user_id, 
         :code => cur_code,
-        :alertvalue => bb.first.MA, 
+        :alertvalue => bb, 
         :memo => '[自動設定]BolingerBand '+bb_name+':'+bb+'('+calc_date+')', 
         :checkrule => checkrule,
         :status => '0'
