@@ -89,7 +89,7 @@ module CheckAlert
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate < pivot
+    if border_rate < pivot.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -131,7 +131,7 @@ module CheckAlert
     # set the border rate from bid and ask
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate < bb
+    if border_rate < bb.to_f
       checkrule = 0
     else
       checkrule = 1
