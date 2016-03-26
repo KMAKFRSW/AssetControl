@@ -33,7 +33,7 @@ class FxRate < ActiveRecord::Base
 
   def self.get_daily_rate(cur_code)
      rate_1year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
-       where trade_date > date_format(now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
        and product_code2 = ?
        order by trade_date asc
        ", cur_code])
