@@ -16,13 +16,13 @@ class FxPerformanceController < ApplicationController
     @gbpusd_term_risk_graph = term_risk_graph('GBP/USD','ポンドドル') 
 
     # make instance for range graph
-    @usdjpy_avg_daily_range_graph = avg_daily_range_graph('USD/JPY','ドル円')
-    @eurjpy_avg_daily_range_graph = avg_daily_range_graph('EUR/JPY','ユーロ円')
-    @audjpy_avg_daily_range_graph = avg_daily_range_graph('AUD/JPY','豪ドル円')
-    @gbpjpy_avg_daily_range_graph = avg_daily_range_graph('GBP/JPY','ポンド円')
-    @eurusd_avg_daily_range_graph = avg_daily_range_graph('EUR/USD','ユーロドル')
-    @audusd_avg_daily_range_graph = avg_daily_range_graph('AUD/USD','豪ドルドル')
-    @gbpusd_avg_daily_range_graph = avg_daily_range_graph('GBP/USD','ポンドドル')
+    @usdjpy_avg_daily_range_graph = avg_daily_range_graph('USD/JPY','ドル円', 0, 10)
+    @eurjpy_avg_daily_range_graph = avg_daily_range_graph('EUR/JPY','ユーロ円', 0, 10)
+    @audjpy_avg_daily_range_graph = avg_daily_range_graph('AUD/JPY','豪ドル円', 0, 10)
+    @gbpjpy_avg_daily_range_graph = avg_daily_range_graph('GBP/JPY','ポンド円', 0, 10)
+    @eurusd_avg_daily_range_graph = avg_daily_range_graph('EUR/USD','ユーロドル', 0, 0.05)
+    @audusd_avg_daily_range_graph = avg_daily_range_graph('AUD/USD','豪ドルドル', 0, 0.05)
+    @gbpusd_avg_daily_range_graph = avg_daily_range_graph('GBP/USD','ポンドドル', 0, 0.05)
     
      # make instance for dfma graph
     @usdjpy_dfma_graph = dfma_graph('USD/JPY','ドル円')
@@ -92,7 +92,7 @@ class FxPerformanceController < ApplicationController
       
     end
     
-    def avg_daily_range_graph(cur_code,cur_name)
+    def avg_daily_range_graph(cur_code,cur_name, min, max)
       # define each item codes
       item_range_5d_avg      = Settings[:item_fx][:range_5d_avg]
       item_range_25d_avg     = Settings[:item_fx][:range_25d_avg]
@@ -136,22 +136,12 @@ class FxPerformanceController < ApplicationController
           range_100d_avg.push(avg_range.data.to_f)
         end
       end
-
-    if cur_code[4..6] == 'JPY'
-      max = range_array.max.round(0)
-      min = range_array.min.round(0)
-      interval = (max-min)/10
-    else
-      max = range_array.max.round(3)
-      min = range_array.min.round(3)
-      interval = (max-min)/10
-    end
       
       @avg_daily_range_graph = LazyHighCharts::HighChart.new('graph') do |f|
         f.title(text: cur_name+'：値幅 チャート')
         f.plotOptions(line: {marker: {radius: 0}})
         f.xAxis(categories: avg_date, tickInterval: 90)
-        f.yAxis(:title => {:text => cur_code+' 値幅'}, :min =>   min, :max =>   max, tickInterval: interval )
+        f.yAxis(:title => {:text => cur_code+' 値幅'}, :min =>   min, :max =>   max, tickInterval: (max-min)/10 )
         f.series(:type => 'line', name: '値幅'        , data: range_array      , pointFormat: '値幅:')
         f.series(:type => 'line', name: '移動平均線(5 day)'   , data: range_5d_avg  , pointFormat: '移動平均線(5 day):')
         f.series(:type => 'line', name: '移動平均線(25 day)'   , data: range_25d_avg  , pointFormat: '移動平均線(25 day):')

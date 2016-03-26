@@ -64,12 +64,12 @@ class FxRateController < ApplicationController
     end
     
     if cur_code[4..6] == 'JPY'
-      max = close_price_array.max.roun0(0)
-      min = close_price_array.min.roun0(0)
+      max = close_price_array.max.round(0)
+      min = close_price_array.min.round(0)
       interval = (max-min)/10
     else
-      max = close_price_array.max.round(3)
-      min = close_price_array.min.round(3)
+      max = close_price_array.max.round(2)
+      min = close_price_array.min.round(2)
       interval = (max-min)/10
     end
     
@@ -78,7 +78,7 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: trade_date_array, tickInterval: 60)
       f.yAxis [
-        {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: interval , format: '{value} '+ unit},
+        {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: interval, format: '{value} '+ unit},
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: close_price_array, pointFormat: 'Close Price')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):')
