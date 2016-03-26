@@ -64,13 +64,13 @@ class FxRateController < ApplicationController
     end
     
     if cur_code[4..6] == 'JPY'
+      max = close_price_array.max.roun0(0)
+      min = close_price_array.min.roun0(0)
+      interval = (max-min)/10
+    else
       max = close_price_array.max.round(3)
       min = close_price_array.min.round(3)
-      interval = ((max-min)/10).round(3)
-    else
-      max = close_price_array.max.round(6)
-      min = close_price_array.min.round(6)
-      interval = ((max-min)/10).round(6)
+      interval = (max-min)/10
     end
     
     rate_graph = LazyHighCharts::HighChart.new('graph') do |f|
