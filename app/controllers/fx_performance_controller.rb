@@ -138,8 +138,8 @@ class FxPerformanceController < ApplicationController
       end
 
     if cur_code[4..6] == 'JPY'
-      max = range_array.max.roun0(0)
-      min = range_array.min.roun0(0)
+      max = range_array.max.round(0)
+      min = range_array.min.round(0)
       interval = (max-min)/10
     else
       max = range_array.max.round(3)
