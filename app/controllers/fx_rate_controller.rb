@@ -23,6 +23,7 @@ class FxRateController < ApplicationController
     item_rate_25d_avg     = Settings[:item_fx][:rate_25d_avg]
     item_rate_75d_avg     = Settings[:item_fx][:rate_75d_avg]
     item_rate_100d_avg    = Settings[:item_fx][:rate_100d_avg]
+    item_rate_200d_avg    = Settings[:item_fx][:rate_200d_avg]
 
     # make array including the values to show chart of USD/JPY
     trade_date_array        = Array.new
@@ -33,6 +34,7 @@ class FxRateController < ApplicationController
     avg_rate_25d_avg     = Array.new
     avg_rate_75d_avg     = Array.new
     avg_rate_100d_avg    = Array.new
+    avg_rate_200d_avg    = Array.new
     avg_rate_array       = Array.new
     
     @rate_1year = FxRate.get_daily_rate(cur_code)
@@ -49,6 +51,8 @@ class FxRateController < ApplicationController
         avg_rate_75d_avg.push(avg_rate.data.to_f)
       when item_rate_100d_avg then
         avg_rate_100d_avg.push(avg_rate.data.to_f)
+      when item_rate_200d_avg then
+        avg_rate_200d_avg.push(avg_rate.data.to_f)
       end
     end
 
@@ -62,9 +66,11 @@ class FxRateController < ApplicationController
     if cur_code[4..6] == 'JPY'
       max = close_price_array.max.round(3)
       min = close_price_array.min.round(3)
+      interval = ((max-min)/10).round(3)
     else
       max = close_price_array.max.round(6)
       min = close_price_array.min.round(6)
+      interval = ((max-min)/10).round(6)
     end
     
     rate_graph = LazyHighCharts::HighChart.new('graph') do |f|
@@ -72,12 +78,13 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: trade_date_array, tickInterval: 60)
       f.yAxis [
-        {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: (max-min)/10 , format: '{value} '+ unit},
+        {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: interval , format: '{value} '+ unit},
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: close_price_array, pointFormat: 'Close Price')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):')
+      f.series(:yAxis => 0, :type => 'line', name: '移動平均線(200 day)'  , data: avg_rate_200d_avg  , pointFormat: '移動平均線(200 day):')
     end
 
     position_graph = LazyHighCharts::HighChart.new('graph') do |f|
