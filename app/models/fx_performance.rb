@@ -35,7 +35,7 @@ class FxPerformance < ActiveRecord::Base
   def self.get_avg_daily_range(cur_code)
       
      avg_range = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
@@ -48,7 +48,7 @@ class FxPerformance < ActiveRecord::Base
   def self.get_avg_daily_rate(cur_code)
       
      avg_rate_day = find_by_sql(["select date_format(calc_date, '%Y/%m/%d') as date, cur_code, item, data from fx_performances
-       where calc_date > date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+       where calc_date > date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
        and cur_code = ?
        and item like ?
        order by date asc, item asc
