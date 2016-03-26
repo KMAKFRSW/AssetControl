@@ -83,10 +83,10 @@ class Tasks::Calculate_Initial_Data
 
   def self.setup_performance
     # delete all data
-    FxPerformance.destroy_all("item = 'RNG01'")
-    FxPerformance.destroy_all("item like 'AVG%'")
+    #FxPerformance.destroy_all("item = 'RNG01'")
+    #FxPerformance.destroy_all("item like 'AVG%'")
 
-    for num in 2..750 do
+    for num in 401..800 do
 
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
