@@ -182,13 +182,15 @@ module Performance
     item_avg_rate_25d    = Settings[:item_fx][:rate_25d_avg]
     item_avg_rate_75d    = Settings[:item_fx][:rate_75d_avg]
     item_avg_rate_100d   = Settings[:item_fx][:rate_100d_avg]
+    item_avg_rate_200d   = Settings[:item_fx][:rate_200d_avg]
     
     # define array for loop procedure
     arr_calc_target = [
       [5,item_avg_rate_5d],
       [25,item_avg_rate_25d],
       [75,item_avg_rate_75d],
-      [100,item_avg_rate_100d]
+      [100,item_avg_rate_100d],
+      [200,item_avg_rate_200d]
     ]
           
     # declare some arrays for each terms

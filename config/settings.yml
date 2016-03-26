@@ -18,6 +18,7 @@ item_fx:
   rate_25d_avg:   'AVG12'
   rate_75d_avg:   'AVG13'
   rate_100d_avg:  'AVG14'
+  rate_200d_avg:  'AVG15'
 
 item_price:
   open_price:     'PRC01'

@@ -6,17 +6,17 @@ class FxRateController < ApplicationController
     # get recent rates of each currencies                  #
     ########################################################
     @latest_rate = FxRate.get_latest_rate()
-    @usdjpy_rate_graph, @usdjpy_position_graph = make_rate_and_position_graph('USD/JPY', 'ドル円', '円', 95, 130)
-    @eurjpy_rate_graph, @eurjpy_position_graph = make_rate_and_position_graph('EUR/JPY', 'ユーロ円', '円', 95, 150)
-    @eurusd_rate_graph, @eurusd_position_graph = make_rate_and_position_graph('EUR/USD', 'ユーロドル', '円', 1.0, 1.5)
-    @audjpy_rate_graph, @audjpy_position_graph = make_rate_and_position_graph('AUD/JPY', '豪ドル円', '円', 55, 110)
-    @audusd_rate_graph, @audusd_position_graph = make_rate_and_position_graph('AUD/USD', '豪ドルドル', '円', 0.5, 1.0)
-    @gbpjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('GBP/JPY', 'ポンド円', '円',130, 230)
-    @gbpusd_rate_graph, @gbpusd_position_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', '円', 1.2, 2.0)
+    @usdjpy_rate_graph, @usdjpy_position_graph = make_rate_and_position_graph('USD/JPY', 'ドル円', '円')
+    @eurjpy_rate_graph, @eurjpy_position_graph = make_rate_and_position_graph('EUR/JPY', 'ユーロ円', '円')
+    @eurusd_rate_graph, @eurusd_position_graph = make_rate_and_position_graph('EUR/USD', 'ユーロドル', 'ドル')
+    @audjpy_rate_graph, @audjpy_position_graph = make_rate_and_position_graph('AUD/JPY', '豪ドル円', '円')
+    @audusd_rate_graph, @audusd_position_graph = make_rate_and_position_graph('AUD/USD', '豪ドルドル', 'ドル')
+    @gbpjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('GBP/JPY', 'ポンド円', '円')
+    @gbpusd_rate_graph, @gbpusd_position_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', 'ドル')
     
   end
   
-  def make_rate_and_position_graph(cur_code, cur_name, unit, min, max )
+  def make_rate_and_position_graph(cur_code, cur_name, unit)
     
     # define each item codes
     item_rate_5d_avg      = Settings[:item_fx][:rate_5d_avg]
@@ -57,6 +57,14 @@ class FxRateController < ApplicationController
       close_price_array.push(rate_1year.close_price.to_f)
       position_quantity_array.push(rate_1year.position_quantity.to_i)
       trade_quantity_array.push(rate_1year.trade_quantity.to_i)
+    end
+    
+    if cur_code[4..6] == 'JPY'
+      max = close_price_array.max.round(3)
+      min = close_price_array.min.round(3)
+    else
+      max = close_price_array.max.round(6)
+      min = close_price_array.min.round(6)
     end
     
     rate_graph = LazyHighCharts::HighChart.new('graph') do |f|

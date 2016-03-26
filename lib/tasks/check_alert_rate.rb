@@ -30,6 +30,7 @@ class Tasks::Check_Alert_Rate
     array_universe.each do |universe|
       Technical_Indicator.reflect_pivot_to_alert(universe, user_id)
       Technical_Indicator.reflect_bb_to_alert(universe, user_id)
+      Technical_Indicator.reflect_ma_to_alert(universe, user_id)
     end          
   end
     

@@ -64,74 +64,85 @@ module CheckAlert
   end
   
   def reflect_pivot_to_alert(universe, user_id)
-    # get current rate
     array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
-    # get current pivot rate
     cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
     pivot = Pivot.find_by_sql(["select calc_date, cur_code, cycle, P, R1, R2, R3, S1, S2, S3 from pivots
       where cur_code = ?
       order by calc_date desc
       limit 1
       ", cur_code])
-    # compare each value and reflect setting
     unless pivot.empty? then
-      compare_rate_with_pivot(array_scrape_info, pivot.first.P, 'P', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.R1, 'R1', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.R2, 'R2', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.R3, 'R3', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.S1, 'S1', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.S2, 'S2', user_id, universe.security_code, pivot.first.calc_date)
-      compare_rate_with_pivot(array_scrape_info, pivot.first.S3, 'S3', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.P, 'Pivot P', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.R1, 'Pivot R1', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.R2, 'Pivot R2', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.R3, 'Pivot R3', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.S1, 'Pivot S1', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.S2, 'Pivot S2', user_id, universe.security_code, pivot.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, pivot.first.S3, 'Pivot S3', user_id, universe.security_code, pivot.first.calc_date)
     end
   end
   
-  def compare_rate_with_pivot(array_scrape_info,pivot, pivot_name, user_id, cur_code, calc_date)
-    # set the border rate from bid and ask
-    border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
-    
-    if border_rate < pivot.to_f
-      checkrule = 0
-    else
-      checkrule = 1
-    end
-    Alerts.create!(
-        :user_id => user_id, 
-        :code => cur_code,
-        :alertvalue => pivot, 
-        :memo => '[自動設定]Pivot '+pivot_name+':'+pivot+'('+calc_date+')', 
-        :checkrule => checkrule,
-        :status => '0'
-        )    
-
-  end 
-
   def reflect_bb_to_alert(universe, user_id)
-    # get current rate
     array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
-    # get current pivot rate
     cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
     bb = BolingerBand.find_by_sql(["select calc_date, cur_code, term, MA, plus1sigma, plus2sigma, plus3sigma, minus1sigma, minus2sigma, minus3sigma from bolinger_bands
       where cur_code = ?
       order by calc_date desc
       limit 1
       ", cur_code])
-    # compare each value and reflect setting
     unless bb.empty? then      
-      compare_rate_with_bb(array_scrape_info, bb.first.plus1sigma, "+1σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.plus2sigma, "+2σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.plus3sigma, "+3σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus1sigma, "-1σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus2sigma, "-2σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.minus3sigma, "-3σ", user_id, universe.security_code, bb.first.calc_date)
-      compare_rate_with_bb(array_scrape_info, bb.first.MA, "25MA", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.plus1sigma, "BolingerBand +1σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.plus2sigma, "BolingerBand +2σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.plus3sigma, "BolingerBand +3σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.minus1sigma, "BolingerBand -1σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.minus2sigma, "BolingerBand -2σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.minus3sigma, "BolingerBand -3σ", user_id, universe.security_code, bb.first.calc_date)
+      compare_rate_with_technical(array_scrape_info, bb.first.MA, "BolingerBand 25MA", user_id, universe.security_code, bb.first.calc_date)
+    end
+  end
+
+  def reflect_ma_to_alert(universe, user_id)
+    # define each item codes
+    item_avg_rate_25d    = Settings[:item_fx][:rate_25d_avg]
+    item_avg_rate_75d    = Settings[:item_fx][:rate_75d_avg]
+    item_avg_rate_100d   = Settings[:item_fx][:rate_100d_avg]
+    item_avg_rate_200d   = Settings[:item_fx][:rate_200d_avg]
+    
+    # define array for loop procedure
+    array_ma = [
+      ['25MA',item_avg_rate_25d],
+      ['75MA',item_avg_rate_75d],
+      ['100MA',item_avg_rate_100d],
+      ['200MA',item_avg_rate_200d]
+    ]
+
+    array_scrape_info = Acquirer.scrape_for_alert_rate(universe)
+    cur_code = universe.security_code[0..2]+'/'+universe.security_code[3..5]
+
+    if cur_code[4..6] == 'JPY'
+      digits = 3
+    else
+      digits = 5
+    end
+
+    # calculate avg of daily range for past 5 day
+    array_ma.each do |technical_name, item_code|
+      ma = BolingerBand.find_by_sql(["select calc_date, cur_code, item, round(data, ?) as data from fx_performances 
+        where cur_code = ? 
+        and item = ? 
+        order by calc_date desc 
+        limit 1
+        ", digits, cur_code, item_code])
+      unless ma.empty? then      
+        compare_rate_with_technical(array_scrape_info, ma.first.data, technical_name, user_id, universe.security_code, ma.first.calc_date)
+      end
     end
   end
   
-  def compare_rate_with_bb(array_scrape_info, bb, bb_name, user_id, cur_code, calc_date)
-    # set the border rate from bid and ask
+  def compare_rate_with_technical(array_scrape_info, data, technical_name, user_id, cur_code, calc_date)
     border_rate = (((array_scrape_info[:ask_price]).to_f + (array_scrape_info[:bid_price]).to_f) /2)
     
-    if border_rate < bb.to_f
+    if border_rate < data.to_f
       checkrule = 0
     else
       checkrule = 1
@@ -139,8 +150,8 @@ module CheckAlert
     Alerts.create!(
         :user_id => user_id, 
         :code => cur_code,
-        :alertvalue => bb, 
-        :memo => '[自動設定]BolingerBand '+bb_name+':'+bb+'('+calc_date+')', 
+        :alertvalue => data, 
+        :memo => '[自動設定]'+technical_name+':'+data.to_s+'('+calc_date+')', 
         :checkrule => checkrule,
         :status => '0'
         )    
