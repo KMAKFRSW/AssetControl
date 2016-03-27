@@ -13,8 +13,8 @@ class FxRateController < ApplicationController
     @audusd_rate_graph, @audusd_position_graph = make_rate_and_position_graph('AUD/USD', '豪ドルドル', 'ドル')
     @gbpjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('GBP/JPY', 'ポンド円', '円')
     @gbpusd_rate_graph, @gbpusd_position_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', 'ドル')
-    @nzdjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('NZD/JPY', 'ニュージーランド円', '円')
-    @cadjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('CAD/JPY', 'カナダドル円', '円')
+    @nzdjpy_rate_graph, @nzdjpy_position_graph = make_rate_and_position_graph('NZD/JPY', 'ニュージーランド円', '円')
+    @cadjpy_rate_graph, @cadjpy_position_graph = make_rate_and_position_graph('CAD/JPY', 'カナダドル円', '円')
     
   end
   
