@@ -101,8 +101,8 @@ class Tasks::Calculate_Initial_Data
 #        Performance.calc_term_range('GBP/USD', batchdate)
 #        Performance.calc_term_range('AUD/JPY', batchdate)
 #        Performance.calc_term_range('AUD/USD', batchdate)
-        Performance.calc_term_range('NZD/JPY', batchdate)
-        Performance.calc_term_range('CAD/JPY', batchdate)
+#        Performance.calc_term_range('NZD/JPY', batchdate)
+#        Performance.calc_term_range('CAD/JPY', batchdate)
             
         # calculate average range for 5, 25, 75, 100 days
 #        Performance.calc_avg_range('USD/JPY', batchdate)
@@ -112,8 +112,8 @@ class Tasks::Calculate_Initial_Data
 #        Performance.calc_avg_range('GBP/USD', batchdate)
 #        Performance.calc_avg_range('AUD/JPY', batchdate)
 #        Performance.calc_avg_range('AUD/USD', batchdate)
-        Performance.calc_avg_range('NZD/JPY', batchdate)
-        Performance.calc_avg_range('CAD/JPY', batchdate)
+#        Performance.calc_avg_range('NZD/JPY', batchdate)
+#        Performance.calc_avg_range('CAD/JPY', batchdate)
 
         # calculate term risk
 #        Performance.calc_avg_rate('USD/JPY', batchdate)
@@ -123,8 +123,19 @@ class Tasks::Calculate_Initial_Data
 #        Performance.calc_avg_rate('GBP/USD', batchdate)
 #        Performance.calc_avg_rate('AUD/JPY', batchdate)
 #        Performance.calc_avg_rate('AUD/USD', batchdate)
-        Performance.calc_avg_rate('NZD/JPY', batchdate)
-        Performance.calc_avg_rate('CAD/JPY', batchdate)
+#        Performance.calc_avg_rate('NZD/JPY', batchdate)
+#        Performance.calc_avg_rate('CAD/JPY', batchdate)
+
+        # calculate term risk
+#        Performance.calc_term_risk('USD/JPY', batchdate)
+#        Performance.calc_term_risk('EUR/JPY', batchdate)
+#        Performance.calc_term_risk('EUR/USD', batchdate)
+#        Performance.calc_term_risk('GBP/JPY', batchdate)
+#        Performance.calc_term_risk('GBP/USD', batchdate)
+#        Performance.calc_term_risk('AUD/JPY', batchdate)
+#        Performance.calc_term_risk('AUD/USD', batchdate)
+        Performance.calc_term_risk('NZD/JPY', batchdate)
+        Performance.calc_term_risk('CAD/JPY', batchdate)
         
       end
     end
