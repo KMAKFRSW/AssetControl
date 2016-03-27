@@ -7,7 +7,7 @@ include Performance
 class Tasks::Calculate_Initial_Data
   def self.setup_technical
  
-    for num in 2..750 do
+    for num in 2..800 do
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
@@ -86,7 +86,7 @@ class Tasks::Calculate_Initial_Data
     #FxPerformance.destroy_all("item = 'RNG01'")
     #FxPerformance.destroy_all("item like 'AVG%'")
 
-    for num in 401..800 do
+    for num in 2..800 do
 
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
@@ -94,35 +94,35 @@ class Tasks::Calculate_Initial_Data
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
 
         # calculate term range
-        Performance.calc_term_range('USD/JPY', batchdate)
-        Performance.calc_term_range('EUR/JPY', batchdate)
-        Performance.calc_term_range('EUR/USD', batchdate)
-        Performance.calc_term_range('GBP/JPY', batchdate)
-        Performance.calc_term_range('GBP/USD', batchdate)
-        Performance.calc_term_range('AUD/JPY', batchdate)
-        Performance.calc_term_range('AUD/USD', batchdate)
+#        Performance.calc_term_range('USD/JPY', batchdate)
+#        Performance.calc_term_range('EUR/JPY', batchdate)
+#        Performance.calc_term_range('EUR/USD', batchdate)
+#        Performance.calc_term_range('GBP/JPY', batchdate)
+#        Performance.calc_term_range('GBP/USD', batchdate)
+#        Performance.calc_term_range('AUD/JPY', batchdate)
+#        Performance.calc_term_range('AUD/USD', batchdate)
         Performance.calc_term_range('NZD/JPY', batchdate)
         Performance.calc_term_range('CAD/JPY', batchdate)
             
         # calculate average range for 5, 25, 75, 100 days
-        Performance.calc_avg_range('USD/JPY', batchdate)
-        Performance.calc_avg_range('EUR/JPY', batchdate)
-        Performance.calc_avg_range('EUR/USD', batchdate)
-        Performance.calc_avg_range('GBP/JPY', batchdate)
-        Performance.calc_avg_range('GBP/USD', batchdate)
-        Performance.calc_avg_range('AUD/JPY', batchdate)
-        Performance.calc_avg_range('AUD/USD', batchdate)
+#        Performance.calc_avg_range('USD/JPY', batchdate)
+#        Performance.calc_avg_range('EUR/JPY', batchdate)
+#        Performance.calc_avg_range('EUR/USD', batchdate)
+#        Performance.calc_avg_range('GBP/JPY', batchdate)
+#        Performance.calc_avg_range('GBP/USD', batchdate)
+#        Performance.calc_avg_range('AUD/JPY', batchdate)
+#        Performance.calc_avg_range('AUD/USD', batchdate)
         Performance.calc_avg_range('NZD/JPY', batchdate)
         Performance.calc_avg_range('CAD/JPY', batchdate)
 
         # calculate term risk
-        Performance.calc_avg_rate('USD/JPY', batchdate)
-        Performance.calc_avg_rate('EUR/JPY', batchdate)
-        Performance.calc_avg_rate('EUR/USD', batchdate)
-        Performance.calc_avg_rate('GBP/JPY', batchdate)
-        Performance.calc_avg_rate('GBP/USD', batchdate)
-        Performance.calc_avg_rate('AUD/JPY', batchdate)
-        Performance.calc_avg_rate('AUD/USD', batchdate)
+#        Performance.calc_avg_rate('USD/JPY', batchdate)
+#        Performance.calc_avg_rate('EUR/JPY', batchdate)
+#        Performance.calc_avg_rate('EUR/USD', batchdate)
+#        Performance.calc_avg_rate('GBP/JPY', batchdate)
+#        Performance.calc_avg_rate('GBP/USD', batchdate)
+#        Performance.calc_avg_rate('AUD/JPY', batchdate)
+#        Performance.calc_avg_rate('AUD/USD', batchdate)
         Performance.calc_avg_rate('NZD/JPY', batchdate)
         Performance.calc_avg_rate('CAD/JPY', batchdate)
         
