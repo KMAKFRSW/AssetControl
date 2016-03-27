@@ -14,6 +14,8 @@ class FxPerformanceController < ApplicationController
     @eurusd_term_risk_graph = term_risk_graph('EUR/USD','ユーロドル')
     @audusd_term_risk_graph = term_risk_graph('AUD/USD','豪ドルドル')
     @gbpusd_term_risk_graph = term_risk_graph('GBP/USD','ポンドドル') 
+    @nzdjpy_term_risk_graph = term_risk_graph('NZD/JPY','ニュージーランド円')
+    @cadjpy_term_risk_graph = term_risk_graph('CAD/JPY','カナダドル円')
 
     # make instance for range graph
     @usdjpy_avg_daily_range_graph = avg_daily_range_graph('USD/JPY','ドル円', 0, 10)
@@ -23,6 +25,8 @@ class FxPerformanceController < ApplicationController
     @eurusd_avg_daily_range_graph = avg_daily_range_graph('EUR/USD','ユーロドル', 0, 0.05)
     @audusd_avg_daily_range_graph = avg_daily_range_graph('AUD/USD','豪ドルドル', 0, 0.05)
     @gbpusd_avg_daily_range_graph = avg_daily_range_graph('GBP/USD','ポンドドル', 0, 0.05)
+    @nzdjpy_avg_daily_range_graph = avg_daily_range_graph('NZD/JPY','ニュージーランド円', 0, 10)
+    @cadjpy_avg_daily_range_graph = avg_daily_range_graph('CAD/JPY','カナダドル円', 0, 10)
     
      # make instance for dfma graph
     @usdjpy_dfma_graph = dfma_graph('USD/JPY','ドル円')
@@ -32,6 +36,8 @@ class FxPerformanceController < ApplicationController
     @eurusd_dfma_graph = dfma_graph('EUR/USD','ユーロドル')
     @audusd_dfma_graph = dfma_graph('AUD/USD','豪ドルドル')
     @gbpusd_dfma_graph = dfma_graph('GBP/USD','ポンドドル') 
+    @nzdjpy_dfma_graph = dfma_graph('NZD/JPY','ニュージーランド円')
+    @cadjpy_dfma_graph = dfma_graph('CAD/JPY','カナダドル円')
 
      # make instance for rsi_and_st graph
     @usdjpy_rsi_and_st_graph = rsi_and_st_graph('USD/JPY','ドル円')
@@ -41,6 +47,8 @@ class FxPerformanceController < ApplicationController
     @eurusd_rsi_and_st_graph = rsi_and_st_graph('EUR/USD','ユーロドル')
     @audusd_rsi_and_st_graph = rsi_and_st_graph('AUD/USD','豪ドルドル')
     @gbpusd_rsi_and_st_graph = rsi_and_st_graph('GBP/USD','ポンドドル') 
+    @nzdjpy_rsi_and_st_graph = rsi_and_st_graph('NZD/JPY','ニュージーランド円')
+    @cadjpy_rsi_and_st_graph = rsi_and_st_graph('CAD/JPY','カナダドル円')
 
   end
 

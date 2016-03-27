@@ -38,9 +38,16 @@ class FxRateController < ApplicationController
     avg_rate_100d_avg    = Array.new
     avg_rate_200d_avg    = Array.new
     avg_rate_array       = Array.new
+    plus1sigma_array     = Array.new
+    plus2sigma_array     = Array.new
+    plus3sigma_array     = Array.new
+    minus1sigma_array     = Array.new
+    minus2sigma_array     = Array.new
+    minus3sigma_array     = Array.new
     
-    @rate_1year = FxRate.get_daily_rate(cur_code)
+    @daily_rate = FxRate.get_daily_rate(cur_code)
     @avg_rate_for_some_term = FxPerformance.get_avg_daily_rate(cur_code)
+    @daily_bb = BolingerBand.get_daily_bb(cur_code)
 
     @avg_rate_for_some_term.each do |avg_rate|
       # judging from item, store data to each array
@@ -58,11 +65,20 @@ class FxRateController < ApplicationController
       end
     end
 
-    @rate_1year.each do |rate_1year|
-      trade_date_array.push(rate_1year.date)
-      close_price_array.push(rate_1year.close_price.to_f)
-      position_quantity_array.push(rate_1year.position_quantity.to_i)
-      trade_quantity_array.push(rate_1year.trade_quantity.to_i)
+    @daily_rate.each do |daily_rate|
+      trade_date_array.push(daily_rate.date)
+      close_price_array.push(daily_rate.close_price.to_f)
+      position_quantity_array.push(daily_rate.position_quantity.to_i)
+      trade_quantity_array.push(daily_rate.trade_quantity.to_i)
+    end
+
+    @daily_bb.each do |daily_bb|
+      plus1sigma_array.push(daily_bb.plus1sigma.to_f)
+      plus2sigma_array.push(daily_bb.plus2sigma.to_f)
+      plus3sigma_array.push(daily_bb.plus3sigma.to_f)
+      minus1sigma_array.push(daily_bb.minus1sigma.to_f)
+      minus2sigma_array.push(daily_bb.minus2sigma.to_f)
+      minus3sigma_array.push(daily_bb.minus3sigma.to_f)
     end
     
     if cur_code[4..6] == 'JPY'
@@ -87,6 +103,12 @@ class FxRateController < ApplicationController
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(200 day)'  , data: avg_rate_200d_avg  , pointFormat: '移動平均線(200 day):')
+#      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: plus1sigma_array  , pointFormat: '+1σ')
+#      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: plus2sigma_array  , pointFormat: '+2σ')
+#      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: plus3sigma_array  , pointFormat: '+3σ')
+#      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: minus1sigma_array  , pointFormat: '+1σ')
+#      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: minus2sigma_array  , pointFormat: '+2σ')
+#      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: minus3sigma_array  , pointFormat: '+3σ')
     end
 
     position_graph = LazyHighCharts::HighChart.new('graph') do |f|
