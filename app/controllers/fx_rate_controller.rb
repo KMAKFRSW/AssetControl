@@ -6,15 +6,15 @@ class FxRateController < ApplicationController
     # get recent rates of each currencies                  #
     ########################################################
     @latest_rate = FxRate.get_latest_rate()
-    @usdjpy_rate_graph, @usdjpy_position_graph = make_rate_and_position_graph('USD/JPY', 'ドル円', '円')
-    @eurjpy_rate_graph, @eurjpy_position_graph = make_rate_and_position_graph('EUR/JPY', 'ユーロ円', '円')
-    @eurusd_rate_graph, @eurusd_position_graph = make_rate_and_position_graph('EUR/USD', 'ユーロドル', 'ドル')
-    @audjpy_rate_graph, @audjpy_position_graph = make_rate_and_position_graph('AUD/JPY', '豪ドル円', '円')
-    @audusd_rate_graph, @audusd_position_graph = make_rate_and_position_graph('AUD/USD', '豪ドルドル', 'ドル')
-    @gbpjpy_rate_graph, @gbpjpy_position_graph = make_rate_and_position_graph('GBP/JPY', 'ポンド円', '円')
-    @gbpusd_rate_graph, @gbpusd_position_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', 'ドル')
-    @nzdjpy_rate_graph, @nzdjpy_position_graph = make_rate_and_position_graph('NZD/JPY', 'ニュージーランド円', '円')
-    @cadjpy_rate_graph, @cadjpy_position_graph = make_rate_and_position_graph('CAD/JPY', 'カナダドル円', '円')
+    @usdjpy_rate_graph, @usdjpy_position_graph, @usdjpy_bolinger_graph = make_rate_and_position_graph('USD/JPY', 'ドル円', '円')
+    @eurjpy_rate_graph, @eurjpy_position_graph, @eurjpy_bolinger_graph = make_rate_and_position_graph('EUR/JPY', 'ユーロ円', '円')
+    @eurusd_rate_graph, @eurusd_position_graph, @eurusd_bolinger_graph = make_rate_and_position_graph('EUR/USD', 'ユーロドル', 'ドル')
+    @audjpy_rate_graph, @audjpy_position_graph, @audjpy_bolinger_graph = make_rate_and_position_graph('AUD/JPY', '豪ドル円', '円')
+    @audusd_rate_graph, @audusd_position_graph, @audusd_bolinger_graph = make_rate_and_position_graph('AUD/USD', '豪ドルドル', 'ドル')
+    @gbpjpy_rate_graph, @gbpjpy_position_graph, @gbpjpy_bolinger_graph = make_rate_and_position_graph('GBP/JPY', 'ポンド円', '円')
+    @gbpusd_rate_graph, @gbpusd_position_graph, @gbpusd_bolinger_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', 'ドル')
+    @nzdjpy_rate_graph, @nzdjpy_position_graph, @nzdjpy_bolinger_graph = make_rate_and_position_graph('NZD/JPY', 'ニュージーランド円', '円')
+    @cadjpy_rate_graph, @cadjpy_position_graph, @cadjpy_bolinger_graph = make_rate_and_position_graph('CAD/JPY', 'カナダドル円', '円')
     
   end
   
@@ -84,31 +84,46 @@ class FxRateController < ApplicationController
     if cur_code[4..6] == 'JPY'
       max = close_price_array.max.round(0)
       min = close_price_array.min.round(0)
+      bolinger_max = plus3sigma_array.max.round(0)
+      bolinger_min = minus3sigma_array.min.round(0)
       interval = (max-min)/10
     else
       max = close_price_array.max.round(2)
       min = close_price_array.min.round(2)
+      bolinger_max = plus3sigma_array.max.round(2)
+      bolinger_min = minus3sigma_array.min.round(2)
       interval = (max-min)/10
     end
     
     rate_graph = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: cur_name+':FXチャート')
+      f.title(text: cur_name+':FX移動平均チャート')
       f.plotOptions(line: {marker: {radius: 0}})
       f.xAxis(categories: trade_date_array, tickInterval: 60)
       f.yAxis [
         {:title => {:text => cur_code}, :min => min, :max => max, tickInterval: interval, format: '{value} '+ unit},
+ 
       ]
       f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: close_price_array, pointFormat: 'Close Price')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(25 day)'  , data: avg_rate_25d_avg  , pointFormat: '移動平均線(25 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(75 day)'  , data: avg_rate_75d_avg  , pointFormat: '移動平均線(75 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(100 day)'  , data: avg_rate_100d_avg  , pointFormat: '移動平均線(100 day):')
       f.series(:yAxis => 0, :type => 'line', name: '移動平均線(200 day)'  , data: avg_rate_200d_avg  , pointFormat: '移動平均線(200 day):')
-#      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: plus1sigma_array  , pointFormat: '+1σ')
-#      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: plus2sigma_array  , pointFormat: '+2σ')
-#      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: plus3sigma_array  , pointFormat: '+3σ')
-#      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: minus1sigma_array  , pointFormat: '+1σ')
-#      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: minus2sigma_array  , pointFormat: '+2σ')
-#      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: minus3sigma_array  , pointFormat: '+3σ')
+    end
+    
+    bolinger_graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: cur_name+':FXボリンジャーバンドチャート')
+      f.plotOptions(line: {marker: {radius: 0}})
+      f.xAxis(categories: trade_date_array, tickInterval: 60)
+      f.yAxis [
+        {:title => {:text => cur_code}, :min => bolinger_min, :max => bolinger_max, tickInterval: interval, format: '{value} '+ unit},
+      ]
+      f.series(:yAxis => 0, :type => 'line', name: 'Close Pirce', data: close_price_array, pointFormat: 'Close Price')
+      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: plus1sigma_array  , pointFormat: '+1σ')
+      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: plus2sigma_array  , pointFormat: '+2σ')
+      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: plus3sigma_array  , pointFormat: '+3σ')
+      f.series(:yAxis => 0, :type => 'line', name: '+1σ'  , data: minus1sigma_array  , pointFormat: '+1σ')
+      f.series(:yAxis => 0, :type => 'line', name: '+2σ'  , data: minus2sigma_array  , pointFormat: '+2σ')
+      f.series(:yAxis => 0, :type => 'line', name: '+3σ'  , data: minus3sigma_array  , pointFormat: '+3σ')
     end
 
     position_graph = LazyHighCharts::HighChart.new('graph') do |f|

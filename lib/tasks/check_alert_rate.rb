@@ -28,7 +28,7 @@ class Tasks::Check_Alert_Rate
     array_universe, data_date = Universe.get_universe(asset_class, region_code)
     # compare current rate by user's alert settings
     array_universe.each do |universe|
-      Technical_Indicator.reflect_pivot_to_alert(universe, user_id)
+#      Technical_Indicator.reflect_pivot_to_alert(universe, user_id)
       Technical_Indicator.reflect_bb_to_alert(universe, user_id)
       Technical_Indicator.reflect_ma_to_alert(universe, user_id)
     end          
