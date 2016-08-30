@@ -6,6 +6,7 @@ class FxRateController < ApplicationController
     # get recent rates of each currencies                  #
     ########################################################
     @latest_rate = FxRate.get_latest_rate()
+    @update_date = FxRate.get_update_date()
     @usdjpy_rate_graph, @usdjpy_position_graph, @usdjpy_bolinger_graph = make_rate_and_position_graph('USD/JPY', 'ドル円', '円')
     @eurjpy_rate_graph, @eurjpy_position_graph, @eurjpy_bolinger_graph = make_rate_and_position_graph('EUR/JPY', 'ユーロ円', '円')
     @eurusd_rate_graph, @eurusd_position_graph, @eurusd_bolinger_graph = make_rate_and_position_graph('EUR/USD', 'ユーロドル', 'ドル')

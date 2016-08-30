@@ -73,6 +73,7 @@ class Tasks::Get_Fx_Rate
         end
       end
     rescue
+      puts("retry")
       sleep 600
       retry
     end

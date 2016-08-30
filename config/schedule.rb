@@ -22,7 +22,7 @@
 set :environment, :production
 set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
 
-every '0 12 * * 2-6' do
+every '0 10 * * 2-6' do
   runner "Tasks::Get_Fx_Rate.execute"
 end
 

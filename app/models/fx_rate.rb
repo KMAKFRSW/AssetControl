@@ -31,6 +31,11 @@ class FxRate < ActiveRecord::Base
        ", 'USD/JPY', 'EUR/JPY','GBP/JPY', 'AUD/JPY','CHF/JPY', 'CAD/JPY', 'NZD/JPY', 'ZAR/JPY', 'EUR/USD', 'GBP/USD', 'AUD/USD', 'NZD/USD'])
   end
 
+  def self.get_update_date
+     find_by_sql(["select date_format(latest_date.date,?) as date from 
+       (select max(updated_at) as date from fx_rates) as latest_date", '%Y/%m/%d %s秒'])
+  end
+
   def self.get_daily_rate(cur_code)
      rate_1year = find_by_sql(["select date_format(trade_date, '%Y/%m/%d') as date, open_price, high_price, low_price, close_price, trade_quantity, position_quantity from fx_rates
        where trade_date > date_format(now() - INTERVAL 2 YEAR,'%Y%m%d')
