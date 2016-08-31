@@ -22,22 +22,22 @@
 set :environment, :production
 set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
 
-every '0 10 * * 2-6' do
+every '0 8 * * 2-6' do
   runner "Tasks::Get_Fx_Rate.execute"
 end
 
-every '5 12 * * 2-6' do
+every '5 11 * * 2-6' do
   runner "Tasks::Calculate_Term_Range.execute"
   runner "Tasks::Calculate_Term_Return.execute"
 end
 
-every '10 12 * * 2-6' do
+every '10 11 * * 2-6' do
   runner "Tasks::Calculate_Term_Risk.execute"
   runner "Tasks::Calculate_Term_Avg.calc_range_avg"
   runner "Tasks::Calculate_Term_Avg.calc_rate_avg"
 end
 
-every '10 12 * * 2-6' do
+every '10 11 * * 2-6' do
   runner "Tasks::Calculate_Daily_Pivot.execute"
   runner "Tasks::Calculate_Bolinger_Band.execute"
   runner "Tasks::Calculate_Rsi.execute"

@@ -33,7 +33,7 @@ class FxRate < ActiveRecord::Base
 
   def self.get_update_date
      find_by_sql(["select date_format(latest_date.date,?) as date from 
-       (select max(updated_at) as date from fx_rates) as latest_date", '%Y/%m/%d %H:%i %s秒'])
+       (select max(updated_at) as date from fx_rates) as latest_date", '%Y/%m/%d ƒ%H:%i %s秒'])
   end
 
   def self.get_daily_rate(cur_code)
