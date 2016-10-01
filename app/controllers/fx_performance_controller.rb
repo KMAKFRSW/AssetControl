@@ -179,8 +179,8 @@ class FxPerformanceController < ApplicationController
         f.plotOptions(line: {marker: {radius: 0}})
         f.xAxis(categories: date, tickInterval: 90)
         f.yAxis(:title => {:text => cur_code + '移動平均乖離率'}, :min => -7.5, :max => 7.5, tickInterval: 2.5)
-        f.series(:type => 'line', name: '移動平均乖離率(5 day)'   , data: dfma_25d  , pointFormat: '移動平均乖離率(5 day)')
-        f.series(:type => 'line', name: '移動平均乖離率(25 day)'   , data: dfma_100d  , pointFormat: '移動平均乖離率(25 day)')
+        f.series(:type => 'line', name: '移動平均乖離率(25 day)'   , data: dfma_25d  , pointFormat: '移動平均乖離率(25 day)')
+        f.series(:type => 'line', name: '移動平均乖離率(100 day)'   , data: dfma_100d  , pointFormat: '移動平均乖離率(100 day)')
       end
       
       return @dfma_graph
