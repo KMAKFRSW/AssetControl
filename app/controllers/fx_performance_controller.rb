@@ -163,15 +163,15 @@ class FxPerformanceController < ApplicationController
 
     def dfma_graph(cur_code,cur_name)
       date     = Array.new
-      dfma_5d  = Array.new
-      dfma_25d = Array.new
+      dfma_25d  = Array.new
+      dfma_100d = Array.new
     
       @dfma = FxPerformance.get_dfma(cur_code)
       
       @dfma.each do |dfma|
         date.push(dfma.date)
-        dfma_5d.push(dfma.DFMA5.to_f)
         dfma_25d.push(dfma.DFMA25.to_f)
+        dfma_100d.push(dfma.DFMA100.to_f)
       end
       
       @dfma_graph = LazyHighCharts::HighChart.new('graph') do |f|
@@ -179,8 +179,8 @@ class FxPerformanceController < ApplicationController
         f.plotOptions(line: {marker: {radius: 0}})
         f.xAxis(categories: date, tickInterval: 90)
         f.yAxis(:title => {:text => cur_code + '移動平均乖離率'}, :min => -7.5, :max => 7.5, tickInterval: 2.5)
-        f.series(:type => 'line', name: '移動平均乖離率(5 day)'   , data: dfma_5d  , pointFormat: '移動平均乖離率(5 day)')
-        f.series(:type => 'line', name: '移動平均乖離率(25 day)'   , data: dfma_25d  , pointFormat: '移動平均乖離率(25 day)')
+        f.series(:type => 'line', name: '移動平均乖離率(5 day)'   , data: dfma_25d  , pointFormat: '移動平均乖離率(5 day)')
+        f.series(:type => 'line', name: '移動平均乖離率(25 day)'   , data: dfma_100d  , pointFormat: '移動平均乖離率(25 day)')
       end
       
       return @dfma_graph

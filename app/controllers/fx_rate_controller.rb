@@ -132,8 +132,8 @@ class FxRateController < ApplicationController
       f.plotOptions(line: {marker: {radius: 0}}, area: {marker: {radius: 0}})
       f.xAxis(categories: trade_date_array, tickInterval: 60) 
       f.yAxis [
-       {:title => {:text => cur_code+' 建玉量'}, labels: {tickInterval: 100000, format: '{value} 枚'}},
-       {:title => {:text => cur_code+' 取引量'}, labels: {tickInterval: 10000 , format: '{value} 枚'} , opposite: true}
+       {:title => {:text => cur_code+' 建玉量'}, :min => 0, labels: {tickInterval: 100000, format: '{value} 枚'}},
+       {:title => {:text => cur_code+' 取引量'}, :min => 0, labels: {tickInterval: 10000 , format: '{value} 枚'} , opposite: true}
       ]
       f.series(:yAxis => 0, :type => 'area', name: '建玉数量', data: position_quantity_array, pointFormat: '建玉数量: <b>{point.y} 枚</b>')
       f.series(:yAxis => 1, :type => 'line', name: '取引数量', data: trade_quantity_array   , pointFormat: '取引数量: <b>{point.y} 枚</b>')

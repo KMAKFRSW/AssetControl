@@ -25,12 +25,12 @@
 	        <td><div class="text-center"><%= rate.product_code2 %></td>
 	        <% case rate.product_code2[4,6] %>
 		        <% when 'JPY' then %>
-			        <td><div class="text-right"><%= number_to_currency(rate.open_price, :unit => "￥", :precision => 3) %></td>
-			        <td><div class="text-right"><%= number_to_currency(rate.high_price, :unit => "￥", :precision => 3) %></td>
-			        <td><div class="text-right"><%= number_to_currency(rate.low_price, :unit => "￥", :precision => 3) %></td>
-			        <td><div class="text-right"><%= number_to_currency(rate.close_price, :unit => "￥", :precision => 3) %></td>
-			        <td><div class="text-right"><%= number_to_currency(rate.prev_changes, :unit => "￥", :precision => 3) %></td>
-			        <td><div class="text-right"><%= number_to_currency(rate.swap, :unit => "￥", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.open_price, :unit => "円", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.high_price, :unit => "円", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.low_price, :unit => "円", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.close_price, :unit => "円", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.prev_changes, :unit => "円", :precision => 3) %></td>
+			        <td><div class="text-right"><%= number_to_currency(rate.swap, :unit => "円", :precision => 3) %></td>
 		        <% when 'USD' then %>
 			        <td><div class="text-right"><%= number_to_currency(rate.open_price, :unit => "$", :precision => 3) %></td>
 			        <td><div class="text-right"><%= number_to_currency(rate.high_price, :unit => "$", :precision => 3) %></td>

@@ -63,12 +63,12 @@ class FxPerformance < ActiveRecord::Base
           select * from difference_from_mas
           where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
           and cur_code = ?
-          and term = '5'
+          and term = '25'
           ) DFMA5,(
           select * from difference_from_mas
           where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
           and cur_code = ?
-          and term = '25'
+          and term = '100'
           ) DFMA25
         where DFMA5.cur_code = DFMA25.cur_code
         and DFMA5.calc_date = DFMA25.calc_date
