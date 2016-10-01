@@ -71,7 +71,7 @@ class FxPerformance < ActiveRecord::Base
           and term = '100'
           ) DFMA100
         where DFMA25.cur_code = DFMA100.cur_code
-        and DFMA100.calc_date = DFMA100.calc_date
+        and DFMA25.calc_date = DFMA100.calc_date
         order by date asc
        ", cur_code, cur_code])
        
