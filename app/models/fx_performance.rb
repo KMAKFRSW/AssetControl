@@ -61,12 +61,12 @@ class FxPerformance < ActiveRecord::Base
       
      avg_rate_day = find_by_sql(["select date_format(DFMA25.calc_date, '%Y/%m/%d') as date , DFMA25.cur_code, DFMA25.DFMA as DFMA25, DFMA100.DFMA as DFMA100 from (
           select * from difference_from_mas
-          where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+          where calc_date >= date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
           and cur_code = ?
           and term = '25'
           ) DFMA25,(
           select * from difference_from_mas
-          where calc_date >= date_format( now() - INTERVAL 1 YEAR,'%Y%m%d')
+          where calc_date >= date_format( now() - INTERVAL 2 YEAR,'%Y%m%d')
           and cur_code = ?
           and term = '100'
           ) DFMA100
