@@ -17,7 +17,7 @@ class Tasks::Get_Fx_Rate
     
         
     # set url
-    url = 'https://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
+    url = 'http://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
     
     # get file name
     filename = url.split(/\//).last
