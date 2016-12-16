@@ -5,6 +5,8 @@ require 'date'
 require 'kconv' 
 require 'csv' 
 require 'open_uri_redirections'
+require 'openssl'
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 require "#{Rails.root}/app/models/fx_rate" 
 
 class Tasks::Get_Fx_Rate
