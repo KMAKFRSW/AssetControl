@@ -35,7 +35,7 @@ gem 'rails_config' # 20141129 add
 gem 'composite_primary_keys' # 20141207 add
 gem "amcharts-rails" # 20150110 add
 gem "mail" # 20160130 add
-gem 'open_uri_redirections' # 20161215 add
+gem 'open_uri_redirections', '~>0.2.1' # 20161215 add
 
 
 # To use ActiveModel has_secure_password

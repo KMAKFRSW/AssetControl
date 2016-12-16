@@ -26,7 +26,7 @@ class Tasks::Get_Fx_Rate
     # 【improvement】need to check if the object of file is null 
     
     begin
-      open(url) do |source|
+      open(url, :allow_redirections => :safe) do |source|
         parsed = CSV.parse((source.read).kconv(Kconv::UTF8, Kconv::SJIS), :headers => true )
         # loop that read rows from file & update table
         parsed.each do |row|
