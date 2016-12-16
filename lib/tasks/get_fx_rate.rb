@@ -12,7 +12,7 @@ class Tasks::Get_Fx_Rate
     # Get yesterday'date
     yesterday = (Date.today - num).strftime("%Y%m%d")
       weekday = yesterday.to_date.wday
-      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
+      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && yesterday.to_date.strftime("%m%d") != '0101'then  
     
         
     # set url
