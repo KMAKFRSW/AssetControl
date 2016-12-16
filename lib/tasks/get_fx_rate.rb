@@ -8,8 +8,9 @@ require "#{Rails.root}/app/models/fx_rate"
 
 class Tasks::Get_Fx_Rate
   def self.execute
+    for num in 2..10 do
     # Get yesterday'date
-    yesterday = (Date.today - 1).strftime("%Y%m%d")
+    yesterday = (Date.today - num).strftime("%Y%m%d")
         
     # set url
     url = 'https://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
@@ -76,6 +77,7 @@ class Tasks::Get_Fx_Rate
       puts("retry")
       sleep 600
       retry
+    end
     end
   end
 end
