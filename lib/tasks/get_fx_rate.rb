@@ -4,6 +4,7 @@ require 'open-uri'
 require 'date'
 require 'kconv' 
 require 'csv' 
+require 'open_uri_redirections'
 require "#{Rails.root}/app/models/fx_rate" 
 
 class Tasks::Get_Fx_Rate
