@@ -11,13 +11,9 @@ require "#{Rails.root}/app/models/fx_rate"
 
 class Tasks::Get_Fx_Rate
   def self.execute
-    for num in 2..10 do
     # Get yesterday'date
-    yesterday = (Date.today - num).strftime("%Y%m%d")
-      weekday = yesterday.to_date.wday
-      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && yesterday.to_date.strftime("%m%d") != '0101'then  
-    
-        
+    yesterday = (Date.today - 1).strftime("%Y%m%d")
+            
     # set url
     url = 'http://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
     
@@ -79,12 +75,10 @@ class Tasks::Get_Fx_Rate
           end
         end
       end
-    #rescue
-    #  puts("retry")
-     # sleep 600
-     # retry
-    end
-    end
+    rescue
+      puts("retry")
+      sleep 600
+      retry
     end
   end
 end
