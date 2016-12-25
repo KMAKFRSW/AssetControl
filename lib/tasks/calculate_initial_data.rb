@@ -150,6 +150,27 @@ class Tasks::Calculate_Initial_Data
         
       end
     end
+  end
+  
+  def self.setup_atr
+    for num in 2..500 do
+      # get reference date (format:YYYYMMDD)
+      batchdate = (Date.today - num).strftime("%Y%m%d")
+      weekday = batchdate.to_date.wday
+      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
+
+        # calculate term range
+        Performance.calc_daily_atr('USD/JPY', batchdate)
+        Performance.calc_daily_atr('EUR/JPY', batchdate)
+        Performance.calc_daily_atr('EUR/USD', batchdate)
+        Performance.calc_daily_atr('GBP/JPY', batchdate)
+        Performance.calc_daily_atr('GBP/USD', batchdate)
+        Performance.calc_daily_atr('AUD/JPY', batchdate)
+        Performance.calc_daily_atr('AUD/USD', batchdate)
+        Performance.calc_daily_atr('NZD/JPY', batchdate)
+        Performance.calc_daily_atr('CAD/JPY', batchdate)        
+      end
+    end
   end    
 
     

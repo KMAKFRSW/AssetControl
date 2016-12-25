@@ -225,5 +225,58 @@ module Performance
           end
       end
     end  
-  end  
+  end
+  
+  def calc_daily_atr(cur_code, calc_date)
+    ##############################################################
+    # calc following performance items :                         #
+    #     daily atr                                            #
+    ##############################################################
+    
+    # define each item codes
+    item_atr    = Settings[:item_fx][:daily_atr]
+
+    # initialize
+    atr = Array.new
+
+    # settingdigits for computing
+    if cur_code[4..6] == 'JPY'
+      digits = "%.3f"
+    else
+      digits = "%.5f"
+    end
+
+    # calc atr
+    atr = FxRate.find_by_sql(["select (TDY.high_price - YTD.close_price) as A,(YTD.close_price - TDY.low_price) as B,(TDY.high_price - TDY.low_price) as C from
+    (select * from fx_rates
+    where trade_date = ?
+    and product_code2 =  ?
+    order by trade_date desc
+    limit 1
+    ) as TDY,
+    (select * from fx_rates
+    where trade_date <> ?
+    and product_code2 = ?
+    order by trade_date desc
+    limit 1
+    ) as YTD
+    ", calc_date, cur_code, calc_date, cur_code])    
+
+    unless atr.empty? then
+      if FxPerformance.exists?({ :cur_code => cur_code, :calc_date => calc_date, :item => item_atr })
+          @FxPerformance = FxPerformance.find_by_cur_code_and_calc_date_and_item(cur_code, calc_date, item_atr)
+          @FxPerformance.attributes = {
+              :data=> sprintf( digits, [atr.first.A,atr.first.B,atr.first.C].max)
+          }
+          @FxPerformance.save!
+      else
+        FxPerformance.create!(
+            :cur_code  => cur_code,
+            :calc_date => calc_date,
+            :item      => item_atr,
+            :data      => sprintf( digits, [atr.first.A,atr.first.B,atr.first.C].max)
+            )
+      end
+    end
+  end
 end

@@ -18,6 +18,17 @@ class Tasks::Calculate_Term_Range
     Performance.calc_term_range('AUD/USD', batchdate)
     Performance.calc_term_range('NZD/JPY', batchdate)
     Performance.calc_term_range('CAD/JPY', batchdate)
+    
+    Performance.calc_daily_atr('USD/JPY', batchdate)
+    Performance.calc_daily_atr('EUR/JPY', batchdate)
+    Performance.calc_daily_atr('EUR/USD', batchdate)
+    Performance.calc_daily_atr('GBP/JPY', batchdate)
+    Performance.calc_daily_atr('GBP/USD', batchdate)
+    Performance.calc_daily_atr('AUD/JPY', batchdate)
+    Performance.calc_daily_atr('AUD/USD', batchdate)
+    Performance.calc_daily_atr('NZD/JPY', batchdate)
+    Performance.calc_daily_atr('CAD/JPY', batchdate)
+    
   end
 
 end

@@ -1,5 +1,6 @@
 item_fx:
   daily_range:  'RNG01'
+  daily_atr:    'ATR01'
   daily_return: 'RTN01'
   risk_1m:  'RSK01'
   risk_2m:  'RSK02'
