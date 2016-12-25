@@ -14,7 +14,7 @@ class FxPerformance < ActiveRecord::Base
        and cur_code = ?
        and item = ?
        order by date asc, item asc
-       ", cur_code, 'ATR01'])
+       ", cur_code, 'RNG01'])
        
        return range 
      
