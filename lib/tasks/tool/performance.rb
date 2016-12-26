@@ -255,7 +255,7 @@ module Performance
     limit 1
     ) as TDY,
     (select * from fx_rates
-    where trade_date <> ?
+    where trade_date < ?
     and product_code2 = ?
     order by trade_date desc
     limit 1
