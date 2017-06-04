@@ -16,6 +16,7 @@ class FxRateController < ApplicationController
     @gbpusd_rate_graph, @gbpusd_position_graph, @gbpusd_bolinger_graph = make_rate_and_position_graph('GBP/USD', 'ポンドドル', 'ドル')
     @nzdjpy_rate_graph, @nzdjpy_position_graph, @nzdjpy_bolinger_graph = make_rate_and_position_graph('NZD/JPY', 'ニュージーランド円', '円')
     @cadjpy_rate_graph, @cadjpy_position_graph, @cadjpy_bolinger_graph = make_rate_and_position_graph('CAD/JPY', 'カナダドル円', '円')
+    @tryjpy_rate_graph, @tryjpy_position_graph, @tryjpy_bolinger_graph = make_rate_and_position_graph('TRY/JPY', 'トルコリラ円', '円')
     
   end
   
