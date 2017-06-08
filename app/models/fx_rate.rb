@@ -26,7 +26,7 @@ class FxRate < ActiveRecord::Base
   def self.get_latest_rate
      find_by_sql(["select date_format(max.date,'%Y/%m/%d') as recent_date, product_code2, open_price, high_price, low_price, close_price, prev_changes, swap, trade_quantity, position_quantity from fx_rates, ( select distinct MAX(trade_date) as date from fx_rates ) max
       where trade_date = max.date
-      and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+      and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? )
       order by cast(trade_quantity as unsigned) desc
        ", 'USD/JPY', 'EUR/JPY','GBP/JPY', 'AUD/JPY','CHF/JPY', 'CAD/JPY', 'NZD/JPY', 'ZAR/JPY', 'EUR/USD', 'GBP/USD', 'AUD/USD', 'NZD/USD', 'TRY/JPY'])
   end
