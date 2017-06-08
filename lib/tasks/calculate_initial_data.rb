@@ -51,6 +51,16 @@ class Tasks::Calculate_Initial_Data
         # calculate daily atr
         Performance.calc_daily_atr('TRY/JPY', batchdate)        
 
+      end
+    end
+
+    for num in 2..700 do
+
+      # get reference date (format:YYYYMMDD)
+      batchdate = (Date.today - num).strftime("%Y%m%d")
+      weekday = batchdate.to_date.wday
+      if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
+
         # calculate term range
         Performance.calc_term_range('TRY/JPY', batchdate)
             
@@ -62,9 +72,9 @@ class Tasks::Calculate_Initial_Data
 
         # calculate term risk
         Performance.calc_term_risk('TRY/JPY', batchdate)
+
+      end    
         
-        
-      end
     end
   end
 end
