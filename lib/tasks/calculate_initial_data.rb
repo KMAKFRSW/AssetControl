@@ -7,7 +7,7 @@ include Performance
 class Tasks::Calculate_Initial_Data
   def self.setup_technical
  
-    for num in 2..20 do
+    for num in 2..700 do
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
@@ -41,12 +41,15 @@ class Tasks::Calculate_Initial_Data
     #FxPerformance.destroy_all("item = 'RNG01'")
     #FxPerformance.destroy_all("item like 'AVG%'")
 
-    for num in 2..20 do
+    for num in 2..700 do
 
       # get reference date (format:YYYYMMDD)
       batchdate = (Date.today - num).strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
+
+        # calculate daily atr
+        Performance.calc_daily_atr('TRY/JPY', batchdate)        
 
         # calculate term range
         Performance.calc_term_range('TRY/JPY', batchdate)
@@ -60,9 +63,6 @@ class Tasks::Calculate_Initial_Data
         # calculate term risk
         Performance.calc_term_risk('TRY/JPY', batchdate)
         
-        # calculate term range
-        Performance.calc_daily_atr('TRY/JPY', batchdate)        
-
         
       end
     end

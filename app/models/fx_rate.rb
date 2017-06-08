@@ -28,7 +28,7 @@ class FxRate < ActiveRecord::Base
       where trade_date = max.date
       and product_code2 IN ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
       order by cast(trade_quantity as unsigned) desc
-       ", 'USD/JPY', 'EUR/JPY','GBP/JPY', 'AUD/JPY','CHF/JPY', 'CAD/JPY', 'NZD/JPY', 'ZAR/JPY', 'EUR/USD', 'GBP/USD', 'AUD/USD', 'NZD/USD'])
+       ", 'USD/JPY', 'EUR/JPY','GBP/JPY', 'AUD/JPY','CHF/JPY', 'CAD/JPY', 'NZD/JPY', 'ZAR/JPY', 'EUR/USD', 'GBP/USD', 'AUD/USD', 'NZD/USD', 'TRY/JPY'])
   end
 
   def self.get_update_date
