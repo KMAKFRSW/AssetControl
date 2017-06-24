@@ -29,6 +29,7 @@ class Tasks::Calculate_Bolinger_Band
     Technical_Indicator.calc_bolinger_band('AUD/USD', 25, batchdate)
     Technical_Indicator.calc_bolinger_band('NZD/JPY', 25, batchdate)
     Technical_Indicator.calc_bolinger_band('CAD/JPY', 25, batchdate)
+    Technical_Indicator.calc_bolinger_band('TRY/JPY', 25, batchdate)
   end    
     
 end

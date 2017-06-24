@@ -21,6 +21,7 @@ class Tasks::Calculate_Term_Avg
     Performance.calc_avg_range('AUD/USD', batchdate)
     Performance.calc_avg_range('NZD/JPY', batchdate)
     Performance.calc_avg_range('CAD/JPY', batchdate)
+    Performance.calc_avg_range('TRY/JPY', batchdate)
 
   end
   
@@ -39,6 +40,7 @@ class Tasks::Calculate_Term_Avg
     Performance.calc_avg_rate('AUD/USD', batchdate)
     Performance.calc_avg_rate('NZD/JPY', batchdate)
     Performance.calc_avg_rate('CAD/JPY', batchdate)
+    Performance.calc_avg_rate('TRY/JPY', batchdate)
 
   end
 end

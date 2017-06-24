@@ -28,5 +28,6 @@ class Tasks::Calculate_Rsi
     Technical_Indicator.calc_rsi('AUD/USD', 14, batchdate)
     Technical_Indicator.calc_rsi('NZD/JPY', 14, batchdate)
     Technical_Indicator.calc_rsi('CAD/JPY', 14, batchdate)
+    Technical_Indicator.calc_rsi('TRY/JPY', 14, batchdate)
   end  
 end

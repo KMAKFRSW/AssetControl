@@ -28,5 +28,6 @@ class Tasks::Calculate_Daily_Pivot
     Technical_Indicator.calc_daily_pivot('AUD/USD', batchdate)
     Technical_Indicator.calc_daily_pivot('NZD/JPY', batchdate)
     Technical_Indicator.calc_daily_pivot('CAD/JPY', batchdate)
+    Technical_Indicator.calc_daily_pivot('TRY/JPY', batchdate)
   end  
 end

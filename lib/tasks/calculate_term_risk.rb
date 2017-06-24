@@ -18,6 +18,7 @@ class Tasks::Calculate_Term_Risk
     Performance.calc_term_risk('AUD/USD', batchdate)
     Performance.calc_term_risk('NZD/JPY', batchdate)
     Performance.calc_term_risk('CAD/JPY', batchdate)
+    Performance.calc_term_risk('TRY/JPY', batchdate)
     
   end  
 end

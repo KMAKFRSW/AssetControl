@@ -6,10 +6,10 @@ include Performance
 
 class Tasks::Calculate_Initial_Data
   def self.setup_technical
- 
-    for num in 2..700 do
+
+   (Date.parse('2015-04-01')..Date.parse('2017-06-23')).each do |date|
       # get reference date (format:YYYYMMDD)
-      batchdate = (Date.today - num).strftime("%Y%m%d")
+      batchdate = date.strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
         # Bolinger Band
@@ -41,10 +41,9 @@ class Tasks::Calculate_Initial_Data
     #FxPerformance.destroy_all("item = 'RNG01'")
     #FxPerformance.destroy_all("item like 'AVG%'")
 
-    for num in 2..700 do
-
+   (Date.parse('2015-04-01')..Date.parse('2017-06-23')).each do |date|
       # get reference date (format:YYYYMMDD)
-      batchdate = (Date.today - num).strftime("%Y%m%d")
+      batchdate = date.strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
 
@@ -54,10 +53,10 @@ class Tasks::Calculate_Initial_Data
       end
     end
 
-    for num in 2..700 do
+   (Date.parse('2015-04-01')..Date.parse('2017-06-23')).each do |date|
 
       # get reference date (format:YYYYMMDD)
-      batchdate = (Date.today - num).strftime("%Y%m%d")
+      batchdate = date.strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
       if (weekday == 1 || weekday == 2 || weekday == 3 || weekday == 4 || weekday == 5) && batchdate.to_date.strftime("%m%d") != '0101'then  
 

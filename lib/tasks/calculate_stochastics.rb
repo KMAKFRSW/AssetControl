@@ -28,5 +28,6 @@ class Tasks::Calculate_Stochastics
     Technical_Indicator.calc_stochastics('AUD/USD', batchdate, 14, 3)
     Technical_Indicator.calc_stochastics('NZD/JPY', batchdate, 14, 3)
     Technical_Indicator.calc_stochastics('CAD/JPY', batchdate, 14, 3)
+    Technical_Indicator.calc_stochastics('TRY/JPY', batchdate, 14, 3)
   end  
 end

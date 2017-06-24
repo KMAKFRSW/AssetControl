@@ -28,6 +28,7 @@ class Tasks::Calculate_Difference_From_Ma
     Technical_Indicator.calc_difference_from_ma('AUD/USD', batchdate, 5)
     Technical_Indicator.calc_difference_from_ma('NZD/JPY', batchdate, 5)
     Technical_Indicator.calc_difference_from_ma('CAD/JPY', batchdate, 5)
+    Technical_Indicator.calc_difference_from_ma('TRY/JPY', batchdate, 5)
 
     Technical_Indicator.calc_difference_from_ma('USD/JPY', batchdate, 25)
     Technical_Indicator.calc_difference_from_ma('EUR/JPY', batchdate, 25)
@@ -38,6 +39,7 @@ class Tasks::Calculate_Difference_From_Ma
     Technical_Indicator.calc_difference_from_ma('AUD/USD', batchdate, 25)
     Technical_Indicator.calc_difference_from_ma('NZD/JPY', batchdate, 25)
     Technical_Indicator.calc_difference_from_ma('CAD/JPY', batchdate, 25)
+    Technical_Indicator.calc_difference_from_ma('TRY/JPY', batchdate, 25)
     
     Technical_Indicator.calc_difference_from_ma('USD/JPY', batchdate, 100)
     Technical_Indicator.calc_difference_from_ma('EUR/JPY', batchdate, 100)
@@ -48,6 +50,7 @@ class Tasks::Calculate_Difference_From_Ma
     Technical_Indicator.calc_difference_from_ma('AUD/USD', batchdate, 100)
     Technical_Indicator.calc_difference_from_ma('NZD/JPY', batchdate, 100)
     Technical_Indicator.calc_difference_from_ma('CAD/JPY', batchdate, 100)
+    Technical_Indicator.calc_difference_from_ma('TRY/JPY', batchdate, 100)
     
   end  
 end
