@@ -41,7 +41,7 @@ class Tasks::Calculate_Initial_Data
     #FxPerformance.destroy_all("item = 'RNG01'")
     #FxPerformance.destroy_all("item like 'AVG%'")
 
-   (Date.parse('2015-04-01')..Date.parse('2017-06-23')).each do |date|
+   (Date.parse('2013-04-01')..Date.parse('2017-06-23')).each do |date|
       # get reference date (format:YYYYMMDD)
       batchdate = date.strftime("%Y%m%d")
       weekday = batchdate.to_date.wday
