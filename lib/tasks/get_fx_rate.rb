@@ -12,8 +12,11 @@ require "#{Rails.root}/app/models/fx_rate"
 class Tasks::Get_Fx_Rate
   def self.execute
     # Get yesterday'date
-    yesterday = (Date.today - 1).strftime("%Y%m%d")
-            
+    #yesterday = (Date.today - 1).strftime("%Y%m%d")
+    
+    #★
+    (Date.parse('2015-05-11')..Date.parse('2017-06-23')).each do |yesterday|
+
     # set url
     url = 'http://www.tfx.co.jp/kawase/document/PRT-010-CSV-003-'+ yesterday +'.CSV'
     

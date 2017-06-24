@@ -19,6 +19,15 @@
 
 require "csv"
 
-CSV.foreach('db/TRYJPY.csv') do |row|
-  FxRate.create!(trade_date: row[0], open_price: row[1], high_price: row[2], low_price: row[3], close_price: row[4],prev_price: row[5], product_code1: '01', product_code2: 'TRY/JPY', product_name: 'トルコリラ', data_kbn: 'D01')
+#CSV.foreach('db/TRYJPY.csv') do |row|
+#  FxRate.create!(trade_date: row[0], open_price: row[1], high_price: row[2], low_price: row[3], close_price: row[4],prev_price: row[5], product_code1: '01', product_code2: 'TRY/JPY', product_name: 'トルコリラ', data_kbn: 'D01')
+#end
+
+FxRate.destroy_all("product_code2 like 'TRY%'")
+
+CSV.foreach('db/TRYJPY2.csv') do |row|
+  FxRate.create!(product_code2: row[0], product_name: row[1], trade_date: row[2], prev_price: row[3],
+   open_price: row[4], high_price: row[5], low_price: row[6], close_price: row[7],
+   today_price: row[8], prev_changes: row[9], swap: row[10], trade_quantity: row[11], position_quantity: row[12],
+   product_code1: '01', data_kbn: 'D01')
 end
